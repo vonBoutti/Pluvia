@@ -1,0 +1,26 @@
+services:
+  api:
+    build: .
+    image: alerta-cheia:latest
+    container_name: alerta-cheia-api
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - dados:/data
+    restart: unless-stopped
+
+  # Estações IoT simuladas. Suba com:  docker compose --profile demo up
+  simulador:
+    image: alerta-cheia:latest
+    depends_on:
+      api:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      API_URL: http://api:8000
+    command: ["python", "-m", "iot.simulador", "--cenario", "tempestade", "--intervalo", "3"]
+    profiles: ["demo"]
+
+volumes:
+  dados:

@@ -1,0 +1,116 @@
+montarTopo("dashboard.html");
+preencherBairros(document.getElementById("f-bairro"), true);
+
+const CORES = { azul: "#3b6fb6", verde: "#0b6e4f", laranja: "#d35400", vermelho: "#b3122e", amarelo: "#c99100", cinza: "#8a9590" };
+const NOMES_CAT = { alagamento: "Alagamento", bueiro_entupido: "Bueiro", deslizamento: "Deslizamento", queda_arvore: "Árvore", outros: "Outros" };
+const graficos = {};
+
+function desenhar(id, config) {
+  if (!window.Chart) return;
+  if (graficos[id]) graficos[id].destroy();
+  config.options = { maintainAspectRatio: false, animation: false, ...config.options };
+  graficos[id] = new Chart(document.getElementById(id), config);
+}
+
+const KPIS = [
+  ["chuva_acumulada_mm", "Chuva acumulada (mm)", 0],
+  ["alagamentos", "Alagamentos", 0],
+  ["horas_criticas", "Horas com córrego acima da cota", 0],
+  ["familias_afetadas", "Famílias afetadas", 0],
+  ["indice_vulnerabilidade", "Alagamentos por 100 mm", 2],
+  ["dias_chuva_forte", "Dias com chuva forte (≥20 mm/h)", 0],
+  ["relatos", "Relatos de cidadãos", 0],
+  ["relatos_graves_pct", "Relatos graves (%)", 1],
+];
+
+async function carregar() {
+  const p = new URLSearchParams();
+  const b = document.getElementById("f-bairro").value;
+  const i = document.getElementById("f-inicio").value;
+  const f = document.getElementById("f-fim").value;
+  if (b) p.set("bairro", b);
+  if (i) p.set("inicio", i);
+  if (f) p.set("fim", f);
+  const d = await api(`/api/dashboard?${p}`);
+  const fi = document.getElementById("f-inicio"), ff = document.getElementById("f-fim");
+  fi.min = ff.min = d.filtros.disponivel.inicio;
+  fi.max = ff.max = d.filtros.disponivel.fim;
+
+  document.getElementById("kpis").innerHTML = KPIS.map(([k, rotulo, casas]) =>
+    `<div class="cartao kpi"><div class="valor">${num(d.kpis[k], casas)}</div><div class="rotulo">${rotulo}</div></div>`).join("");
+  document.getElementById("recomendacao").textContent = d.recomendacao;
+
+  desenhar("g-mensal", {
+    data: {
+      labels: d.mensal.map((m) => m.mes),
+      datasets: [
+        { type: "bar", label: "Chuva (mm)", data: d.mensal.map((m) => m.chuva_mm), backgroundColor: "#9dbbe0", yAxisID: "y" },
+        { type: "line", label: "Alagamentos", data: d.mensal.map((m) => m.alagamentos), borderColor: CORES.vermelho, backgroundColor: CORES.vermelho, yAxisID: "y2" },
+      ],
+    },
+    options: { scales: { y: { title: { display: true, text: "mm" } }, y2: { position: "right", beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { precision: 0 } } } },
+  });
+
+  desenhar("g-bairros", {
+    type: "bar",
+    data: {
+      labels: d.ranking_bairros.map((r) => r.bairro),
+      datasets: [{ label: "Alagamentos por 100 mm", data: d.ranking_bairros.map((r) => r.indice_vulnerabilidade),
+        backgroundColor: d.ranking_bairros.map((r) => (b && r.bairro === b ? CORES.laranja : CORES.verde)) }],
+    },
+    options: { indexAxis: "y", plugins: { legend: { display: false } } },
+  });
+
+  desenhar("g-diario", {
+    data: {
+      labels: d.diario.map((x) => x.data),
+      datasets: [
+        { type: "bar", label: "Chuva média diária (mm)", data: d.diario.map((x) => x.chuva_mm), backgroundColor: "#b7cbe6" },
+        { type: "line", label: "Média móvel 7 dias", data: d.diario.map((x) => x.media_movel_7d), borderColor: CORES.azul, pointRadius: 0, borderWidth: 2 },
+      ],
+    },
+    options: { scales: { x: { ticks: { maxTicksLimit: 10 } } } },
+  });
+
+  desenhar("g-relatos", {
+    type: "bar",
+    data: {
+      labels: d.relatos_categoria.map((r) => NOMES_CAT[r.categoria]),
+      datasets: [
+        { label: "Alta", data: d.relatos_categoria.map((r) => r.alta), backgroundColor: CORES.vermelho },
+        { label: "Média", data: d.relatos_categoria.map((r) => r.media), backgroundColor: CORES.amarelo },
+        { label: "Baixa", data: d.relatos_categoria.map((r) => r.baixa), backgroundColor: CORES.cinza },
+      ],
+    },
+    options: { scales: { x: { stacked: true }, y: { stacked: true } } },
+  });
+
+  document.getElementById("t-ranking").innerHTML = `
+    <thead><tr><th>Bairro</th><th>Chuva (mm)</th><th>Alagamentos</th><th>Horas críticas</th><th>Famílias afetadas</th><th>Índice</th></tr></thead>
+    <tbody>${d.ranking_bairros.map((r) => `<tr><td>${esc(r.bairro)}</td><td>${num(r.chuva_mm)}</td><td>${r.alagamentos}</td>
+      <td>${r.horas_criticas}</td><td>${r.familias_afetadas}</td><td>${num(r.indice_vulnerabilidade, 2)}</td></tr>`).join("")}</tbody>`;
+}
+
+async function carregarIA() {
+  try {
+    const m = (await api("/api/ia/metricas")).risco_alagamento;
+    const ia = m.ia, re = m.regra_atual_80pct_cota;
+    const linha = (rotulo, a, d, sufixo = "", menorMelhor = false) => {
+      const melhor = menorMelhor ? d < a : d > a;
+      return `<tr><td>${rotulo}</td><td>${num(a, 1)}${sufixo}</td><td class="${melhor ? "melhor" : ""}">${num(d, 1)}${sufixo}</td></tr>`;
+    };
+    document.getElementById("t-ia").innerHTML = `
+      <thead><tr><th>Métrica (${ia.eventos} alagamentos no teste)</th><th>Antes: régua 80%</th><th>Depois: IA</th></tr></thead>
+      <tbody>
+        ${linha("Alagamentos avisados com 1 h ou mais de antecedência", re.eventos_avisados_1h_antes_pct, ia.eventos_avisados_1h_antes_pct, "%")}
+        ${linha("Antecedência média do aviso", re.antecedencia_media_min, ia.antecedencia_media_min, " min")}
+        ${linha("Falsos alarmes por mês (todos os bairros)", re.falsos_alarmes_por_mes, ia.falsos_alarmes_por_mes, "", true)}
+        ${linha("Precisão (alerta certo)", re.precisao * 100, ia.precisao * 100, "%")}
+      </tbody>`;
+  } catch { document.getElementById("t-ia").innerHTML = "<tr><td>Métricas da IA indisponíveis.</td></tr>"; }
+}
+
+document.getElementById("filtros").addEventListener("submit", (e) => { e.preventDefault(); carregar().catch((er) => alert(er.message)); });
+document.getElementById("limpar").addEventListener("click", () => { document.getElementById("filtros").reset(); carregar(); });
+carregar();
+carregarIA();

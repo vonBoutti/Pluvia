@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alerta Cheia — Receber alertas</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header class="topo" id="topo"></header>
+  <main id="conteudo">
+    <h1>Receba alertas no celular</h1>
+    <p class="sub">Funciona em qualquer celular, até sem internet: o aviso chega por <strong>SMS</strong> com até 3 horas de antecedência.</p>
+    <div class="duas">
+      <form id="form" class="cartao" novalidate>
+        <h2>Cadastrar telefone</h2>
+        <div class="campo">
+          <label for="bairro">Bairro onde você mora ou trabalha</label>
+          <select id="bairro" required></select>
+        </div>
+        <div class="campo">
+          <label for="telefone">Celular com DDD</label>
+          <input id="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 91234-5678" required>
+        </div>
+        <div class="campo check">
+          <input id="aceite" type="checkbox" required>
+          <label for="aceite" style="font-weight:400">Autorizo usar meu número <strong>apenas</strong> para alertas de enchente. Ele é guardado de forma protegida e posso pedir exclusão quando quiser (LGPD).</label>
+        </div>
+        <button class="prim" type="submit">Quero receber alertas</button>
+        <p id="msg" role="status"></p>
+      </form>
+
+      <section class="cartao">
+        <h2>Alertas emitidos</h2>
+        <ul id="lista" class="lista-alertas" aria-live="polite"><li>Carregando…</li></ul>
+      </section>
+    </div>
+  </main>
+  <footer>Alerta Cheia · Defesa Civil 199 · Bombeiros 193</footer>
+  <script src="js/comum.js"></script>
+  <script src="js/alertas.js"></script>
+</body>
+</html>

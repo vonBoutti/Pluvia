@@ -1,0 +1,18 @@
+[project]
+name = "alerta-cheia"
+version = "1.0.0"
+description = "CitizenTech - previsão de alagamentos com IoT + IA e alertas ao cidadão"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["bigdata/data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "S"]
+ignore = ["S101", "S311", "S105", "S106", "B008", "E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"

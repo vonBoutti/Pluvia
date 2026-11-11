@@ -1,0 +1,21 @@
+texto,categoria,severidade
+"Minha rua encheu de água de repente e minha mãe idosa ficou ilhada em casa",alagamento,alta
+"Tem um carro boiando na avenida, a água tá muito alta e com correnteza",alagamento,alta
+"A água do córrego está entrando na casa dos vizinhos agora",alagamento,alta
+"Choveu forte e a rua está alagada, nenhum carro passa",alagamento,media
+"Ponto de alagamento perto do viaduto, trânsito parado",alagamento,media
+"Ficou uma poçinha de água na frente de casa depois da chuva",alagamento,baixa
+"O bueiro da esquina está tampado de lixo e garrafa pet",bueiro_entupido,media
+"Bueiro sujo com folhas secas precisando de limpeza",bueiro_entupido,baixa
+"O morro atrás da minha casa desabou e caiu terra no quintal",deslizamento,alta
+"Está descendo lama do barranco para a calçada",deslizamento,media
+"Uma árvore caiu nos fios e está saindo faísca",queda_arvore,alta
+"Galho enorme caído no meio da rua",queda_arvore,media
+"Tem uma árvore inclinada que parece que vai cair",queda_arvore,baixa
+"A lâmpada do poste está queimada há semanas",outros,baixa
+"Buraco grande no asfalto em frente à padaria",outros,baixa
+"Rachadura enorme na parede depois que a encosta cedeu",deslizamento,alta
+"Água no joelho na rua da escola, crianças saindo agora",alagamento,alta
+"Boca de lobo entupida, vai alagar tudo de novo",bueiro_entupido,media
+"Lixo acumulado na calçada atrapalhando a passagem",outros,baixa
+"Rua virou rio, água chegando nas portas das lojas",alagamento,media

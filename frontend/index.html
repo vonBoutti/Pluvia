@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alerta Cheia — Painel de risco</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header class="topo" id="topo"></header>
+  <main id="conteudo">
+    <h1>Risco de alagamento agora</h1>
+    <p class="sub">Sensores nos córregos medem chuva e nível da água a cada hora. A inteligência artificial estima a chance de transbordar nas <strong>próximas 3 horas</strong>.</p>
+
+    <div id="faixa" class="faixa-alerta" role="alert"></div>
+
+    <section aria-labelledby="t-bairros">
+      <h2 id="t-bairros" class="oculto">Bairros monitorados</h2>
+      <div id="bairros" class="grade" aria-live="polite"><p>Carregando…</p></div>
+    </section>
+
+    <section id="detalhe" class="cartao oculto" style="margin-top:18px" aria-live="polite">
+      <h2 id="det-titulo">Últimas 24 horas</h2>
+      <div class="grafico"><canvas id="grafico-nivel" aria-label="Gráfico do nível do córrego e chuva nas últimas 24 horas" role="img"></canvas></div>
+      <p class="ajuda" id="det-resumo"></p>
+    </section>
+
+    <section class="cartao" style="margin-top:18px">
+      <h2>Como ler o painel</h2>
+      <p>
+        <span class="selo n-normal">Normal</span> sem risco previsto ·
+        <span class="selo n-atencao">Atenção</span> chuva forte, acompanhe ·
+        <span class="selo n-alerta">Alerta</span> risco de alagamento em até 3 h: tire o carro de áreas baixas ·
+        <span class="selo n-emergencia">Emergência</span> vá para local alto
+      </p>
+      <p class="ajuda">A barra mostra quanto o córrego já encheu em relação ao ponto em que transborda (cota). Em emergência ligue <strong>199</strong> (Defesa Civil) ou <strong>193</strong> (Bombeiros).</p>
+    </section>
+  </main>
+  <footer>Alerta Cheia · CitizenTech — Global Solution 2026/2 · dados de demonstração</footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="js/comum.js"></script>
+  <script src="js/painel.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alerta Cheia — Relatar problema</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header class="topo" id="topo"></header>
+  <main id="conteudo">
+    <h1>Relatar um problema</h1>
+    <p class="sub">Escreva do seu jeito o que está acontecendo. A inteligência artificial entende o relato, classifica a urgência e encaminha para o órgão certo na hora.</p>
+    <div class="duas">
+      <form id="form" class="cartao" novalidate>
+        <div class="campo">
+          <label for="bairro">Bairro</label>
+          <select id="bairro" name="bairro" required></select>
+        </div>
+        <div class="campo">
+          <label for="texto">O que está acontecendo?</label>
+          <textarea id="texto" name="texto" required minlength="10" maxlength="500"
+            aria-describedby="ajuda-texto" placeholder="Ex.: a água do córrego está entrando nas casas da rua das Flores"></textarea>
+          <span class="ajuda" id="ajuda-texto">Diga o local e o que você vê. Não precisa se identificar. <span id="contador">0</span>/500</span>
+        </div>
+        <button class="prim" type="submit" id="enviar">Enviar relato</button>
+        <p id="erro" class="erro" role="alert"></p>
+        <p class="ajuda">Em perigo imediato ligue <strong>193</strong> (Bombeiros) ou <strong>199</strong> (Defesa Civil).</p>
+      </form>
+
+      <section class="cartao" aria-live="polite" id="resultado">
+        <h2>Resultado da triagem</h2>
+        <p class="ajuda" id="vazio">Envie um relato para ver como a IA o classifica.</p>
+        <div id="saida" class="oculto">
+          <p id="protocolo" class="ok"></p>
+          <table>
+            <tbody>
+              <tr><th scope="row">Tipo de problema</th><td id="r-cat"></td></tr>
+              <tr><th scope="row">Urgência</th><td id="r-sev"></td></tr>
+              <tr><th scope="row">Encaminhado para</th><td id="r-orgao"></td></tr>
+              <tr><th scope="row">Prazo de atendimento</th><td id="r-prazo"></td></tr>
+              <tr><th scope="row">Confiança da IA</th><td id="r-conf"></td></tr>
+              <tr><th scope="row">Tempo de triagem</th><td id="r-tempo"></td></tr>
+            </tbody>
+          </table>
+          <p id="r-extra" class="ajuda"></p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>Alerta Cheia · Seu relato é anônimo: não guardamos nome nem IP.</footer>
+  <script src="js/comum.js"></script>
+  <script src="js/relatar.js"></script>
+</body>
+</html>

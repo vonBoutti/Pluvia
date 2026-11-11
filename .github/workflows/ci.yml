@@ -1,0 +1,65 @@
+name: CI/CD Alerta Cheia
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  qualidade-e-testes:
+    name: Lint + dados + IA + testes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar dependências
+        run: pip install -r requirements-dev.txt
+      - name: Lint (ruff, inclui regras de segurança bandit)
+        run: ruff check .
+      - name: Pipeline de dados e treino da IA
+        run: python -m scripts.preparar
+      - name: Testes automatizados
+        run: pytest --junitxml=relatorio-testes.xml
+      - name: Publicar relatório de testes e métricas da IA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios
+          path: |
+            relatorio-testes.xml
+            ia/modelos/metricas.json
+            bigdata/data/gold/qualidade.json
+
+  docker:
+    name: Build e smoke test do container
+    needs: qualidade-e-testes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build da imagem
+        run: docker build -t alerta-cheia:${{ github.sha }} .
+      - name: Subir container e checar /api/health
+        run: |
+          docker run -d --name api -p 8000:8000 \
+            -e ADMIN_PASSWORD=ci-senha-temporaria -e DEVICE_API_KEY=ci-chave alerta-cheia:${{ github.sha }}
+          for i in $(seq 1 30); do curl -fs localhost:8000/api/health && break; sleep 2; done
+          curl -fs localhost:8000/api/health
+          curl -fs -X POST localhost:8000/api/leituras -H "X-API-Key: ci-chave" -H "Content-Type: application/json" \
+            -d '{"estacao":"AC-01","chuva_mm":12,"nivel_cm":95}'
+          curl -fs localhost:8000/metrics | head
+      - name: Publicar imagem no GitHub Container Registry (deploy)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          IMG=ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          docker tag alerta-cheia:${{ github.sha }} $IMG:latest
+          docker tag alerta-cheia:${{ github.sha }} $IMG:${{ github.sha }}
+          docker push $IMG:latest && docker push $IMG:${{ github.sha }}

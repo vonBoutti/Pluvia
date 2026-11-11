@@ -1,0 +1,14 @@
+# dados e modelos são gerados por `python -m scripts.preparar` (semente fixa = reprodutível)
+bigdata/data/
+ia/modelos/
+*.db
+
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+entrega/
+*.zip
+.claude/
