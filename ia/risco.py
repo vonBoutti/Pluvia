@@ -7,6 +7,7 @@ import joblib
 import pandas as pd
 
 from bigdata.catalogo import MODELOS
+from ia.features import candidato
 
 
 @lru_cache(maxsize=1)
@@ -37,6 +38,8 @@ def prever(features: dict) -> dict:
     art = _carregar()
     if features["nivel_pct_cota"] >= 1.0:  # já transbordou: não precisa de previsão
         p = 1.0
+    elif not candidato(features):  # tempo seco e córrego baixo: risco zero, sem gastar a IA
+        p = 0.0
     else:
         X = pd.DataFrame([features])[art["features"]]
         p = float(art["modelo"].predict_proba(X)[0, 1])

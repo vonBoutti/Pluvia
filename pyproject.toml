@@ -1,5 +1,5 @@
 [project]
-name = "alerta-cheia"
+name = "pluvia"
 version = "1.0.0"
 description = "CitizenTech - previsão de alagamentos com IoT + IA e alertas ao cidadão"
 requires-python = ">=3.11"

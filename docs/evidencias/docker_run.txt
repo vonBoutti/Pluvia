@@ -1,43 +1,43 @@
-$ docker images alerta-cheia
-REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
-alerta-cheia   latest    aa35052d1f8b   7 minutes ago   726MB
+$ docker images pluvia
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+pluvia       latest    76c7806fcf25   8 minutes ago   978MB
 
-$ docker run -d --name alerta-cheia-evid -p 8001:8000 --env-file .env alerta-cheia:latest
+$ docker run -d --name pluvia-evid -p 8001:8000 --env-file .env pluvia:latest
 
-$ docker ps --filter name=alerta-cheia-evid
-NAMES               IMAGE                 STATUS                   PORTS
-alerta-cheia-evid   alerta-cheia:latest   Up 7 minutes (healthy)   0.0.0.0:8001->8000/tcp
+$ docker ps --filter name=pluvia-evid
+NAMES         IMAGE           STATUS                    PORTS
+pluvia-evid   pluvia:latest   Up 19 seconds (healthy)   0.0.0.0:8001->8000/tcp
 
-$ curl localhost:8001/api/health
+$ curl 127.0.0.1:8001/api/health
 {"status":"ok","versao":"1.0.0","modelos":true}
 
-$ curl -X POST localhost:8001/api/leituras (X-API-Key) {"estacao":"AC-01","chuva_mm":18,"nivel_cm":116}
-{"bairro":"Jardim Pantanal","features":{"chuva_mm":18.0,"chuva_3h":18.0,"chuva_24h":18.0,"nivel_cm":116.0,"delta_nivel_1h":55.0,"nivel_pct_cota":0.644},"risco":{"probabilidade":0.45,"nivel":"alerta","rotulo":"Alerta"},"agente":{"acao":"criar","nivel":"alerta","mensagem":"ALERTA Jardim Pantanal: risco de alagamento nas próximas 3h. Tire carros de áreas baixas e prepare documentos. Defesa Civil 199","acao_defesa_civil":"Deslocar equipe ao bairro; acionar agentes comunitários; bloquear vias baixas.","motivo":"modelo: p=0.45; R1","alerta_id":1,"sms_enviados_simulados":0}}
+$ curl -X POST 127.0.0.1:8001/api/leituras (X-API-Key) {"estacao":"AC-01","chuva_mm":18,"nivel_cm":116}
+{"bairro":"Jardim Helena","features":{"chuva_mm":18.0,"chuva_3h":18.0,"chuva_24h":18.0,"nivel_cm":116.0,"delta_nivel_1h":55.0,"nivel_pct_cota":0.644},"risco":{"probabilidade":0.519,"nivel":"alerta","rotulo":"Alerta"},"agente":{"acao":"criar","nivel":"alerta","mensagem":"ALERTA Jardim Helena: risco de alagamento nas próximas 3h. Tire carros de áreas baixas e prepare documentos. Defesa Civil 199","acao_defesa_civil":"Deslocar equipe ao bairro; acionar agentes comunitários; bloquear vias baixas.","motivo":"modelo: p=0.52; R1","alerta_id":1,"sms_enviados_simulados":0}}
 
-$ curl -X POST localhost:8001/api/leituras (sem chave)
+$ curl -X POST 127.0.0.1:8001/api/leituras (sem chave)
 {"detail":"Chave do dispositivo inválida"}
 
-$ curl localhost:8001/metrics
-# TYPE alerta_cheia_uptime_seconds gauge
-alerta_cheia_uptime_seconds 19
-# TYPE alerta_cheia_requests_total counter
-alerta_cheia_requests_total 6
-# TYPE alerta_cheia_latency_avg_ms gauge
-alerta_cheia_latency_avg_ms 232.93
-# TYPE alerta_cheia_alertas_ativos gauge
-alerta_cheia_alertas_ativos 1
-# TYPE alerta_cheia_leituras_total counter
-alerta_cheia_leituras_total 145
-alerta_cheia_http_status_total{code="200"} 4
-alerta_cheia_http_status_total{code="201"} 1
-alerta_cheia_http_status_total{code="401"} 1
+$ curl 127.0.0.1:8001/metrics
+# TYPE pluvia_uptime_seconds gauge
+pluvia_uptime_seconds 19
+# TYPE pluvia_requests_total counter
+pluvia_requests_total 6
+# TYPE pluvia_latency_avg_ms gauge
+pluvia_latency_avg_ms 218.65
+# TYPE pluvia_alertas_ativos gauge
+pluvia_alertas_ativos 1
+# TYPE pluvia_leituras_total counter
+pluvia_leituras_total 2305
+pluvia_http_status_total{code="200"} 4
+pluvia_http_status_total{code="201"} 1
+pluvia_http_status_total{code="401"} 1
 
-$ docker logs alerta-cheia-evid
+$ docker logs pluvia-evid
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     172.17.0.1:43806 - "GET /api/health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56672 - "GET /api/health HTTP/1.1" 200 OK
-INFO:     172.17.0.1:37908 - "GET /api/health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50230 - "GET /api/health HTTP/1.1" 200 OK
-INFO:     172.17.0.1:37916 - "POST /api/leituras HTTP/1.1" 201 Created
-INFO:     172.17.0.1:36810 - "POST /api/leituras HTTP/1.1" 401 Unauthorized
-INFO:     172.17.0.1:36816 - "GET /metrics HTTP/1.1" 200 OK
+INFO:     172.17.0.1:60308 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34144 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     172.17.0.1:52846 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57400 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     172.17.0.1:52860 - "POST /api/leituras HTTP/1.1" 201 Created
+INFO:     172.17.0.1:52870 - "POST /api/leituras HTTP/1.1" 401 Unauthorized
+INFO:     172.17.0.1:52876 - "GET /metrics HTTP/1.1" 200 OK

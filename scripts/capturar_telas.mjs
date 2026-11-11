@@ -15,7 +15,7 @@ mkdirSync(SAIDA, { recursive: true });
 
 const porta = 9333;
 const chrome = spawn(CHROME, ["--headless=new", `--remote-debugging-port=${porta}`, "--no-first-run",
-  `--user-data-dir=${join(tmpdir(), "alerta-cheia-chrome")}`, "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
+  `--user-data-dir=${join(tmpdir(), "pluvia-chrome")}`, "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function alvo() {
@@ -62,12 +62,12 @@ async function print(nome, url, { largura = 1280, altura = 900, antes = null, pa
 
 await cdp("Page.enable");
 await cdp("Runtime.enable");
-await print("01_painel_risco", "/index.html", { paginaInteira: false, antes: "document.getElementById('meu-bairro').value='Jardim Pantanal';document.getElementById('meu-bairro').dispatchEvent(new Event('change'))" });
+await print("01_painel_risco", "/index.html", { paginaInteira: false, antes: "document.getElementById('meu-bairro').value='Jardim Helena';document.getElementById('meu-bairro').dispatchEvent(new Event('change'))" });
 await print("01b_painel_completo", "/index.html");
 await print("12_entenda", "/entenda.html");
 await print("02_relatar_triagem", "/relatar.html", {
   paginaInteira: false, altura: 760,
-  antes: `document.getElementById('bairro').value='Jardim Pantanal';
+  antes: `document.getElementById('bairro').value='Jardim Helena';
           document.getElementById('texto').value='Socorro, a água do córrego invadiu as casas da rua Bom Jesus e tem uma senhora ilhada';
           document.getElementById('form').requestSubmit();`,
 });
@@ -75,7 +75,7 @@ await print("03_alertas", "/alertas.html", { paginaInteira: false, altura: 820 }
 await print("04_dashboard", "/dashboard.html");
 await print("05_dashboard_filtro_bairro", "/dashboard.html", {
   paginaInteira: false, altura: 980,
-  antes: `document.getElementById('f-bairro').value='Jardim Pantanal';
+  antes: `document.getElementById('f-bairro').value='Jardim Helena';
           document.getElementById('f-inicio').value='2025-11-01'; document.getElementById('f-fim').value='2026-03-31';
           document.getElementById('filtros').requestSubmit();`,
 });

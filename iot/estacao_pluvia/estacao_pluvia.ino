@@ -1,6 +1,6 @@
 /*
- * Alerta Cheia - Estação de monitoramento de córrego (ESP32)
- * Simulável no Wokwi: abra iot/estacao_alerta_cheia/ no wokwi.com (diagram.json incluso).
+ * Pluvia - Estação de monitoramento de córrego (ESP32)
+ * Simulável no Wokwi: abra iot/estacao_pluvia/ no wokwi.com (diagram.json incluso).
  *
  * Sensores:
  *   1. HC-SR04 (ultrassônico)  -> nível da água no córrego (sensor preso na ponte)
@@ -22,7 +22,7 @@ const char* WIFI_SSID   = "Wokwi-GUEST";
 const char* WIFI_SENHA  = "";
 const char* API_URL     = "http://SEU_IP:8000/api/leituras";  // troque pelo IP da máquina com a API
 const char* API_KEY     = "dev-device-key-troque";           // igual a DEVICE_API_KEY do .env
-const char* ESTACAO     = "AC-01";                            // Jardim Pantanal
+const char* ESTACAO     = "AC-01";                            // Jardim Helena (Jardim Pantanal)
 const float ALTURA_SENSOR_CM = 400.0;  // distância do sensor ao fundo do córrego
 const float COTA_CM          = 180.0;  // nível de transbordamento deste ponto
 const unsigned long CICLO_MS = 10000;  // demo: 10 s representam 1 h de leitura consolidada

@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS leituras (
     probabilidade REAL, nivel_risco TEXT
 );
 CREATE INDEX IF NOT EXISTS ix_leituras_estacao ON leituras(estacao, id);
+CREATE INDEX IF NOT EXISTS ix_leituras_bairro ON leituras(bairro, id);
 
 CREATE TABLE IF NOT EXISTS alertas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS alertas (
     criado_em TEXT NOT NULL, encerrado_em TEXT, ativo INTEGER NOT NULL DEFAULT 1,
     destinatarios INTEGER NOT NULL DEFAULT 0
 );
+CREATE INDEX IF NOT EXISTS ix_alertas_bairro ON alertas(bairro, ativo, id);
 
 CREATE TABLE IF NOT EXISTS relatos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

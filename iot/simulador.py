@@ -1,4 +1,4 @@
-"""Simulador (mock) das 6 estações IoT do Alerta Cheia.
+"""Simulador (mock) das 6 estações IoT do Pluvia.
 
 Cada estação tem 3 sensores: pluviômetro (chuva_mm), ultrassônico (nivel_cm) e
 DHT22 (temp_c). O simulador envia as leituras para a API exatamente como o ESP32
@@ -6,12 +6,12 @@ faria (POST /api/leituras + X-API-Key). Cada ciclo representa 1 hora.
 
 Cenários:
   calmo       tempo seco em todos os bairros
-  tempestade  temporal sobre um bairro (padrão: Jardim Pantanal) e chuva menor nos vizinhos
+  tempestade  temporal sobre um distrito (padrão: Jardim Helena), chuva menor no resto da mesma região
   replay      reproduz o maior alagamento real do histórico (camada silver) do bairro
 
 Exemplos:
-  python -m iot.simulador --cenario tempestade --bairro "Jardim Pantanal"
-  python -m iot.simulador --cenario replay --bairro "Vila Itaim" --intervalo 1
+  python -m iot.simulador --cenario tempestade --bairro "Jardim Helena"
+  python -m iot.simulador --cenario replay --bairro "Itaim Paulista" --intervalo 1
 """
 from __future__ import annotations
 
@@ -45,12 +45,17 @@ class Estacao:
                 "temp_c": round(23 - 0.15 * chuva + random.gauss(0, 0.5), 1)}
 
 
+def _da_regiao(alvo: str) -> list[str]:
+    """Temporais são locais: simulamos as estações da mesma região do distrito-alvo."""
+    return [b for b, c in BAIRROS.items() if c["regiao"] == BAIRROS[alvo]["regiao"]]
+
+
 def roteiro(cenario: str, alvo: str, passos: int) -> dict[str, list[dict]]:
     """Gera a sequência de leituras de cada estação."""
     if cenario == "replay":
         return _roteiro_replay(alvo)
     seq = {}
-    for bairro in BAIRROS:
+    for bairro in _da_regiao(alvo):
         est = Estacao(bairro)
         fator = 1.0 if bairro == alvo else random.uniform(0.2, 0.45)
         perfil = PERFIL_TEMPESTADE if cenario == "tempestade" else [0] * passos
@@ -63,7 +68,7 @@ def roteiro(cenario: str, alvo: str, passos: int) -> dict[str, list[dict]]:
 def _roteiro_replay(alvo: str) -> dict[str, list[dict]]:
     import pandas as pd
 
-    df = pd.read_csv(SILVER / "leituras.csv", parse_dates=["hora"])
+    df = pd.read_parquet(SILVER / "leituras.parquet")
     g = df[df["bairro"] == alvo].reset_index(drop=True)
     pico = int(g["nivel_cm"].idxmax())
     janela_ini = max(0, pico - 8)
@@ -71,7 +76,8 @@ def _roteiro_replay(alvo: str) -> dict[str, list[dict]]:
     print(f"Replay: maior evento de {alvo} em {g.at[pico, 'hora']:%d/%m/%Y %H:%M} "
           f"(nível máx. {g.at[pico, 'nivel_cm']} cm, cota {BAIRROS[alvo]['cota_cm']} cm)")
     seq = {}
-    for bairro, cfg in BAIRROS.items():
+    for bairro in _da_regiao(alvo):
+        cfg = BAIRROS[bairro]
         j = df[(df["bairro"] == bairro) & (df["hora"] >= hora_ini) & (df["hora"] <= hora_fim)]
         seq[bairro] = [{"estacao": cfg["estacao"], "chuva_mm": float(r.chuva_mm), "nivel_cm": float(r.nivel_cm),
                         "temp_c": None if pd.isna(r.temp_c) else float(r.temp_c)} for r in j.itertuples()]
@@ -107,7 +113,7 @@ def main():
     ap.add_argument("--api", default=os.getenv("API_URL", "http://127.0.0.1:8000"))
     ap.add_argument("--chave", default=os.getenv("DEVICE_API_KEY", "dev-device-key-troque"))
     ap.add_argument("--cenario", choices=["calmo", "tempestade", "replay"], default="tempestade")
-    ap.add_argument("--bairro", default="Jardim Pantanal", choices=list(BAIRROS))
+    ap.add_argument("--bairro", default="Jardim Helena", choices=list(BAIRROS))
     ap.add_argument("--passos", type=int, default=14)
     ap.add_argument("--intervalo", type=float, default=2.0, help="segundos entre ciclos (1 ciclo = 1 h)")
     ap.add_argument("--semente", type=int, default=7)

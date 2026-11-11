@@ -1,4 +1,4 @@
-name: CI/CD Alerta Cheia
+name: CI/CD Pluvia
 
 on:
   push:
@@ -45,11 +45,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build da imagem
-        run: docker build -t alerta-cheia:${{ github.sha }} .
+        run: docker build -t pluvia:${{ github.sha }} .
       - name: Subir container e checar /api/health
         run: |
           docker run -d --name api -p 8000:8000 \
-            -e ADMIN_PASSWORD=ci-senha-temporaria -e DEVICE_API_KEY=ci-chave alerta-cheia:${{ github.sha }}
+            -e ADMIN_PASSWORD=ci-senha-temporaria -e DEVICE_API_KEY=ci-chave pluvia:${{ github.sha }}
           for i in $(seq 1 30); do curl -fs localhost:8000/api/health && break; sleep 2; done
           curl -fs localhost:8000/api/health
           curl -fs -X POST localhost:8000/api/leituras -H "X-API-Key: ci-chave" -H "Content-Type: application/json" \
@@ -60,6 +60,6 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           IMG=ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          docker tag alerta-cheia:${{ github.sha }} $IMG:latest
-          docker tag alerta-cheia:${{ github.sha }} $IMG:${{ github.sha }}
+          docker tag pluvia:${{ github.sha }} $IMG:latest
+          docker tag pluvia:${{ github.sha }} $IMG:${{ github.sha }}
           docker push $IMG:latest && docker push $IMG:${{ github.sha }}

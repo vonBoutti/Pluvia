@@ -1,4 +1,4 @@
-"""Práticas de segurança do Alerta Cheia.
+"""Práticas de segurança do Pluvia.
 
 1. Autenticação JWT (HS256, expiração) para o painel da Defesa Civil.
 2. Senha do administrador guardada só como hash PBKDF2-SHA256 + salt; comparação em tempo constante.

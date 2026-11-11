@@ -1,5 +1,13 @@
 // Funções compartilhadas por todas as telas.
-const BAIRROS = ["Jardim Pantanal", "Vila Itaim", "Aricanduva", "Lapa de Baixo", "Ipiranga", "Pompeia"];
+const REGIOES = ["Centro", "Norte", "Sul", "Leste", "Oeste"];
+const NOME_REGIAO = { Centro: "Centro", Norte: "Zona Norte", Sul: "Zona Sul", Leste: "Zona Leste", Oeste: "Zona Oeste" };
+
+// Lista dos 96 distritos (vem da API uma vez e fica guardada)
+let _catalogo = null;
+function catalogo() {
+  if (!_catalogo) _catalogo = api("/api/catalogo");
+  return _catalogo;
+}
 const ROTULOS = { normal: "Normal", atencao: "Atenção", alerta: "Alerta", emergencia: "Emergência" };
 
 // Ícones (traço, herdam a cor do texto)
@@ -83,9 +91,16 @@ function num(n, casas = 0) {
   return Number(n).toLocaleString("pt-BR", { maximumFractionDigits: casas, minimumFractionDigits: casas });
 }
 
-function preencherBairros(select, comTodos = false) {
-  select.innerHTML = (comTodos ? '<option value="">Todos os bairros</option>' : "") +
-    BAIRROS.map((b) => `<option>${b}</option>`).join("");
+// Preenche um <select> com os 96 distritos agrupados por região (ordem alfabética)
+async function preencherBairros(select, comTodos = false) {
+  const lista = await catalogo();
+  const grupos = REGIOES.map((r) => {
+    const nomes = lista.filter((b) => b.regiao === r).map((b) => b.bairro).sort((a, b) => a.localeCompare(b, "pt-BR"));
+    return `<optgroup label="${NOME_REGIAO[r]}">${nomes.map((n) => `<option>${esc(n)}</option>`).join("")}</optgroup>`;
+  }).join("");
+  const valor = select.value;
+  select.innerHTML = (comTodos ? '<option value="">Todos os distritos</option>' : "") + grupos;
+  if (valor) select.value = valor;
 }
 
 // Lê uma cor do tema atual (para os gráficos acompanharem claro/escuro)
@@ -123,9 +138,9 @@ function montarTopo(atual) {
   document.getElementById("topo").innerHTML = `
     <a class="pular" href="#conteudo">Pular para o conteúdo</a>
     <div class="barra">
-      <a class="marca" href="index.html" aria-label="Alerta Cheia - início">
+      <a class="marca" href="index.html" aria-label="Pluvia - início">
         <span class="logo">${icone("gota")}</span>
-        <span>Alerta Cheia<small>Aviso de enchente antes da água chegar</small></span>
+        <span>Pluvia<small>Aviso de enchente antes da água chegar</small></span>
       </a>
       <nav class="menu" aria-label="Principal">
         ${paginas.map(([h, t, i]) => `<a href="${h}" ${h === atual ? 'aria-current="page"' : ""}>${icone(i)}${t}</a>`).join("")}

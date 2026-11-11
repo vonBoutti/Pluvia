@@ -205,3 +205,29 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 /* desempenho: pausa animações quando não estão visíveis */
 .pausado, .pausado *, .pausado *::before, .pausado::before { animation-play-state: paused !important; }
 .hero, .faixa-tela { contain: paint; }
+
+/* ---------- os 96 distritos: mapa de calor por zona ---------- */
+.outros-topo { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.link-btn { background: none; border: 0; padding: 0; font: inherit; font-size: .88rem; font-weight: 700; color: var(--brand); cursor: pointer; }
+.link-btn:hover { text-decoration: underline; }
+.todos { max-width: 1200px; margin: 0 auto; padding: 40px 16px 8px; }
+.todos-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.busca input { width: min(320px, 90vw); border-radius: 99px; padding-left: 16px; }
+.legenda-mini { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-size: .82rem; color: var(--muted); margin-bottom: 14px; }
+.legenda-mini span { display: inline-flex; align-items: center; gap: 6px; }
+.legenda-mini i { width: 12px; height: 12px; border-radius: 4px; background: var(--c); animation: none; }
+.mapa { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.regiao { padding: 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.regiao header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; }
+.regiao h3 { margin: 0; font-size: 1rem; }
+.regiao header span { font-size: .8rem; color: var(--muted); }
+.txt-alerta { color: var(--alerta); }
+.ladrilhos { display: grid; gap: 6px; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
+.ladrilho { display: flex; justify-content: space-between; align-items: center; gap: 6px; min-width: 0; padding: 7px 9px; border-radius: 9px; font: inherit; font-size: .78rem; cursor: pointer; text-align: left;
+  color: var(--text); background: color-mix(in srgb, var(--c) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); border-left: 4px solid var(--c); transition: transform .12s; }
+.ladrilho:hover { transform: translateY(-1px); }
+.ladrilho[aria-current="true"] { outline: 2px solid var(--brand); outline-offset: 1px; }
+.ladrilho .nome { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.ladrilho .pct { flex: none; font-weight: 800; color: var(--c); }
+.l-normal { --c: var(--normal); } .l-atencao { --c: var(--atencao); } .l-alerta { --c: var(--alerta); } .l-emergencia { --c: var(--emergencia); }
+@media (min-width: 760px) { .regiao.larga { grid-column: span 2; } }

@@ -15,7 +15,7 @@
     </style>
   </defs>
   <rect width="1120" height="640" fill="#ffffff"/>
-  <text x="560" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#13201b">Alerta Cheia — arquitetura geral</text>
+  <text x="560" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#13201b">Pluvia — arquitetura geral</text>
 
   <!-- Área 3: IoT -->
   <rect class="area" x="20" y="55" width="235" height="360"/>

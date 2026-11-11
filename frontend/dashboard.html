@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>Alerta Cheia — Indicadores</title>
+  <title>Pluvia — Indicadores</title>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <script src="js/tema.js"></script>
   <link rel="stylesheet" href="css/estilo.css">
@@ -19,7 +19,10 @@
     </div>
 
     <form class="cartao filtros" id="filtros">
-      <div class="campo"><label for="f-bairro">Bairro</label><select id="f-bairro"></select></div>
+      <div class="campo"><label for="f-regiao">Região</label><select id="f-regiao"><option value="">Cidade inteira</option>
+        <option value="Centro">Centro</option><option value="Norte">Zona Norte</option><option value="Sul">Zona Sul</option>
+        <option value="Leste">Zona Leste</option><option value="Oeste">Zona Oeste</option></select></div>
+      <div class="campo"><label for="f-bairro">Distrito</label><select id="f-bairro"></select></div>
       <div class="campo"><label for="f-inicio">De</label><input type="date" id="f-inicio"></div>
       <div class="campo"><label for="f-fim">Até</label><input type="date" id="f-fim"></div>
       <div class="acoes"><button class="prim" type="submit">Aplicar</button><button class="sec" type="button" id="limpar">Limpar</button></div>
@@ -33,14 +36,14 @@
 
     <div class="duas">
       <section class="cartao"><h2>Quando chove mais, alaga mais?</h2><p class="ajuda" style="margin:-6px 0 10px">Chuva e alagamentos por mês</p><div class="grafico"><canvas id="g-mensal" role="img" aria-label="Chuva e alagamentos por mês"></canvas></div></section>
-      <section class="cartao"><h2>Quais bairros drenam pior?</h2><p class="ajuda" style="margin:-6px 0 10px">Alagamentos a cada 100 mm de chuva: quanto maior, pior</p><div class="grafico"><canvas id="g-bairros" role="img" aria-label="Índice de vulnerabilidade por bairro"></canvas></div></section>
+      <section class="cartao"><h2>Quais distritos drenam pior?</h2><p class="ajuda" style="margin:-6px 0 10px">Os 15 piores: alagamentos a cada 100 mm de chuva</p><div class="grafico"><canvas id="g-bairros" role="img" aria-label="Índice de vulnerabilidade por bairro"></canvas></div></section>
       <section class="cartao"><h2>Como a chuva variou dia a dia</h2><p class="ajuda" style="margin:-6px 0 10px">Chuva diária e tendência (média de 7 dias)</p><div class="grafico"><canvas id="g-diario" role="img" aria-label="Chuva diária com média móvel"></canvas></div></section>
       <section class="cartao"><h2>O que os moradores relatam</h2><p class="ajuda" style="margin:-6px 0 10px">Relatos por tipo e urgência</p><div class="grafico"><canvas id="g-relatos" role="img" aria-label="Relatos por categoria e urgência"></canvas></div></section>
     </div>
 
     <section class="cartao secao">
-      <h2>Ranking de bairros</h2>
-      <div class="tabela-rolagem"><table id="t-ranking"></table></div>
+      <h2>Ranking de distritos</h2>
+      <div class="tabela-rolagem" style="max-height:440px;overflow-y:auto"><table id="t-ranking"></table></div>
     </section>
 
     <section class="cartao secao">
@@ -49,7 +52,7 @@
       <div class="tabela-rolagem"><table class="comparacao" id="t-ia"></table></div>
     </section>
   </main>
-  <footer>Alerta Cheia · dados sintéticos gerados para demonstração</footer>
+  <footer>Pluvia · dados sintéticos gerados para demonstração</footer>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script defer src="js/comum.js"></script>
   <script defer src="js/dashboard.js"></script>

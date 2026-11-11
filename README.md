@@ -1,4 +1,4 @@
-# Alerta Cheia: CitizenTech de previsão de alagamentos
+# Pluvia: CitizenTech de previsão de alagamentos
 
 **Global Solution 2026/2 · FIAP · Engenharia de Software (4ESOA)**
 
@@ -7,12 +7,14 @@ próximas 3 horas, e um agente de automação avisa a população por SMS e orie
 Civil. O cidadão também relata problemas em texto livre, que a IA classifica e encaminha
 em milissegundos. Um dashboard mostra ao gestor onde investir em prevenção.
 
-> No teste com 1 ano de dados nunca vistos pelo modelo, a IA avisou **81% dos alagamentos com 1 h ou mais de
-> antecedência** (régua atual: 56%), com **75 min** de antecedência média (régua: 36 min) e **1,6 falso alarme/mês**
-> (régua: 4,5).
+Cobre **os 96 distritos da cidade de São Paulo**, com uma estação por distrito.
+
+> No teste com 1 ano de dados nunca vistos pelo modelo (356 alagamentos nos 96 distritos), a IA avisou **96% dos
+> alagamentos com 1 h ou mais de antecedência** (régua atual: 64%), com **92 min** de antecedência média (régua: 39 min)
+> e **menos da metade dos falsos alarmes** (13 vs. 28 por mês na cidade toda).
 
 - **Vídeo pitch:** `<COLE AQUI O LINK PÚBLICO>`
-- **PDF de entregáveis:** [`docs/Alerta_Cheia_Entregaveis.pdf`](docs/Alerta_Cheia_Entregaveis.pdf)
+- **PDF de entregáveis:** [`docs/Pluvia_Entregaveis.pdf`](docs/Pluvia_Entregaveis.pdf)
 - **Integrantes:** ver [`integrantes.txt`](integrantes.txt)
 - **ODS:** 11 (cidades resilientes), 13 (clima), 9 (infraestrutura), 10 (desigualdades)
 
@@ -97,7 +99,7 @@ Depois abra http://127.0.0.1:8000 (as 6 telas: comece pela "Risco agora" e pela 
 Em outro terminal, simule as estações IoT (cada ciclo representa 1 hora):
 
 ```bash
-python -m iot.simulador --cenario tempestade --bairro "Jardim Pantanal"
+python -m iot.simulador --cenario tempestade --bairro "Jardim Helena"
 ```
 
 Outros cenários: `--cenario calmo` e `--cenario replay` (reproduz o maior alagamento do histórico).
@@ -128,7 +130,7 @@ docker compose --profile demo up --build
 
 ### IoT no Wokwi
 1. Em https://wokwi.com, crie um projeto **ESP32**.
-2. Cole `iot/estacao_alerta_cheia/estacao_alerta_cheia.ino` e `diagram.json`, e adicione a biblioteca *DHT sensor library for ESPx*.
+2. Cole `iot/estacao_pluvia/estacao_pluvia.ino` e `diagram.json`, e adicione a biblioteca *DHT sensor library for ESPx*.
 3. Ajuste `API_URL` para o IP da sua máquina (exige o Wokwi Private Gateway) ou apenas observe o alarme local: mova o slider de distância do HC-SR04 (menor distância = córrego mais cheio) e clique no botão verde para simular chuva.
 
 ### Prints das telas (opcional)

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <title>Alerta Cheia — Risco agora</title>
+  <title>Pluvia — Risco agora</title>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <script src="js/tema.js"></script>
   <link rel="stylesheet" href="css/estilo.css">
@@ -54,10 +54,29 @@
       </div>
 
       <div class="outros surgir d4">
-        <h2>Outros bairros agora</h2>
+        <div class="outros-topo"><h2>Mais críticos agora</h2><button type="button" class="link-btn" id="ver-mapa">Ver os 96 distritos →</button></div>
         <div class="chips" id="chips"></div>
       </div>
       <div class="rolar-dica"><button type="button" id="ver-historico"></button></div>
+    </section>
+
+    <section id="todos" class="todos">
+      <div class="todos-topo">
+        <div>
+          <div class="eyebrow">Mapa de calor</div>
+          <h2 class="titulo-sec" style="margin:0">Toda a cidade agora</h2>
+          <p class="ajuda" id="mapa-total" style="margin:4px 0 0"></p>
+        </div>
+        <label class="busca"><span class="oculto">Buscar distrito</span>
+          <input type="search" id="busca" placeholder="Buscar distrito... ex.: Penha" autocomplete="off">
+        </label>
+      </div>
+      <div class="legenda-mini" aria-hidden="true">
+        <span><i class="l-normal"></i>Normal</span><span><i class="l-atencao"></i>Atenção</span>
+        <span><i class="l-alerta"></i>Alerta</span><span><i class="l-emergencia"></i>Emergência</span>
+        <span class="ajuda">· o número é quanto o córrego já encheu</span>
+      </div>
+      <div id="mapa" class="mapa"></div>
     </section>
 
     <section id="detalhe" style="max-width:1200px;margin:0 auto;padding:24px 16px 56px">
@@ -68,7 +87,7 @@
       </div>
     </section>
   </main>
-  <footer>Alerta Cheia · CitizenTech — Global Solution 2026/2 · dados de demonstração</footer>
+  <footer>Pluvia · CitizenTech — Global Solution 2026/2 · dados de demonstração</footer>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <script defer src="js/comum.js"></script>
   <script defer src="js/painel.js"></script>

@@ -1,8 +1,8 @@
 services:
   api:
     build: .
-    image: alerta-cheia:latest
-    container_name: alerta-cheia-api
+    image: pluvia:latest
+    container_name: pluvia-api
     env_file: .env
     ports:
       - "8000:8000"
@@ -12,7 +12,7 @@ services:
 
   # Estações IoT simuladas. Suba com:  docker compose --profile demo up
   simulador:
-    image: alerta-cheia:latest
+    image: pluvia:latest
     depends_on:
       api:
         condition: service_healthy

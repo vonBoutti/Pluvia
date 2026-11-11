@@ -28,7 +28,6 @@ const MENSAGENS = {
 };
 
 const sel = document.getElementById("meu-bairro");
-preencherBairros(sel);
 document.getElementById("ic-local").innerHTML = icone("mapa");
 document.getElementById("cta-sms").innerHTML = `${icone("sino")} Avisar meu celular`;
 document.getElementById("cta-relatar").innerHTML = `${icone("mensagem")} Relatar problema`;
@@ -81,7 +80,7 @@ function contarAte(el, alvo) {
 
 function render(trocou = false) {
   if (!dados.length) return;
-  const b = dados.find((x) => x.bairro === escolhido) || dados[0];
+  const b = dados.find((x) => x.bairro === escolhido) || porCriticidade(dados)[0];
   escolhido = b.bairro;
   sel.value = b.bairro;
   const nivel = b.risco?.nivel ?? "normal";
@@ -110,8 +109,9 @@ function render(trocou = false) {
   document.getElementById("frase").innerHTML =
     `${m.frase(esc(b.bairro))}<br><span style="font-size:.92em">Chance de alagar nas próximas 3 h: <b>${prob}%</b> · Chuva agora: <b>${ult ? num(ult.chuva_mm, 1) : "-"} mm/h</b> · atualizado às ${hora}</span>`;
 
-  const outros = [...dados].sort((a, c) => ORDEM[a.risco?.nivel ?? "normal"] - ORDEM[c.risco?.nivel ?? "normal"]);
-  document.getElementById("chips").innerHTML = outros.map((o) => {
+  // os 8 distritos mais críticos agora (o escolhido sempre aparece primeiro)
+  const criticos = porCriticidade(dados).filter((o) => o.bairro !== b.bairro).slice(0, 7);
+  document.getElementById("chips").innerHTML = [b, ...criticos].map((o) => {
     const n = o.risco?.nivel ?? "normal";
     const p = Math.round(o.nivel_pct_cota ?? 0);
     return `<button type="button" class="chip" data-b="${esc(o.bairro)}" aria-current="${o.bairro === escolhido}"
@@ -121,7 +121,39 @@ function render(trocou = false) {
       <span class="mini"><span style="width:${Math.min(p, 100)}%;background:var(--${COR_VAR[n]})"></span></span>
     </button>`;
   }).join("");
+  renderMapa();
   document.getElementById("ver-historico").innerHTML = `Ver as últimas 24 horas de ${esc(b.bairro)} ${icone("seta")}`;
+}
+
+function criticidade(o) {
+  return ORDEM[o.risco?.nivel ?? "normal"] * 1000 - (o.risco?.probabilidade ?? 0) * 100 - (o.nivel_pct_cota ?? 0) / 10;
+}
+function porCriticidade(lista) {
+  return [...lista].sort((a, c) => criticidade(a) - criticidade(c));
+}
+const semAcento = (t) => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+// Mapa de calor: os 96 distritos agrupados por zona, coloridos pelo risco
+function renderMapa() {
+  const termo = semAcento((document.getElementById("busca").value || "").trim());
+  let visiveis = 0;
+  document.getElementById("mapa").innerHTML = ["Leste", "Sul", "Norte", "Oeste", "Centro"].map((r) => {
+    const da = dados.filter((o) => o.regiao === r).sort((a, c) => a.bairro.localeCompare(c.bairro, "pt-BR"));
+    const filtrados = termo ? da.filter((o) => semAcento(o.bairro).includes(termo)) : da;
+    visiveis += filtrados.length;
+    if (!filtrados.length) return "";
+    const emRisco = da.filter((o) => ["alerta", "emergencia"].includes(o.risco?.nivel)).length;
+    return `<section class="regiao${r === "Leste" && !termo ? " larga" : ""}">
+      <header><h3>${NOME_REGIAO[r]}</h3><span>${da.length} distritos${emRisco ? ` · <b class="txt-alerta">${emRisco} em alerta</b>` : ""}</span></header>
+      <div class="ladrilhos">${filtrados.map((o) => {
+        const n = o.risco?.nivel ?? "normal";
+        const p = Math.round(o.nivel_pct_cota ?? 0);
+        return `<button type="button" class="ladrilho l-${n}" data-b="${esc(o.bairro)}" aria-current="${o.bairro === escolhido}"
+                  title="${esc(o.bairro)}: ${ROTULOS[n]}, ${p}% do limite" aria-label="${esc(o.bairro)}: ${ROTULOS[n]}, córrego em ${p}% do limite">
+          <span class="nome">${esc(o.bairro)}</span><span class="pct">${p}%</span></button>`;
+      }).join("")}</div></section>`;
+  }).join("") || `<p class="ajuda">Nenhum distrito encontrado para "${esc(termo)}".</p>`;
+  document.getElementById("mapa-total").textContent = termo ? `${visiveis} encontrados` : `${dados.length} distritos monitorados`;
 }
 
 async function atualizar() {
@@ -132,7 +164,7 @@ async function atualizar() {
     assinatura = sig;
     dados = novos;
     if (!escolhido) { // primeira visita: mostra o bairro com maior risco
-      escolhido = [...dados].sort((a, c) => ORDEM[a.risco?.nivel ?? "normal"] - ORDEM[c.risco?.nivel ?? "normal"])[0].bairro;
+      escolhido = porCriticidade(dados)[0].bairro;
     }
     render();
     const atual = dados.find((x) => x.bairro === escolhido)?.ultima_leitura?.id ?? null;
@@ -191,6 +223,15 @@ document.getElementById("chips").addEventListener("click", (ev) => { // um únic
   const c = ev.target.closest(".chip");
   if (c) escolher(c.dataset.b);
 });
+document.getElementById("mapa").addEventListener("click", (ev) => {
+  const c = ev.target.closest(".ladrilho");
+  if (!c) return;
+  escolher(c.dataset.b);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+document.getElementById("busca").addEventListener("input", () => renderMapa());
+document.getElementById("ver-mapa").addEventListener("click", () =>
+  document.getElementById("todos").scrollIntoView({ behavior: "smooth" }));
 document.addEventListener("temamudou", () => { if (ultimoHistorico) desenharGrafico(ultimoHistorico, true); });
 pausarForaDaTela(document.querySelector(".hero"));
-repetir(atualizar, 5000);
+preencherBairros(sel).then(() => repetir(atualizar, 5000));

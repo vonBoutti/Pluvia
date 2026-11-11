@@ -1,7 +1,7 @@
 """Pipeline do data lake: BRONZE (bruto) -> SILVER (limpo) -> GOLD (analítico).
 
-bronze/  leituras_iot.jsonl, ocorrencias_defesa_civil.csv, relatos_cidadaos.csv
-silver/  leituras.csv (horário, limpo, com features), ocorrencias.csv, relatos.csv
+bronze/  leituras_iot.jsonl.gz (96 estações, ~1,7 mi linhas), ocorrencias_defesa_civil.csv, relatos_cidadaos.csv
+silver/  leituras.parquet (horário, limpo, com features; formato colunar), ocorrencias.csv, relatos.csv
 gold/    diario_bairro.csv, mensal_bairro.csv, dim_bairro.csv
          qualidade.json (relatório de qualidade de dados)
 
@@ -9,8 +9,10 @@ Uso:  python -m bigdata.pipeline
 """
 from __future__ import annotations
 
+import gzip
 import json
 import unicodedata
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -18,6 +20,29 @@ import pandas as pd
 from bigdata.catalogo import BAIRROS, BRONZE, ESTACAO_PARA_BAIRRO, GOLD, HORIZONTE_ALERTA_H, SILVER
 
 FAIXAS_VALIDAS = {"chuva_mm": (0, 200), "nivel_cm": (0, 600), "temp_c": (-10, 50)}
+
+
+# ---------------------------------------------------------------- BRONZE ---
+def ler_bronze_iot(caminho: Path) -> pd.DataFrame:
+    """Lê o JSON Lines comprimido linha a linha (rápido e com pouca memória).
+
+    Linhas corrompidas são contadas e descartadas, não derrubam o pipeline.
+    """
+    dev, ts, chuva, nivel, temp = [], [], [], [], []
+    with gzip.open(caminho, "rt", encoding="utf-8") as f:
+        for linha in f:
+            try:
+                r = json.loads(linha)
+                p = r["payload"]
+            except (ValueError, KeyError):
+                continue
+            dev.append(r.get("device_id"))
+            ts.append(r.get("ts"))
+            chuva.append(p.get("chuva_mm"))
+            nivel.append(p.get("nivel_cm"))
+            temp.append(p.get("temp_c"))
+    return pd.DataFrame({"device_id": dev, "ts": ts, "payload.chuva_mm": chuva,
+                         "payload.nivel_cm": nivel, "payload.temp_c": temp})
 
 
 # ---------------------------------------------------------------- SILVER ----
@@ -74,8 +99,8 @@ def adicionar_features(df: pd.DataFrame) -> pd.DataFrame:
     """Engenharia de atributos usada pela IA (calculada por estação)."""
     df = df.sort_values(["estacao", "hora"]).copy()
     g = df.groupby("estacao")
-    df["chuva_3h"] = g["chuva_mm"].transform(lambda s: s.rolling(3, min_periods=1).sum()).round(1)
-    df["chuva_24h"] = g["chuva_mm"].transform(lambda s: s.rolling(24, min_periods=1).sum()).round(1)
+    df["chuva_3h"] = g["chuva_mm"].rolling(3, min_periods=1).sum().reset_index(level=0, drop=True).round(1)
+    df["chuva_24h"] = g["chuva_mm"].rolling(24, min_periods=1).sum().reset_index(level=0, drop=True).round(1)
     df["delta_nivel_1h"] = g["nivel_cm"].diff().fillna(0).round(1)
     df["nivel_pct_cota"] = (df["nivel_cm"] / df["cota_cm"]).round(3)
     df["hora_dia"] = df["hora"].dt.hour
@@ -142,13 +167,12 @@ def executar() -> dict:
     SILVER.mkdir(parents=True, exist_ok=True)
     GOLD.mkdir(parents=True, exist_ok=True)
 
-    bruto = pd.json_normalize(pd.read_json(BRONZE / "leituras_iot.jsonl", lines=True, dtype=False)
-                              .to_dict(orient="records"))
+    bruto = ler_bronze_iot(BRONZE / "leituras_iot.jsonl.gz")
     leituras, qualidade = limpar_leituras(bruto)
     ocorr = pd.read_csv(BRONZE / "ocorrencias_defesa_civil.csv")
     relatos = limpar_relatos(pd.read_csv(BRONZE / "relatos_cidadaos.csv"))
 
-    leituras.to_csv(SILVER / "leituras.csv", index=False)
+    leituras.to_parquet(SILVER / "leituras.parquet", index=False)
     ocorr.to_csv(SILVER / "ocorrencias.csv", index=False)
     relatos.to_csv(SILVER / "relatos.csv", index=False)
 

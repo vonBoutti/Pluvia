@@ -1,7 +1,7 @@
 GLOBAL SOLUTION 2026/2 - CITIZENTECH
 Engenharia de Software - 4º ano - Turma 4ESOA
 
-Projeto: Alerta Cheia - previsão de alagamentos com IoT + IA e alerta ao cidadão
+Projeto: Pluvia - previsão de alagamentos com IoT + IA e alerta ao cidadão
 
 Nome do grupo: <PREENCHER>
 

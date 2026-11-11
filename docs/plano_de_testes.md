@@ -1,4 +1,4 @@
-# Plano de testes — Alerta Cheia
+# Plano de testes — Pluvia
 
 Execução automatizada: `pytest` (local) e GitHub Actions a cada push (`.github/workflows/ci.yml`).
 Ambiente de teste isolado: banco SQLite temporário e credenciais próprias (`tests/conftest.py`).

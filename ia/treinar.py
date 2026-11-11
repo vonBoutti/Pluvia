@@ -1,4 +1,4 @@
-"""Treina e avalia os dois modelos de IA do Alerta Cheia.
+"""Treina e avalia os dois modelos de IA do Pluvia.
 
 1. Previsão de alagamento (próximas 3 h) a partir dos sensores IoT
    -> RandomForest sobre features da camada silver.
@@ -29,7 +29,7 @@ from sklearn.pipeline import FeatureUnion, Pipeline
 
 from bigdata.catalogo import MODELOS, RAIZ, SILVER
 from bigdata.pipeline import normalizar_texto
-from ia.features import FEATURES
+from ia.features import FEATURES, candidato
 
 REGRA_ATUAL_PCT = 0.8  # régua manual: alarme com 80% da cota
 
@@ -99,37 +99,49 @@ def escolher_limiar(treino: pd.DataFrame) -> tuple[float, dict]:
 
 
 def _novo_modelo() -> RandomForestClassifier:
-    return RandomForestClassifier(n_estimators=300, max_depth=8, min_samples_leaf=5,
+    return RandomForestClassifier(n_estimators=150, max_depth=8, min_samples_leaf=5,
                                   random_state=42, n_jobs=-1)
 
 
 def treinar_risco() -> dict:
-    df = pd.read_csv(SILVER / "leituras.csv", parse_dates=["hora"])
+    df = pd.read_parquet(SILVER / "leituras.parquet")
     df = df[df["alagado"] == 0]  # prever o FUTURO: só momentos ainda sem transbordamento
     # 1º ano treina, 2º ano testa: os dois períodos têm uma estação chuvosa inteira
     corte = df["hora"].min() + pd.DateOffset(months=12)
     treino, teste = df[df["hora"] < corte], df[df["hora"] >= corte]
 
-    limiar, grade_f1 = escolher_limiar(treino)
+    # a IA só é treinada nas horas "candidatas" (com chuva recente ou córrego alto)
+    treino_c = treino[candidato(treino)]
+    limiar, grade_f1 = escolher_limiar(treino_c)
     modelo = _novo_modelo()
-    modelo.fit(treino[FEATURES], treino["alagamento_prox_3h"])
+    modelo.fit(treino_c[FEATURES], treino_c["alagamento_prox_3h"])
+    modelo.set_params(n_jobs=1)  # na API a previsão é de 1 linha: paralelizar só atrasa
     joblib.dump({"modelo": modelo, "features": FEATURES, "limiar": limiar}, MODELOS / "modelo_risco.joblib")
 
-    proba = modelo.predict_proba(teste[FEATURES])[:, 1]
+    def prever_lote(d: pd.DataFrame) -> np.ndarray:
+        p = np.zeros(len(d))
+        m = candidato(d).to_numpy()
+        if m.any():
+            p[m] = modelo.predict_proba(d.loc[m, FEATURES])[:, 1]
+        return p
+
+    proba = prever_lote(teste)
     pred_ia = (proba >= limiar).astype(int)
     pred_regra = (teste["nivel_pct_cota"] >= REGRA_ATUAL_PCT).astype(int).to_numpy()
     y = teste["alagamento_prox_3h"].to_numpy()
 
     # antecedência medida na série completa do período de teste (inclui horas alagadas)
-    completo = pd.read_csv(SILVER / "leituras.csv", parse_dates=["hora"])
+    completo = pd.read_parquet(SILVER / "leituras.parquet")
     completo = completo[completo["hora"] >= corte].reset_index(drop=True)
-    p_full = modelo.predict_proba(completo[FEATURES])[:, 1]
+    p_full = prever_lote(completo)
     importancias = sorted(zip(FEATURES, modelo.feature_importances_, strict=True), key=lambda x: -x[1])
 
     return {
         "periodo_treino": f"{treino['hora'].min():%Y-%m-%d} a {treino['hora'].max():%Y-%m-%d}",
         "periodo_teste": f"{teste['hora'].min():%Y-%m-%d} a {teste['hora'].max():%Y-%m-%d}",
-        "amostras_treino": int(len(treino)), "amostras_teste": int(len(teste)),
+        "estacoes": int(df["estacao"].nunique()),
+        "amostras_treino": int(len(treino)), "amostras_treino_candidatas": int(len(treino_c)),
+        "amostras_teste": int(len(teste)),
         "positivos_teste": int(y.sum()),
         "limiar_alerta": limiar,
         "f1_validacao_cruzada_por_limiar": grade_f1,

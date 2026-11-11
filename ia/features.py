@@ -13,6 +13,15 @@ from typing import Sequence
 FEATURES = ["chuva_mm", "chuva_3h", "chuva_24h", "nivel_cm", "delta_nivel_1h", "nivel_pct_cota"]
 
 
+def candidato(f):
+    """Só vale rodar a IA se choveu nas últimas 24 h ou o córrego já passou de 50% do limite.
+
+    Sem chuva e com córrego baixo, o risco nas próximas 3 h é zero por definição.
+    Funciona com dict (API) ou DataFrame (treino).
+    """
+    return (f["chuva_24h"] > 0) | (f["nivel_pct_cota"] >= 0.5)
+
+
 def montar_features(historico: Sequence[dict], cota_cm: float) -> dict:
     """`historico` em ordem cronológica; o último item é a leitura atual.
 

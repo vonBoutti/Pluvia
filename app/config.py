@@ -5,7 +5,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 
-DB_PATH = Path(os.getenv("DB_PATH", RAIZ / "app" / "alerta_cheia.db"))
+DB_PATH = Path(os.getenv("DB_PATH", RAIZ / "app" / "pluvia.db"))
 # Se SECRET_KEY não for definida, gera uma aleatória a cada inicialização (tokens expiram no restart).
 SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_urlsafe(32)
 ADMIN_USER = os.getenv("ADMIN_USER", "defesacivil")

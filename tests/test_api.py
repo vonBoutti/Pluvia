@@ -53,7 +53,7 @@ def test_ct06_fluxo_tempestade_alerta_antes_de_transbordar(cliente, auth):
 
     from iot.simulador import Estacao
     random.seed(7)
-    est = Estacao("Jardim Pantanal")
+    est = Estacao("Jardim Helena")
     primeiro_alerta = None
     for chuva in TEMPESTADE:
         leitura = est.passo(chuva)
@@ -63,11 +63,11 @@ def test_ct06_fluxo_tempestade_alerta_antes_de_transbordar(cliente, auth):
     assert primeiro_alerta is not None, "nenhum alerta emitido"
     assert primeiro_alerta["nivel_cm"] < 180, "alerta deveria sair antes do transbordamento"
     ativos = cliente.get("/api/alertas?ativos=true").json()
-    assert any(a["bairro"] == "Jardim Pantanal" for a in ativos)
+    assert any(a["bairro"] == "Jardim Helena" for a in ativos)
 
 
 def test_ct07_triagem_ia_relato_grave(cliente):
-    r = cliente.post("/api/relatos", json={"bairro": "Vila Itaim",
+    r = cliente.post("/api/relatos", json={"bairro": "Itaim Paulista",
                                            "texto": "A água invadiu as casas e tem uma família ilhada no telhado"})
     assert r.status_code == 201
     t = r.json()["triagem"]
@@ -76,7 +76,7 @@ def test_ct07_triagem_ia_relato_grave(cliente):
 
 
 def test_ct08_relato_com_html_rejeitado(cliente):
-    r = cliente.post("/api/relatos", json={"bairro": "Pompeia", "texto": "<script>alert('x')</script> rua alagada"})
+    r = cliente.post("/api/relatos", json={"bairro": "Perdizes", "texto": "<script>alert('x')</script> rua alagada"})
     assert r.status_code == 422
     r = cliente.post("/api/relatos", json={"bairro": "Bairro Inexistente", "texto": "rua alagada perto da escola"})
     assert r.status_code == 422
@@ -119,17 +119,17 @@ def test_ct11_pipeline_limpa_dados_brutos():
 
 def test_ct12_regras_do_agente():
     alto = {"nivel": "alerta", "probabilidade": 0.6}
-    assert decidir("Pompeia", alto, None, 0)["acao"] == "criar"                     # R1
-    assert decidir("Pompeia", alto, "alerta", 0)["acao"] == "manter"                # R2 sem spam
-    assert decidir("Pompeia", {"nivel": "emergencia", "probabilidade": .9}, "alerta", 0)["acao"] == "criar"  # R3
-    assert decidir("Pompeia", {"nivel": "normal", "probabilidade": .0}, None, 2)["acao"] == "criar"  # R4
-    assert decidir("Pompeia", {"nivel": "normal", "probabilidade": .0}, "alerta", 0)["acao"] == "encerrar"  # R5
-    assert len(decidir("Pompeia", alto, None, 0)["mensagem"]) <= 160               # R6 SMS
+    assert decidir("Perdizes", alto, None, 0)["acao"] == "criar"                     # R1
+    assert decidir("Perdizes", alto, "alerta", 0)["acao"] == "manter"                # R2 sem spam
+    assert decidir("Perdizes", {"nivel": "emergencia", "probabilidade": .9}, "alerta", 0)["acao"] == "criar"  # R3
+    assert decidir("Perdizes", {"nivel": "normal", "probabilidade": .0}, None, 2)["acao"] == "criar"  # R4
+    assert decidir("Perdizes", {"nivel": "normal", "probabilidade": .0}, "alerta", 0)["acao"] == "encerrar"  # R5
+    assert len(decidir("Perdizes", alto, None, 0)["mensagem"]) <= 160               # R6 SMS
 
 
 def test_ct13_dashboard_filtros(cliente):
     geral = cliente.get("/api/dashboard").json()
-    filtrado = cliente.get("/api/dashboard?bairro=Pompeia&inicio=2025-01-01&fim=2025-03-31").json()
+    filtrado = cliente.get("/api/dashboard?bairro=Perdizes&inicio=2025-01-01&fim=2025-03-31").json()
     assert len(geral["kpis"]) >= 3
     assert filtrado["kpis"]["chuva_acumulada_mm"] < geral["kpis"]["chuva_acumulada_mm"]
     assert all("2025-01" <= m["mes"] <= "2025-03" for m in filtrado["mensal"])
@@ -141,4 +141,4 @@ def test_ct14_cabecalhos_de_seguranca_e_monitoramento(cliente):
     assert r.headers["X-Frame-Options"] == "DENY"
     assert "default-src 'self'" in r.headers["Content-Security-Policy"]
     m = cliente.get("/metrics").text
-    assert "alerta_cheia_requests_total" in m
+    assert "pluvia_requests_total" in m

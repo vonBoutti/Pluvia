@@ -1,4 +1,4 @@
-"""API do Alerta Cheia — FastAPI.
+"""API do Pluvia — FastAPI.
 
 Rodar:  uvicorn app.main:app --reload     (documentação interativa em /docs)
 """
@@ -80,7 +80,7 @@ async def ciclo_de_vida(_: FastAPI):
     yield
 
 
-app = FastAPI(title="Alerta Cheia API", version=VERSAO, lifespan=ciclo_de_vida,
+app = FastAPI(title="Pluvia API", version=VERSAO, lifespan=ciclo_de_vida,
               description="CitizenTech: previsão de alagamentos com IoT + IA e alerta ao cidadão.")
 app.add_middleware(GZipMiddleware, minimum_size=1000)  # comprime respostas grandes (ex.: dashboard)
 
@@ -130,13 +130,13 @@ def metricas_prometheus():
     """Formato Prometheus, para coleta por Prometheus/Grafana."""
     m = metricas()
     linhas = [
-        "# TYPE alerta_cheia_uptime_seconds gauge", f"alerta_cheia_uptime_seconds {m['uptime_s']}",
-        "# TYPE alerta_cheia_requests_total counter", f"alerta_cheia_requests_total {m['requisicoes_total']}",
-        "# TYPE alerta_cheia_latency_avg_ms gauge", f"alerta_cheia_latency_avg_ms {m['latencia_media_ms']}",
-        "# TYPE alerta_cheia_alertas_ativos gauge", f"alerta_cheia_alertas_ativos {m['negocio']['alertas_ativos']}",
-        "# TYPE alerta_cheia_leituras_total counter", f"alerta_cheia_leituras_total {m['negocio']['leituras']}",
+        "# TYPE pluvia_uptime_seconds gauge", f"pluvia_uptime_seconds {m['uptime_s']}",
+        "# TYPE pluvia_requests_total counter", f"pluvia_requests_total {m['requisicoes_total']}",
+        "# TYPE pluvia_latency_avg_ms gauge", f"pluvia_latency_avg_ms {m['latencia_media_ms']}",
+        "# TYPE pluvia_alertas_ativos gauge", f"pluvia_alertas_ativos {m['negocio']['alertas_ativos']}",
+        "# TYPE pluvia_leituras_total counter", f"pluvia_leituras_total {m['negocio']['leituras']}",
     ]
-    linhas += [f'alerta_cheia_http_status_total{{code="{k}"}} {v}' for k, v in m["por_status"].items()]
+    linhas += [f'pluvia_http_status_total{{code="{k}"}} {v}' for k, v in m["por_status"].items()]
     return "\n".join(linhas) + "\n"
 
 
@@ -154,21 +154,33 @@ def _ultima_leitura(con, bairro: str):
     return dict(r) if r else None
 
 
+@app.get("/api/catalogo", tags=["cidadão"])
+def catalogo():
+    """Lista fixa dos 96 distritos (para menus e buscas). Pode ser guardada em cache pelo navegador."""
+    return [{"bairro": b, "regiao": c["regiao"], "estacao": c["estacao"], "cota_cm": c["cota_cm"],
+             "populacao": c["populacao"]} for b, c in BAIRROS.items()]
+
+
 @app.get("/api/bairros", tags=["cidadão"])
 def listar_bairros():
-    out = []
+    # 2 consultas no total (e não 2 por bairro): última leitura e alerta ativo de todos de uma vez
     with db.transacao() as con:
-        for bairro, cfg in BAIRROS.items():
-            ult = _ultima_leitura(con, bairro)
-            alerta = con.execute("SELECT nivel, mensagem, criado_em FROM alertas WHERE bairro=? AND ativo=1 "
-                                 "ORDER BY id DESC LIMIT 1", (bairro,)).fetchone()
-            out.append({
-                "bairro": bairro, "estacao": cfg["estacao"], "cota_cm": cfg["cota_cm"],
-                "ultima_leitura": ult,
-                "nivel_pct_cota": round(ult["nivel_cm"] / cfg["cota_cm"] * 100, 1) if ult else None,
-                "risco": {"nivel": ult["nivel_risco"], "probabilidade": ult["probabilidade"]} if ult else None,
-                "alerta_ativo": dict(alerta) if alerta else None,
-            })
+        ultimas = {r["bairro"]: dict(r) for r in con.execute(
+            "SELECT l.* FROM leituras l JOIN (SELECT MAX(id) AS id FROM leituras GROUP BY bairro) m ON l.id = m.id")}
+        alertas = {r["bairro"]: dict(r) for r in con.execute(
+            "SELECT a.bairro, a.nivel, a.mensagem, a.criado_em FROM alertas a "
+            "JOIN (SELECT MAX(id) AS id FROM alertas WHERE ativo=1 GROUP BY bairro) m ON a.id = m.id")}
+    out = []
+    for bairro, cfg in BAIRROS.items():
+        ult = ultimas.get(bairro)
+        alerta = alertas.get(bairro)
+        out.append({
+            "bairro": bairro, "regiao": cfg["regiao"], "estacao": cfg["estacao"], "cota_cm": cfg["cota_cm"],
+            "ultima_leitura": ult,
+            "nivel_pct_cota": round(ult["nivel_cm"] / cfg["cota_cm"] * 100, 1) if ult else None,
+            "risco": {"nivel": ult["nivel_risco"], "probabilidade": ult["probabilidade"]} if ult else None,
+            "alerta_ativo": alerta,
+        })
     return out
 
 
@@ -298,11 +310,14 @@ def reset_demo(usuario: str = Depends(exigir_token)):
 
 # ------------------------------------------------------------ big data/IA ----
 @app.get("/api/dashboard", tags=["big data"])
-def dashboard(bairro: str | None = None, inicio: str | None = None, fim: str | None = None):
+def dashboard(bairro: str | None = None, inicio: str | None = None, fim: str | None = None,
+              regiao: str | None = None):
     if bairro and bairro not in BAIRROS:
         raise HTTPException(404, "Bairro não encontrado")
     try:
-        return analitico.painel(bairro, inicio, fim)
+        return analitico.painel(bairro, inicio, fim, regiao)
+    except KeyError as err:
+        raise HTTPException(404, "Região não encontrada (Centro, Norte, Sul, Leste ou Oeste)") from err
     except ValueError as err:
         raise HTTPException(422, "Datas inválidas (use AAAA-MM-DD)") from err
 

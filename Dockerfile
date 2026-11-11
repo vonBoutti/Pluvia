@@ -1,9 +1,9 @@
-# Imagem da API Alerta Cheia (inclui dados e modelos gerados no build)
+# Imagem da API Pluvia (inclui dados e modelos gerados no build)
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    DB_PATH=/data/alerta_cheia.db
+    DB_PATH=/data/pluvia.db
 
 WORKDIR /app
 COPY requirements.txt .

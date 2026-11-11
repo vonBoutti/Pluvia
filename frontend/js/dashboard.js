@@ -27,6 +27,11 @@ const KPIS = [
 
 function renderizar(d) {
   const b = document.getElementById("f-bairro").value;
+  const top = d.ranking_bairros.slice(0, 15);
+  if (b && !top.some((r) => r.bairro === b)) {
+    const sel = d.ranking_bairros.find((r) => r.bairro === b);
+    if (sel) top.push(sel);
+  }
   document.getElementById("kpis").innerHTML = KPIS.map(([k, rotulo, casas, dest]) =>
     `<div class="cartao kpi${dest ? " destaque" : ""}"><div class="valor">${num(d.kpis[k], casas)}</div><div class="rotulo">${rotulo}</div></div>`).join("");
   document.getElementById("recomendacao").textContent = d.recomendacao;
@@ -47,11 +52,11 @@ function renderizar(d) {
   desenhar("g-bairros", {
     type: "bar",
     data: {
-      labels: d.ranking_bairros.map((r) => r.bairro),
-      datasets: [{ label: "Alagamentos por 100 mm", data: d.ranking_bairros.map((r) => r.indice_vulnerabilidade), borderRadius: 6,
-        backgroundColor: d.ranking_bairros.map((r) => (b && r.bairro === b ? cor("alerta") : cor("brand"))) }],
+      labels: top.map((r) => r.bairro),
+      datasets: [{ label: "Alagamentos por 100 mm", data: top.map((r) => r.indice_vulnerabilidade), borderRadius: 6,
+        backgroundColor: top.map((r) => (b && r.bairro === b ? cor("alerta") : cor("brand"))) }],
     },
-    options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { y: { grid: { display: false } } } },
+    options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } } } },
   });
 
   desenhar("g-diario", {
@@ -79,17 +84,19 @@ function renderizar(d) {
   });
 
   document.getElementById("t-ranking").innerHTML = `
-    <thead><tr><th>Bairro</th><th>Chuva (mm)</th><th>Alagamentos</th><th>Horas acima do limite</th><th>Famílias afetadas</th><th>Índice</th></tr></thead>
-    <tbody>${d.ranking_bairros.map((r) => `<tr><td><b>${esc(r.bairro)}</b></td><td>${num(r.chuva_mm)}</td><td>${r.alagamentos}</td>
+    <thead><tr><th>#</th><th>Distrito</th><th>Região</th><th>Chuva (mm)</th><th>Alagamentos</th><th>Horas acima do limite</th><th>Famílias afetadas</th><th>Índice</th></tr></thead>
+    <tbody>${d.ranking_bairros.map((r, i) => `<tr><td>${i + 1}</td><td><b>${esc(r.bairro)}</b></td><td>${esc(NOME_REGIAO[r.regiao])}</td><td>${num(r.chuva_mm)}</td><td>${r.alagamentos}</td>
       <td>${r.horas_criticas}</td><td>${r.familias_afetadas}</td><td>${num(r.indice_vulnerabilidade, 2)}</td></tr>`).join("")}</tbody>`;
 }
 
 async function carregar() {
   const p = new URLSearchParams();
   const b = document.getElementById("f-bairro").value;
+  const rg = document.getElementById("f-regiao").value;
   const i = document.getElementById("f-inicio").value;
   const f = document.getElementById("f-fim").value;
   if (b) p.set("bairro", b);
+  if (rg) p.set("regiao", rg);
   if (i) p.set("inicio", i);
   if (f) p.set("fim", f);
   const d = await api(`/api/dashboard?${p}`);

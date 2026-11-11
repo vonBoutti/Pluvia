@@ -22,4 +22,4 @@ tests/test_api.py::test_ct12_regras_do_agente PASSED                     [ 85%]
 tests/test_api.py::test_ct13_dashboard_filtros PASSED                    [ 92%]
 tests/test_api.py::test_ct14_cabecalhos_de_seguranca_e_monitoramento PASSED [100%]
 
-============================= 14 passed in 5.22s ==============================
+============================= 14 passed in 4.43s ==============================

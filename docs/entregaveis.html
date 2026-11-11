@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Alerta Cheia — Entregáveis Global Solution 2026/2</title>
+<title>Pluvia — Entregáveis Global Solution 2026/2</title>
 <style>
   @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
   :root { --verde:#0b6e4f; --texto:#13201b; --cinza:#55625d; --linha:#d8dfdc; --fundo:#f3f6f4; }
@@ -43,7 +43,7 @@
   <div>
     <div class="faixa">
       <div class="eyebrow">FIAP · Global Solution 2026/2 · CitizenTech</div>
-      <h1>Alerta Cheia</h1>
+      <h1>Pluvia</h1>
       <p style="font-size:14pt;margin:0">Previsão de alagamentos com sensores IoT e inteligência artificial,<br>com aviso ao cidadão até 2 horas antes.</p>
     </div>
     <div style="margin-top:22px">
@@ -76,17 +76,17 @@
   <div class="eyebrow">1 · A proposta</div>
   <h2>Uma CitizenTech para quem mora na beira do córrego</h2>
   <table>
-    <tr><th style="width:26%">Quem é o cidadão beneficiado</th><td>Moradores de bairros de várzea e periferia (ex.: Jardim Pantanal, Vila Itaim), que sofrem com enchentes todo verão. Muitos são idosos e famílias de baixa renda, nem sempre com smartphone ou internet estável. Também a <strong>Defesa Civil</strong> e o <strong>gestor da subprefeitura</strong>, que precisam decidir rápido e investir certo.</td></tr>
+    <tr><th style="width:26%">Quem é o cidadão beneficiado</th><td>Moradores dos <strong>96 distritos de São Paulo</strong>, em especial os de várzea e periferia (ex.: Jardim Helena, onde fica o Jardim Pantanal, Itaim Paulista e Vila Leopoldina), que sofrem com enchentes todo verão. Muitos são idosos e famílias de baixa renda, nem sempre com smartphone ou internet estável. Também a <strong>Defesa Civil</strong> e o <strong>gestor da subprefeitura</strong>, que precisam decidir rápido e investir certo.</td></tr>
     <tr><th>Qual problema será resolvido</th><td>Hoje o aviso de alagamento costuma chegar tarde: o alarme manual (régua) só dispara quando o córrego já está perto de transbordar, e os relatos da população chegam soltos por telefone ou redes sociais, sem triagem. Resultado: carros, móveis e documentos perdidos e risco à vida.</td></tr>
     <tr><th>Como a solução funciona</th><td>Estações IoT baratas medem <strong>chuva</strong>, <strong>nível do córrego</strong> e temperatura a cada hora. Uma <strong>IA</strong> estima a chance de transbordar nas próximas 3 horas. Um <strong>agente de alerta</strong> transforma o risco em ação: SMS ao morador (funciona em qualquer celular) e ação recomendada à Defesa Civil. O cidadão também pode <strong>relatar problemas em texto livre</strong>, que a IA classifica e encaminha em milissegundos. Um <strong>dashboard</strong> mostra ao gestor onde investir em prevenção.</td></tr>
     <tr><th>Quais tecnologias serão usadas</th><td>Python, FastAPI, SQLite, pandas, scikit-learn (RandomForest, TF-IDF + Regressão Logística), HTML/CSS/JavaScript + Chart.js, ESP32 no Wokwi (HC-SR04, pluviômetro, DHT22), Docker, GitHub Actions, pytest, ruff, JWT. Medidas analíticas também documentadas em DAX para Power BI.</td></tr>
     <tr><th>Quem participa do ecossistema</th><td>Moradores (recebem alertas e relatam), agentes comunitários, Defesa Civil (fila priorizada e alertas), subprefeituras (bueiros, árvores), operadoras de SMS, escolas e UBS como pontos de apoio, e universidades/ONGs que podem instalar e manter estações.</td></tr>
-    <tr><th>Como o impacto será medido e ampliado</th><td>Métricas embutidas: % de alagamentos avisados com 1 h ou mais de antecedência, antecedência média, falsos alarmes por mês, tempo de triagem, famílias afetadas e índice de vulnerabilidade por bairro. Para ampliar: cada nova estação custa menos de R$ 300 em componentes, a API roda em um único container e o modelo é re-treinado com os dados de cada novo bairro.</td></tr>
+    <tr><th>Como o impacto será medido e ampliado</th><td>Métricas embutidas: % de alagamentos avisados com 1 h ou mais de antecedência, antecedência média, falsos alarmes por mês, tempo de triagem, famílias afetadas e índice de vulnerabilidade por bairro. Para ampliar: cada nova estação custa menos de R$ 300 em componentes, a API roda em um único container e o modelo é re-treinado com os dados de cada novo bairro. O MVP já cobre a cidade inteira: 96 estações, uma por distrito.</td></tr>
   </table>
 
   <h3>Conexão com os ODS da ONU</h3>
   <table>
-    <tr><th style="width:26%">ODS</th><th>Como o Alerta Cheia contribui</th></tr>
+    <tr><th style="width:26%">ODS</th><th>Como o Pluvia contribui</th></tr>
     <tr><td><span class="ods">11</span> Cidades e comunidades sustentáveis</td><td>Meta 11.5: reduzir mortes e perdas por desastres, com foco nos mais vulneráveis. A antecedência do aviso passa de 36 para 75 minutos em média.</td></tr>
     <tr><td><span class="ods">13</span> Ação contra a mudança do clima</td><td>Meta 13.1: resiliência a riscos climáticos. O sistema de alerta precoce é medida de adaptação a chuvas extremas cada vez mais frequentes.</td></tr>
     <tr><td><span class="ods">9</span> Indústria, inovação e infraestrutura</td><td>Infraestrutura de baixo custo (IoT + nuvem) e dados abertos que orientam investimento em drenagem.</td></tr>
@@ -99,7 +99,7 @@
 <section class="quebra">
   <div class="eyebrow">2 · Arquitetura</div>
   <h2>Arquitetura geral e como as áreas se conectam</h2>
-  <figure><img src="arquitetura.svg" alt="Diagrama de arquitetura"><figcaption>Figura 1: arquitetura do Alerta Cheia (arquivo editável em <code>docs/arquitetura.svg</code>).</figcaption></figure>
+  <figure><img src="arquitetura.svg" alt="Diagrama de arquitetura"><figcaption>Figura 1: arquitetura do Pluvia (arquivo editável em <code>docs/arquitetura.svg</code>).</figcaption></figure>
   <h3>Fluxo de ponta a ponta</h3>
   <ol>
     <li>A estação (ESP32 ou simulador) envia <code>POST /api/leituras</code> com a chave do dispositivo.</li>
@@ -127,7 +127,7 @@
   <p>O agente (<code>ia/automacao.py</code>) decide a ação a cada nova leitura ou relato grave:</p>
   <table>
     <tr><th style="width:8%">Regra</th><th>Condição</th><th>Ação</th></tr>
-    <tr><td>R1</td><td>Risco "alerta" (p ≥ 0,40, limiar escolhido por validação cruzada) ou "emergência" (p ≥ 0,75)</td><td>Cria alerta para o bairro, envia SMS aos inscritos e recomenda ação à Defesa Civil</td></tr>
+    <tr><td>R1</td><td>Risco "alerta" (p ≥ 0,35, limiar escolhido por validação cruzada) ou "emergência" (p ≥ 0,75)</td><td>Cria alerta para o bairro, envia SMS aos inscritos e recomenda ação à Defesa Civil</td></tr>
     <tr><td>R2</td><td>Já existe alerta ativo de nível igual ou maior</td><td>Mantém, sem reenviar (evita spam e "fadiga de alerta")</td></tr>
     <tr><td>R3</td><td>Nível de risco sobe</td><td>Novo alerta escalonado (ex.: Alerta → Emergência)</td></tr>
     <tr><td>R4</td><td>2 ou mais relatos de alagamento com severidade alta no bairro na última hora</td><td>Eleva para pelo menos "alerta" (sinal humano complementa o sensor)</td></tr>
@@ -140,47 +140,47 @@
 
 <section class="quebra">
   <h3>03 · Demonstração: entrada e saída reais</h3>
-  <p><strong>Previsão de risco</strong>: execução do simulador contra a API (<code>docs/evidencias/simulador_tempestade.txt</code>), estação do Jardim Pantanal, cota de 180 cm:</p>
+  <p><strong>Previsão de risco</strong>: execução do simulador contra a API (<code>docs/evidencias/simulador_tempestade.txt</code>), estação AC-01 do Jardim Helena, cota de 180 cm (o simulador também envia as outras 32 estações da Zona Leste):</p>
 <pre>hora 3  chuva=  4.0mm nivel=  62.6cm p=0.02 [Normal]      agente=nenhuma
-hora 4  chuva= 12.0mm nivel=  77.4cm p=0.17 [Atenção]     agente=nenhuma
-hora 5  chuva= 18.0mm nivel= 116.1cm p=0.41 [Alerta]      agente=criar   &lt;&lt;&lt; ALERTA (2 h antes)
-hora 6  chuva= 16.0mm nivel= 176.7cm p=0.77 [Emergência]  agente=criar   (R3 escalonamento)
+hora 4  chuva= 12.0mm nivel=  77.4cm p=0.03 [Normal]      agente=nenhuma
+hora 5  chuva= 18.0mm nivel= 116.1cm p=0.53 [Alerta]      agente=criar   &lt;&lt;&lt; ALERTA (2 h antes)
+hora 6  chuva= 16.0mm nivel= 176.7cm p=0.95 [Emergência]  agente=criar   (R3 escalonamento)
 hora 7  chuva=  8.0mm nivel= 234.9cm p=1.00 [Emergência]  agente=manter  (R2)  ← transbordou
 hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</pre>
   <p>Na hora 5 o córrego está em <strong>64% da cota</strong>: a régua de 80% ainda não dispararia, mas a IA já emite o alerta. O transbordamento ocorre na hora 7.</p>
   <p><strong>Resposta da API</strong> a uma leitura (entrada <code>{"estacao":"AC-01","chuva_mm":18,"nivel_cm":116}</code>, rodando no container):</p>
-<pre>{"bairro":"Jardim Pantanal",
+<pre>{"bairro":"Jardim Helena",
  "features":{"chuva_mm":18.0,"chuva_3h":18.0,"chuva_24h":18.0,"nivel_cm":116.0,"delta_nivel_1h":55.0,"nivel_pct_cota":0.644},
- "risco":{"probabilidade":0.45,"nivel":"alerta","rotulo":"Alerta"},
+ "risco":{"probabilidade":0.519,"nivel":"alerta","rotulo":"Alerta"},
  "agente":{"acao":"criar","nivel":"alerta",
-   "mensagem":"ALERTA Jardim Pantanal: risco de alagamento nas próximas 3h. Tire carros de áreas baixas e prepare documentos. Defesa Civil 199",
-   "acao_defesa_civil":"Deslocar equipe ao bairro; acionar agentes comunitários; bloquear vias baixas.","motivo":"modelo: p=0.45; R1"}}</pre>
+   "mensagem":"ALERTA Jardim Helena: risco de alagamento nas próximas 3h. Tire carros de áreas baixas e prepare documentos. Defesa Civil 199",
+   "acao_defesa_civil":"Deslocar equipe ao bairro; acionar agentes comunitários; bloquear vias baixas.","motivo":"modelo: p=0.52; R1"}}</pre>
   <p><strong>Triagem de relatos</strong> (frases fora da base de treino):</p>
   <table>
     <tr><th>Entrada (texto livre)</th><th>Categoria</th><th>Severidade</th><th>Encaminhamento</th><th>Confiança</th></tr>
     <tr><td>"Minha mãe idosa ficou ilhada, a água entrou em casa"</td><td>alagamento</td><td>alta</td><td>Defesa Civil · até 30 min</td><td>95%</td></tr>
     <tr><td>"Bueiro da esquina tampado de garrafa pet"</td><td>bueiro entupido</td><td>baixa</td><td>Subprefeitura, Limpeza · 48 h</td><td>97%</td></tr>
-    <tr><td>"Lâmpada do poste queimada há semanas"</td><td>alagamento ✗</td><td>baixa</td><td><strong>revisão humana</strong></td><td>32%</td></tr>
+    <tr><td>"Lâmpada do poste queimada há semanas"</td><td>alagamento ✗</td><td>baixa</td><td><strong>revisão humana</strong></td><td>31%</td></tr>
   </table>
   <p class="muted">O terceiro caso mostra a salvaguarda: com confiança baixa, a IA não decide sozinha e manda o relato para revisão.</p>
-  <figure><img src="prints/02_relatar_triagem.png" alt="Tela de relato com triagem"><figcaption>Figura 2: triagem por IA na tela "Relatar problema", em 5,3 ms.</figcaption></figure>
+  <figure><img src="prints/02_relatar_triagem.png" alt="Tela de relato com triagem"><figcaption>Figura 2: triagem por IA na tela "Relatar problema", em poucos milissegundos.</figcaption></figure>
 </section>
 
 <section class="quebra">
   <h3>04 · Lógica e ganho: antes x depois</h3>
-  <p>Treino com o 1º ano de dados (52.365 horas) e teste no 2º ano (52.426 horas, <strong>32 alagamentos que o modelo nunca viu</strong>). O limiar de alerta (0,40) foi escolhido por validação cruzada <em>dentro do treino</em> (folds por mês, máximo F1), sem olhar o teste. "Antes" é a régua manual usada hoje: alarme quando o córrego atinge 80% da cota.</p>
+  <p>Treino com o 1º ano de dados das 96 estações e teste no 2º ano (839.682 horas-estação, <strong>356 alagamentos que o modelo nunca viu</strong>). A IA só é acionada nas horas "candidatas" (choveu nas últimas 24 h ou o córrego passou de 50% do limite); fora delas o risco é zero por definição, o que deixa treino e API rápidos (229.470 horas candidatas no treino). O limiar de alerta (0,35) foi escolhido por validação cruzada <em>dentro do treino</em> (folds por mês, máximo F1), sem olhar o teste. "Antes" é a régua manual usada hoje: alarme quando o córrego atinge 80% da cota.</p>
   <table>
     <tr><th>Métrica (período de teste)</th><th>Antes: régua 80%</th><th>Depois: IA</th><th>Ganho</th></tr>
-    <tr><td>Alagamentos avisados com 1 h ou mais de antecedência</td><td>56,2%</td><td class="bom">81,2%</td><td>+25 p.p.</td></tr>
-    <tr><td>Antecedência média do aviso</td><td>35,6 min</td><td class="bom">75,0 min</td><td>2,1× mais tempo</td></tr>
-    <tr><td>Falsos alarmes por mês (6 bairros)</td><td>4,5</td><td class="bom">1,6</td><td>−64%</td></tr>
-    <tr><td>Precisão por hora de alarme</td><td>9,8%</td><td class="bom">65,2%</td><td>6,7×</td></tr>
-    <tr><td>Recall por hora (horas antes do transbordamento)</td><td>19,8%</td><td class="bom">44,8%</td><td>2,3×</td></tr>
+    <tr><td>Alagamentos avisados com 1 h ou mais de antecedência</td><td>64,0%</td><td class="bom">96,3%</td><td>+32 p.p.</td></tr>
+    <tr><td>Antecedência média do aviso</td><td>38,9 min</td><td class="bom">92,5 min</td><td>2,4× mais tempo</td></tr>
+    <tr><td>Falsos alarmes por mês (96 distritos)</td><td>28,4</td><td class="bom">13,0</td><td>−54%</td></tr>
+    <tr><td>Precisão por hora de alarme</td><td>15,7%</td><td class="bom">75,6%</td><td>4,8×</td></tr>
+    <tr><td>Recall por hora (horas antes do transbordamento)</td><td>21,6%</td><td class="bom">53,5%</td><td>2,5×</td></tr>
   </table>
-  <p><strong>Importância das features:</strong> chuva acumulada em 3 h (26%), chuva da hora (25%), variação do nível em 1 h (22%), % da cota (13%), chuva 24 h (7%), nível absoluto (7%). Hora do dia e mês foram testados e <strong>descartados</strong>: o modelo "decorava" o horário dos temporais de verão em vez de aprender a física.</p>
+  <p><strong>Importância das features:</strong> variação do nível em 1 h (29%), chuva da hora (22%), % da cota (20%), chuva acumulada em 3 h (15%), nível absoluto (8%), chuva 24 h (5%). Hora do dia e mês foram testados e <strong>descartados</strong>: o modelo "decorava" o horário dos temporais de verão em vez de aprender a física.</p>
   <table>
     <tr><th>Triagem de relatos</th><th>Resultado</th></tr>
-    <tr><td>Teste com dados sintéticos (450 relatos)</td><td>100% categoria, 100% severidade (base gerada por modelos de frase, por isso fácil demais)</td></tr>
+    <tr><td>Teste com dados sintéticos (1.000 relatos)</td><td>100% categoria, 100% severidade (base gerada por modelos de frase, por isso fácil demais)</td></tr>
     <tr><td><strong>Validação honesta</strong>: 20 frases escritas à mão, fora dos modelos (<code>ia/casos_validacao_manual.csv</code>)</td><td class="bom">95% categoria · 85% severidade</td></tr>
     <tr><td>Tempo por relato</td><td class="bom">~4 ms (vs. ~2 min de triagem manual por atendente)</td></tr>
   </table>
@@ -194,16 +194,16 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
   <h3>01 · Estrutura dos dados: data lake em camadas</h3>
   <table>
     <tr><th style="width:12%">Camada</th><th>Arquivos</th><th>Conteúdo</th></tr>
-    <tr><td><strong>Bronze</strong></td><td><code>leituras_iot.jsonl</code> (105.665 linhas), <code>ocorrencias_defesa_civil.csv</code> (88), <code>relatos_cidadaos.csv</code> (1.800)</td><td>Dados brutos como chegam: JSON aninhado do dispositivo, timestamps com atraso, IDs em minúsculas, pacotes perdidos, leituras com defeito (999 cm, −5 mm) e reenvios duplicados.</td></tr>
-    <tr><td><strong>Silver</strong></td><td><code>leituras.csv</code> (105.120), <code>ocorrencias.csv</code>, <code>relatos.csv</code></td><td>Série horária limpa por estação, com flag de imputação e features da IA (chuva 3 h/24 h, Δnível, % da cota, alvo "alaga em 3 h"). Texto dos relatos normalizado.</td></tr>
+    <tr><td><strong>Bronze</strong></td><td><code>leituras_iot.jsonl.gz</code> (1.690.312 linhas de 96 estações, comprimido), <code>ocorrencias_defesa_civil.csv</code> (822), <code>relatos_cidadaos.csv</code> (4.000)</td><td>Dados brutos como chegam: JSON aninhado do dispositivo, timestamps com atraso, IDs em minúsculas, pacotes perdidos, leituras com defeito (999 cm, −5 mm) e reenvios duplicados.</td></tr>
+    <tr><td><strong>Silver</strong></td><td><code>leituras.parquet</code> (1.681.918, formato colunar), <code>ocorrencias.csv</code>, <code>relatos.csv</code></td><td>Série horária limpa por estação, com flag de imputação e features da IA (chuva 3 h/24 h, Δnível, % da cota, alvo "alaga em 3 h"). Texto dos relatos normalizado.</td></tr>
     <tr><td><strong>Gold</strong></td><td><code>diario_bairro.csv</code>, <code>mensal_bairro.csv</code>, <code>relatos_categoria.csv</code>, <code>dim_bairro.csv</code>, <code>qualidade.json</code></td><td>Modelo analítico (fatos diário/mensal por bairro + dimensão bairro), pronto para o dashboard ou para o Power BI.</td></tr>
   </table>
   <p>Modelo operacional (SQLite da API): <code>leituras</code>(estacao, bairro, ts, chuva_mm, nivel_cm, temp_c, probabilidade, nivel_risco) · <code>alertas</code>(bairro, nivel, mensagem, acao_defesa_civil, motivo, ativo, destinatarios) · <code>relatos</code>(bairro, texto, categoria, severidade, confianca, orgao, prazo, status) · <code>inscricoes</code>(bairro, contato_hash, contato_mascarado).</p>
 
   <h3>02 · Ingestão e processamento: da coleta ao dado tratado</h3>
   <ol>
-    <li><strong>Coleta</strong>: estações publicam JSON (<code>bigdata/gerar_dados.py</code> simula 2 anos e 6 estações, com hidrograma realista de 1 a 3 h de atraso).</li>
-    <li><strong>Padronização</strong>: <code>json_normalize</code>, ID da estação em maiúsculas, timestamp arredondado para a hora.</li>
+    <li><strong>Coleta</strong>: estações publicam JSON (<code>bigdata/gerar_dados.py</code> simula 2 anos e 96 estações de forma vetorizada em ~10 s, com chuva correlacionada por região e hidrograma realista de 1 a 3 h de atraso).</li>
+    <li><strong>Padronização</strong>: leitura do JSON Lines comprimido linha a linha (descarta linhas corrompidas), ID da estação em maiúsculas, timestamp arredondado para a hora.</li>
     <li><strong>Deduplicação</strong> por (estação, hora).</li>
     <li><strong>Validação de faixa física</strong>: chuva 0–200 mm, nível 0–600 cm, temperatura −10–50 °C. Fora da faixa vira nulo.</li>
     <li><strong>Reamostragem horária e imputação</strong>: interpolação de até 3 h para nível e temperatura; chuva ausente = 0, com flag <code>imputado</code>.</li>
@@ -213,14 +213,14 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
   <p>Relatório de qualidade gerado automaticamente (<code>gold/qualidade.json</code>):</p>
   <table>
     <tr><th>Linhas bronze</th><th>Duplicatas removidas</th><th>Nível fora da faixa</th><th>Chuva fora da faixa</th><th>Nulos (nível)</th><th>Horas imputadas</th><th>Linhas silver</th></tr>
-    <tr><td>105.665</td><td>545</td><td>322</td><td>302</td><td>1.372</td><td>3.999</td><td>105.120</td></tr>
+    <tr><td>1.690.312</td><td>8.392</td><td>4.996</td><td>4.990</td><td>21.752</td><td>64.718</td><td>1.681.918</td></tr>
   </table>
 </section>
 
 <section class="quebra">
-  <h3>03 · Dashboard: 8 indicadores com filtros de bairro e período</h3>
-  <figure><img src="prints/05_dashboard_filtro_bairro.png" alt="Dashboard filtrado"><figcaption>Figura 4: dashboard filtrado (Jardim Pantanal, verão 2025/26). KPIs, recomendação ao gestor e gráficos são recalculados pela API.</figcaption></figure>
-  <p><strong>Decisão apoiada:</strong> onde investir primeiro em prevenção. O <em>índice de vulnerabilidade</em> (alagamentos por 100 mm de chuva) separa "choveu muito" de "drena mal". Jardim Pantanal tem índice 1,05 contra 0,03 de Pompeia com a mesma chuva, então é prioridade para limpeza de bueiros, piscinão e cadastro de moradores no SMS.</p>
+  <h3>03 · Dashboard: 8 indicadores com filtros de região, distrito e período</h3>
+  <figure><img src="prints/05_dashboard_filtro_bairro.png" alt="Dashboard filtrado"><figcaption>Figura 4: dashboard filtrado (Jardim Helena, verão 2025/26). KPIs, recomendação ao gestor e gráficos são recalculados pela API.</figcaption></figure>
+  <p><strong>Decisão apoiada:</strong> onde investir primeiro em prevenção. O <em>índice de vulnerabilidade</em> (alagamentos por 100 mm de chuva) separa "choveu muito" de "drena mal". Com praticamente a mesma chuva em 2 anos (~2.870 mm), Vila Leopoldina tem índice 1,18 e Vila Mariana 0,00, então a primeira é prioridade para limpeza de bueiros, piscinão e cadastro de moradores no SMS.</p>
 </section>
 
 <section class="quebra">
@@ -239,7 +239,7 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
     <tr><td>Ranking de vulnerabilidade</td><td><code>RANKX(ALL(dim_bairro[bairro]), [Indice Vulnerabilidade], , DESC)</code></td></tr>
     <tr><td>Variação anual</td><td><code>DIVIDE([Alagamentos] - CALCULATE([Alagamentos], SAMEPERIODLASTYEAR(Calendario[Date])), CALCULATE([Alagamentos], SAMEPERIODLASTYEAR(Calendario[Date])))</code></td></tr>
   </table>
-  <figure><img src="prints/04_dashboard.png" style="max-height:150mm;object-fit:cover;object-position:top" alt="Dashboard geral"><figcaption>Figura 5: visão geral (todos os bairros, 2 anos): 8 KPIs, chuva x alagamentos por mês, vulnerabilidade por bairro, média móvel e relatos por tipo.</figcaption></figure>
+  <figure><img src="prints/04_dashboard.png" style="max-height:150mm;object-fit:cover;object-position:top" alt="Dashboard geral"><figcaption>Figura 5: visão geral (cidade inteira, 96 distritos, 2 anos): 8 KPIs, chuva x alagamentos por mês, vulnerabilidade por bairro, média móvel e relatos por tipo.</figcaption></figure>
 </section>
 
 <!-- 5. MVP / IoT -->
@@ -257,7 +257,7 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
     <tr><td>Central da Defesa Civil (<code>admin.html</code>)</td><td>Defesa Civil</td><td>Login JWT, fila de relatos por urgência, status, decisões do agente, saúde do sistema</td></tr>
   </table>
   <p>Design e acessibilidade: tema <strong>claro e escuro</strong> (segue o celular ou escolha manual), paleta com contraste adequado nos dois modos, botões <strong>A+</strong> (fonte maior) e <strong>alto contraste</strong>, animações que são desligadas para quem prefere menos movimento, rótulos em todos os campos, <code>aria-live</code> nas atualizações e níveis de risco indicados por <strong>texto + cor</strong> (não só cor).</p>
-  <figure><img src="prints/01_painel_risco.png" alt="Risco agora"><figcaption>Figura 6: tela principal durante a tempestade simulada. O cidadão do Jardim Pantanal vê "Pode alagar em até 3 horas", o córrego em 65% do limite e o que fazer.</figcaption></figure>
+  <figure><img src="prints/01_painel_risco.png" alt="Risco agora"><figcaption>Figura 6: tela principal durante a tempestade simulada. O cidadão do Jardim Helena vê "Pode alagar em até 3 horas", o córrego em 65% do limite e o que fazer.</figcaption></figure>
 </section>
 
 <section class="quebra">
@@ -283,7 +283,7 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
   <h3>02 · IoT: 3 sensores (Wokwi + simulador)</h3>
   <table>
     <tr><th>Sensor / atuador</th><th>Mede / faz</th><th>Implementação</th></tr>
-    <tr><td>HC-SR04 ultrassônico</td><td>Nível do córrego (altura do sensor − distância até a água), mediana de 5 leituras</td><td rowspan="4"><code>iot/estacao_alerta_cheia/</code>: sketch ESP32 + <code>diagram.json</code> do Wokwi; envia JSON por Wi-Fi com <code>X-API-Key</code>. <br><br><code>iot/simulador.py</code>: mock das 6 estações com o mesmo protocolo e cenários calmo, tempestade e replay do maior evento histórico.</td></tr>
+    <tr><td>HC-SR04 ultrassônico</td><td>Nível do córrego (altura do sensor − distância até a água), mediana de 5 leituras</td><td rowspan="4"><code>iot/estacao_pluvia/</code>: sketch ESP32 + <code>diagram.json</code> do Wokwi; envia JSON por Wi-Fi com <code>X-API-Key</code>. <br><br><code>iot/simulador.py</code>: mock das 96 estações (envia a região do temporal) com o mesmo protocolo e cenários calmo, tempestade e replay do maior evento histórico.</td></tr>
     <tr><td>Pluviômetro de báscula</td><td>Chuva (0,2 mm por báscula, contada por interrupção com debounce)</td></tr>
     <tr><td>DHT22</td><td>Temperatura e umidade do ar</td></tr>
     <tr><td>LEDs + buzzer</td><td>Alarme <strong>local</strong> (verde/amarelo/vermelho) que funciona sem internet, mais buffer de 24 leituras offline</td></tr>
@@ -292,12 +292,12 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
 
   <h3>03 · Fluxo funcional completo</h3>
   <ol>
-    <li>A moradora se cadastra em <em>Receber alertas</em> (Jardim Pantanal, com aceite LGPD).</li>
+    <li>A moradora se cadastra em <em>Receber alertas</em> (Jardim Helena, com aceite LGPD).</li>
     <li>Começa um temporal: as estações enviam chuva e nível; o painel muda de Normal para Atenção.</li>
-    <li>Com o córrego em 64% da cota, a IA prevê p = 0,41 e o agente emite <strong>ALERTA</strong> com SMS para os inscritos, 2 h antes do transbordamento.</li>
+    <li>Com o córrego em 64% da cota, a IA prevê p = 0,53 e o agente emite <strong>ALERTA</strong> com SMS para os inscritos, 2 h antes do transbordamento.</li>
     <li>Um vizinho relata "água entrando nas casas, idosa ilhada"; a triagem marca alagamento, severidade alta, Defesa Civil, até 30 min.</li>
     <li>A Defesa Civil vê o relato no topo da fila, a ação recomendada pelo agente e muda o status para "em atendimento".</li>
-    <li>O nível sobe (p = 0,77): o agente escala para <strong>EMERGÊNCIA</strong> (R3). Depois da chuva, o risco normaliza e o alerta é encerrado (R5).</li>
+    <li>O nível sobe (p = 0,95): o agente escala para <strong>EMERGÊNCIA</strong> (R3). Depois da chuva, o risco normaliza e o alerta é encerrado (R5).</li>
     <li>O evento entra no histórico e no dashboard, que recomenda priorizar o bairro.</li>
   </ol>
   <p>O mesmo fluxo é verificado automaticamente pelo teste <strong>CT-06</strong> e pode ser reproduzido com <code>python -m iot.simulador --cenario tempestade</code>.</p>
@@ -311,7 +311,7 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
   <div class="eyebrow">6 · Área 4 de 4</div>
   <h2>DevOps, segurança e qualidade <span class="pts">3 pontos</span></h2>
   <h3>01 · Organização e versionamento</h3>
-<pre>alerta-cheia/
+<pre>pluvia/
 ├── app/          API FastAPI (main, segurança, schemas, banco)
 ├── frontend/     6 telas HTML + CSS + JS (claro/escuro)
 ├── ia/           treino, risco, triagem, agente de automação
@@ -330,18 +330,19 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
     <li><strong>Monitoramento</strong>: <code>/api/health</code>, <code>/api/metricas</code> (uptime, requisições por rota e status, latência média, alertas ativos) e <code>/metrics</code> no formato Prometheus, pronto para Grafana.</li>
   </ul>
   <p>Evidência real (<code>docs/evidencias/docker_run.txt</code>):</p>
-<pre>$ docker ps --filter name=alerta-cheia-evid
-NAMES               IMAGE                 STATUS                   PORTS
-alerta-cheia-evid   alerta-cheia:latest   Up 7 minutes (healthy)   0.0.0.0:8001-&gt;8000/tcp
-$ curl localhost:8001/api/health
+<pre>$ docker ps --filter name=pluvia-evid
+NAMES         IMAGE           STATUS                    PORTS
+pluvia-evid   pluvia:latest   Up 19 seconds (healthy)   0.0.0.0:8001-&gt;8000/tcp
+$ curl 127.0.0.1:8001/api/health
 {"status":"ok","versao":"1.0.0","modelos":true}
-$ curl -X POST localhost:8001/api/leituras   (sem chave)
+$ curl -X POST 127.0.0.1:8001/api/leituras   (sem chave)
 {"detail":"Chave do dispositivo inválida"}
-$ curl localhost:8001/metrics
-alerta_cheia_requests_total 6
-alerta_cheia_alertas_ativos 1
-alerta_cheia_http_status_total{code="201"} 1
-alerta_cheia_http_status_total{code="401"} 1</pre>
+$ curl 127.0.0.1:8001/metrics
+pluvia_requests_total 6
+pluvia_alertas_ativos 1
+pluvia_leituras_total 2305
+pluvia_http_status_total{code="201"} 1
+pluvia_http_status_total{code="401"} 1</pre>
 </section>
 
 <section class="quebra">

@@ -9,7 +9,7 @@ from functools import lru_cache
 
 import pandas as pd
 
-from bigdata.catalogo import BAIRROS, GOLD
+from bigdata.catalogo import BAIRROS, GOLD, REGIOES
 
 LIMIAR_CHUVA_FORTE_MM_H = 20  # INMET/Defesa Civil: chuva forte a partir de ~20 mm/h
 
@@ -26,7 +26,10 @@ def periodo_disponivel() -> dict:
     return {"inicio": f"{d['data'].min():%Y-%m-%d}", "fim": f"{d['data'].max():%Y-%m-%d}"}
 
 
-def filtrar(df: pd.DataFrame, bairro: str | None, inicio: str | None, fim: str | None) -> pd.DataFrame:
+def filtrar(df: pd.DataFrame, bairro: str | None, inicio: str | None, fim: str | None,
+            regiao: str | None = None) -> pd.DataFrame:
+    if regiao:
+        df = df[df["bairro"].isin([b for b, c in BAIRROS.items() if c["regiao"] == regiao])]
     if bairro:
         df = df[df["bairro"] == bairro]
     if inicio:
@@ -80,6 +83,7 @@ def ranking_bairros(d: pd.DataFrame) -> list[dict]:
                                 familias_afetadas=("familias_afetadas", "sum")).reset_index()
     g["indice_vulnerabilidade"] = [indice_vulnerabilidade(a, c) for a, c in zip(g["alagamentos"], g["chuva_mm"], strict=True)]
     g["chuva_mm"] = g["chuva_mm"].round(1)
+    g["regiao"] = g["bairro"].map(lambda b: BAIRROS[b]["regiao"])
     return g.sort_values(["indice_vulnerabilidade", "alagamentos"], ascending=False).to_dict(orient="records")
 
 
@@ -104,13 +108,17 @@ def recomendacao(ranking: list[dict]) -> str:
 
 
 @lru_cache(maxsize=256)  # a camada gold não muda com a API rodando: mesma consulta = mesma resposta
-def painel(bairro: str | None = None, inicio: str | None = None, fim: str | None = None) -> dict:
+def painel(bairro: str | None = None, inicio: str | None = None, fim: str | None = None,
+           regiao: str | None = None) -> dict:
+    if regiao and regiao not in REGIOES:
+        raise KeyError(regiao)
     diario, relatos = _gold()
-    d = filtrar(diario, bairro, inicio, fim)
-    r = filtrar(relatos, bairro, inicio, fim)
-    ranking = ranking_bairros(filtrar(diario, None, inicio, fim))
+    d = filtrar(diario, bairro, inicio, fim, regiao)
+    r = filtrar(relatos, bairro, inicio, fim, regiao)
+    ranking = ranking_bairros(filtrar(diario, None, inicio, fim, regiao))
     return {
-        "filtros": {"bairro": bairro, "inicio": inicio, "fim": fim, **{"disponivel": periodo_disponivel()}},
+        "filtros": {"bairro": bairro, "regiao": regiao, "inicio": inicio, "fim": fim,
+                    "disponivel": periodo_disponivel()},
         "kpis": kpis(d, r),
         "mensal": serie_mensal(d),
         "diario": serie_diaria_media_movel(d),
