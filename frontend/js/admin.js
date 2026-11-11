@@ -66,4 +66,4 @@ async function carregar() {
 }
 
 mostrarPainel(!!sessionStorage.getItem("token"));
-setInterval(() => { if (sessionStorage.getItem("token")) carregar(); }, 6000);
+setTimeout(() => repetir(() => (sessionStorage.getItem("token") ? carregar() : null), 6000), 6000);

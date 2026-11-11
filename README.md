@@ -88,9 +88,11 @@ python -m scripts.preparar
 Gera os dados (bronze/silver/gold), treina os dois modelos e grava as métricas em `ia/modelos/metricas.json`. Leva cerca de 30 s.
 
 ```bash
-uvicorn app.main:app --env-file .env
+uvicorn app.main:app --env-file .env --host 127.0.0.1
 ```
-Depois abra http://localhost:8000 (as 6 telas: comece pela "Risco agora" e pela "Entenda") ou http://localhost:8000/docs (documentação da API).
+Depois abra http://127.0.0.1:8000 (as 6 telas: comece pela "Risco agora" e pela "Entenda") ou http://127.0.0.1:8000/docs (documentação da API).
+
+> **Dica de desempenho (Windows):** prefira `127.0.0.1` a `localhost`. No Windows, `localhost` tenta primeiro o IPv6 e cada requisição perde cerca de 200 ms antes de cair no IPv4.
 
 Em outro terminal, simule as estações IoT (cada ciclo representa 1 hora):
 

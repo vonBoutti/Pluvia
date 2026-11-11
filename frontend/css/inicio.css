@@ -24,7 +24,7 @@ body { --nivel: var(--normal); --nivel-bg: var(--normal-bg); --agua-1: #4f9cf0; 
     radial-gradient(35% 45% at 80% 30%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
     radial-gradient(50% 40% at 60% 100%, color-mix(in srgb, var(--brand) 18%, transparent), transparent 70%);
   animation: aura 14s ease-in-out infinite alternate;
-  transition: background 1s;
+  will-change: transform; pointer-events: none;
 }
 @keyframes aura { to { transform: translate3d(3%, -2%, 0) rotate(6deg) scale(1.05); } }
 
@@ -33,7 +33,7 @@ body { --nivel: var(--normal); --nivel-bg: var(--normal-bg); --agua-1: #4f9cf0; 
 .chuva-anim i {
   position: absolute; top: -12%; width: 2px; height: 70px; border-radius: 2px;
   background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--chuva) 70%, transparent));
-  animation: cair linear infinite; opacity: .6;
+  animation: cair linear infinite; opacity: .6; will-change: transform;
 }
 @keyframes cair { to { transform: translate3d(-40px, 125vh, 0); } }
 
@@ -41,7 +41,7 @@ body { --nivel: var(--normal); --nivel-bg: var(--normal-bg); --agua-1: #4f9cf0; 
 @media (max-width: 860px) { .hero-conteudo { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
 
 /* seletor de bairro em forma de "pílula" */
-.seletor { display: inline-flex; margin-bottom: 0 !important; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: 99px; background: color-mix(in srgb, var(--surface) 75%, transparent); border: 1px solid var(--line); backdrop-filter: blur(8px); font-size: .9rem; color: var(--muted); margin-bottom: 18px; box-shadow: var(--shadow); }
+.seletor { display: inline-flex; margin-bottom: 0 !important; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: 99px; background: color-mix(in srgb, var(--surface) 75%, transparent); border: 1px solid var(--line); font-size: .9rem; color: var(--muted); margin-bottom: 18px; box-shadow: var(--shadow); }
 .seletor svg { width: 18px; height: 18px; color: var(--brand); }
 .seletor select { width: auto; border: 0; background: var(--surface-2); padding: 7px 34px 7px 12px; border-radius: 99px; font-weight: 700; color: var(--text); cursor: pointer; }
 
@@ -53,18 +53,19 @@ body { --nivel: var(--normal); --nivel-bg: var(--normal-bg); --agua-1: #4f9cf0; 
   box-shadow: 0 0 0 10px color-mix(in srgb, var(--nivel) 12%, transparent), var(--shadow-hover);
   transition: border-color .8s, box-shadow .8s;
 }
-.nv-emergencia .copo { animation: alarme 1.6s ease-in-out infinite; }
-@keyframes alarme { 50% { box-shadow: 0 0 0 26px color-mix(in srgb, var(--nivel) 0%, transparent), var(--shadow-hover); } }
+.copo-wrap::before { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 6px solid var(--nivel); opacity: 0; pointer-events: none; }
+.nv-emergencia .copo-wrap::before { animation: alarme 1.6s ease-out infinite; will-change: transform, opacity; }
+@keyframes alarme { from { transform: scale(1); opacity: .55; } to { transform: scale(1.14); opacity: 0; } }
 .agua { position: absolute; left: 0; right: 0; bottom: 0; height: 0%; transition: height 1.6s cubic-bezier(.22, 1, .36, 1); }
 .agua .corpo { position: absolute; inset: 18px 0 0 0; background: linear-gradient(to bottom, var(--agua-1), var(--agua-2)); }
-.agua svg { position: absolute; left: 0; top: 0; width: 200%; height: 20px; }
-.agua .onda1 { fill: var(--agua-1); animation: onda 4s linear infinite; }
-.agua .onda2 { fill: color-mix(in srgb, var(--agua-1) 45%, transparent); animation: onda 6.5s linear infinite reverse; }
+.agua svg { position: absolute; left: 0; top: 0; width: 200%; height: 20px; animation: onda 5s linear infinite; will-change: transform; }
+.agua .onda1 { fill: var(--agua-1); }
+.agua .onda2 { fill: color-mix(in srgb, var(--agua-1) 45%, transparent); }
 @keyframes onda { to { transform: translateX(-50%); } }
 .limite { position: absolute; left: 18%; right: 18%; top: 12%; border-top: 2px dashed var(--emergencia); z-index: 2; }
 .limite span { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; top: 4px; font-size: .7rem; font-weight: 800; color: var(--emergencia); background: var(--surface); padding: 1px 6px; border-radius: 6px; }
 .copo-texto { position: absolute; inset: 0; z-index: 3; display: grid; place-content: center; text-align: center; }
-.copo-texto .pilula { display: flex; flex-direction: column; align-items: center; padding: 10px 20px 10px; border-radius: 22px; background: color-mix(in srgb, var(--surface) 80%, transparent); backdrop-filter: blur(8px); box-shadow: var(--shadow); }
+.copo-texto .pilula { display: flex; flex-direction: column; align-items: center; padding: 10px 20px 10px; border-radius: 22px; background: color-mix(in srgb, var(--surface) 88%, transparent); box-shadow: var(--shadow); }
 .copo-texto strong { font-size: clamp(3rem, 9vw, 4.6rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; color: var(--nivel); }
 .copo-texto span { font-size: .85rem; font-weight: 700; color: var(--text); }
 
@@ -78,7 +79,7 @@ body { --nivel: var(--normal); --nivel-bg: var(--normal-bg); --agua-1: #4f9cf0; 
 .estado .frase b { color: var(--text); }
 .fazer { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); max-width: 720px; }
 @media (max-width: 1100px) { .fazer { grid-template-columns: 1fr; } .fazer li { flex-direction: row !important; align-items: center !important; } }
-.fazer li { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; font-size: .92rem; line-height: 1.35; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--surface) 80%, transparent); border: 1px solid var(--line); backdrop-filter: blur(6px); font-weight: 600; text-align: left; }
+.fazer li { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; font-size: .92rem; line-height: 1.35; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--surface) 80%, transparent); border: 1px solid var(--line); font-weight: 600; text-align: left; }
 .fazer li .ic { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--nivel-bg); color: var(--nivel); }
 .fazer li .ic svg { width: 20px; height: 20px; }
 @media (max-width: 860px) { .fazer { justify-items: stretch; width: 100%; } }
@@ -94,7 +95,7 @@ body { --nivel: var(--normal); --nivel-bg: var(--normal-bg); --agua-1: #4f9cf0; 
 .outros { width: 100%; max-width: 1200px; margin: 28px auto 0; }
 .outros h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 10px; text-align: left; }
 .chips { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 10px; scroll-snap-type: x mandatory; }
-.chip { scroll-snap-align: start; flex: 1 0 170px; display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 12px 14px; border-radius: 14px; cursor: pointer; font: inherit; color: var(--text); background: color-mix(in srgb, var(--surface) 82%, transparent); border: 1px solid var(--line); backdrop-filter: blur(6px); transition: transform .15s, border-color .15s; }
+.chip { scroll-snap-align: start; flex: 1 0 170px; display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 12px 14px; border-radius: 14px; cursor: pointer; font: inherit; color: var(--text); background: color-mix(in srgb, var(--surface) 82%, transparent); border: 1px solid var(--line); transition: transform .15s, border-color .15s; }
 .chip:hover { transform: translateY(-2px); border-color: var(--brand); }
 .chip[aria-current="true"] { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
 .chip .nome { font-weight: 700; font-size: .92rem; display: flex; align-items: center; gap: 8px; }
@@ -196,7 +197,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius
 .faq details p { margin: 0; padding: 0 20px 18px; color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero::before, .chuva-anim i, .agua svg *, .etapa .bolha, .trilho i, .rolar-dica svg, .nv-emergencia .copo { animation: none !important; }
+  .hero::before, .chuva-anim i, .agua svg, .etapa .bolha, .trilho i, .rolar-dica svg, .nv-emergencia .copo-wrap::before { animation: none !important; }
   .surgir, .revelar { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
 .cor-card > * { position: relative; z-index: 1; }
+
+/* desempenho: pausa animações quando não estão visíveis */
+.pausado, .pausado *, .pausado *::before, .pausado::before { animation-play-state: paused !important; }
+.hero, .faixa-tela { contain: paint; }

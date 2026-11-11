@@ -37,5 +37,4 @@ async function carregar() {
     document.getElementById("lista").innerHTML = `<li class="erro">${esc(e.message)}</li>`;
   }
 }
-carregar();
-setInterval(carregar, 5000);
+repetir(carregar, 5000);

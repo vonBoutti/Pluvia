@@ -104,7 +104,7 @@ def executar(api: str, chave: str, cenario: str, alvo: str, passos: int, interva
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--api", default=os.getenv("API_URL", "http://localhost:8000"))
+    ap.add_argument("--api", default=os.getenv("API_URL", "http://127.0.0.1:8000"))
     ap.add_argument("--chave", default=os.getenv("DEVICE_API_KEY", "dev-device-key-troque"))
     ap.add_argument("--cenario", choices=["calmo", "tempestade", "replay"], default="tempestade")
     ap.add_argument("--bairro", default="Jardim Pantanal", choices=list(BAIRROS))

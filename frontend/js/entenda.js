@@ -49,8 +49,10 @@ function simular() {
   secao.classList.add(`nv-${nivel}`);
   document.getElementById("sim-res").innerHTML = `${selo(nivel)}<p>${RESULTADO[nivel]}</p>`;
   document.getElementById("sim-desc").setAttribute("aria-label", `Córrego simulado em ${pct}% do limite: ${ROTULOS[nivel]}`);
-  chover(Math.min(90, chuva * 3));
+  chover(Math.min(40, Math.round(chuva * 1.5)));
 }
+pausarForaDaTela(document.querySelector(".hero"));
+pausarForaDaTela(secao);
 mm.addEventListener("input", simular);
 horas.addEventListener("input", simular);
 simular();

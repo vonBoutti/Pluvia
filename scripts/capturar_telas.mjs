@@ -7,7 +7,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const CHROME = process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
-const BASE = process.env.BASE_URL || "http://localhost:8000";
+const BASE = process.env.BASE_URL || "http://127.0.0.1:8000";
 const SAIDA = "docs/prints";
 const USUARIO = process.env.ADMIN_USER || "defesacivil";
 const SENHA = process.env.ADMIN_PASSWORD || "demo-DefesaCivil-2026";

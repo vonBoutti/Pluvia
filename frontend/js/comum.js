@@ -27,6 +27,27 @@ function icone(nome, extra = "") {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${ICONES[nome]}</svg>`;
 }
 
+// Repete `fn` a cada `ms`, mas só com a aba visível (economiza rede e bateria).
+// Ao voltar para a aba, atualiza na hora.
+function repetir(fn, ms) {
+  let timer = null;
+  const ciclo = async () => {
+    try { await fn(); } catch { /* a própria fn mostra o erro */ }
+    timer = setTimeout(ciclo, ms);
+  };
+  document.addEventListener("visibilitychange", () => {
+    clearTimeout(timer);
+    if (!document.hidden) ciclo();
+  });
+  ciclo();
+}
+
+// Pausa as animações CSS de um elemento quando ele sai da tela.
+function pausarForaDaTela(el) {
+  if (!el || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(([e]) => el.classList.toggle("pausado", !e.isIntersecting)).observe(el);
+}
+
 async function api(caminho, opcoes = {}) {
   const headers = { "Content-Type": "application/json", ...(opcoes.headers || {}) };
   const token = sessionStorage.getItem("token");

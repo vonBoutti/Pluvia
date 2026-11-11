@@ -11,6 +11,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timedelta
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -81,6 +82,7 @@ async def ciclo_de_vida(_: FastAPI):
 
 app = FastAPI(title="Alerta Cheia API", version=VERSAO, lifespan=ciclo_de_vida,
               description="CitizenTech: previsão de alagamentos com IoT + IA e alerta ao cidadão.")
+app.add_middleware(GZipMiddleware, minimum_size=1000)  # comprime respostas grandes (ex.: dashboard)
 
 
 @app.middleware("http")

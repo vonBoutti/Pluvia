@@ -16,7 +16,7 @@ def main() -> None:
     pipeline.executar()
     print("3/3 Treinando modelos de IA...")
     treinar.executar()
-    print(f"Pronto em {time.time() - t0:.0f}s. Suba a API com: uvicorn app.main:app --env-file .env")
+    print(f"Pronto em {time.time() - t0:.0f}s. Suba a API com: uvicorn app.main:app --env-file .env e abra http://127.0.0.1:8000")
 
 
 if __name__ == "__main__":

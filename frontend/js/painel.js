@@ -41,6 +41,8 @@ let ultimoNivel = null;
 let grafico = null;
 let ultimoHistorico = null;
 let gotasAtuais = -1;
+let assinatura = "";        // evita redesenhar se nada mudou
+let ultimaLeituraId = null;  // evita rebaixar o histórico sem leitura nova
 
 sel.addEventListener("change", () => escolher(sel.value));
 
@@ -48,12 +50,13 @@ function escolher(bairro) {
   escolhido = bairro;
   try { localStorage.setItem("meu-bairro", bairro); } catch { /* sem storage */ }
   ultimoNivel = null;
+  ultimaLeituraId = null;
   render(true);
   carregarHistorico();
 }
 
 function chuvaAnimada(mm) {
-  const qtd = Math.min(90, Math.round(mm * 4));
+  const qtd = Math.min(40, Math.round(mm * 2.5)); // poucas gotas já dão o efeito
   if (qtd === gotasAtuais || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   gotasAtuais = qtd;
   const box = document.getElementById("chuva");
@@ -65,6 +68,7 @@ function chuvaAnimada(mm) {
 
 function contarAte(el, alvo) {
   const ini = parseInt(el.dataset.v || "0", 10);
+  if (ini === alvo && el.textContent !== "–") return;
   el.dataset.v = alvo;
   const t0 = performance.now();
   const passo = (t) => {
@@ -117,28 +121,40 @@ function render(trocou = false) {
       <span class="mini"><span style="width:${Math.min(p, 100)}%;background:var(--${COR_VAR[n]})"></span></span>
     </button>`;
   }).join("");
-  document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => escolher(c.dataset.b)));
   document.getElementById("ver-historico").innerHTML = `Ver as últimas 24 horas de ${esc(b.bairro)} ${icone("seta")}`;
 }
 
 async function atualizar() {
   try {
-    dados = await api("/api/bairros");
+    const novos = await api("/api/bairros");
+    const sig = JSON.stringify(novos);
+    if (sig === assinatura) return; // nada mudou: não mexe na tela
+    assinatura = sig;
+    dados = novos;
     if (!escolhido) { // primeira visita: mostra o bairro com maior risco
       escolhido = [...dados].sort((a, c) => ORDEM[a.risco?.nivel ?? "normal"] - ORDEM[c.risco?.nivel ?? "normal"])[0].bairro;
     }
     render();
-    if (!ultimoHistorico || ultimoHistorico.bairro !== escolhido) carregarHistorico();
+    const atual = dados.find((x) => x.bairro === escolhido)?.ultima_leitura?.id ?? null;
+    if (atual !== ultimaLeituraId) { ultimaLeituraId = atual; carregarHistorico(); }
   } catch (e) {
     document.getElementById("titulo").textContent = "Sem conexão";
     document.getElementById("frase").textContent = `Tentando de novo… (${e.message})`;
   }
 }
 
-function desenharGrafico(h) {
+function desenharGrafico(h, recriar = false) {
   if (!window.Chart) return;
   const n = h.leituras.length;
   const rotulos = h.leituras.map((_, i) => (i === n - 1 ? "agora" : `-${n - 1 - i}h`));
+  if (grafico && !recriar) { // atualiza no lugar: bem mais leve que recriar o gráfico
+    grafico.data.labels = rotulos;
+    grafico.data.datasets[0].data = h.leituras.map((l) => l.nivel_cm);
+    grafico.data.datasets[1].data = h.leituras.map(() => h.cota_cm);
+    grafico.data.datasets[2].data = h.leituras.map((l) => l.chuva_mm);
+    grafico.update("none");
+    return;
+  }
   if (grafico) grafico.destroy();
   grafico = new Chart(document.getElementById("grafico-nivel"), {
     data: {
@@ -171,6 +187,10 @@ async function carregarHistorico() {
 
 document.getElementById("ver-historico").addEventListener("click", () =>
   document.getElementById("detalhe").scrollIntoView({ behavior: "smooth" }));
-document.addEventListener("temamudou", () => { if (ultimoHistorico) desenharGrafico(ultimoHistorico); });
-atualizar();
-setInterval(() => { atualizar(); if (escolhido) carregarHistorico().catch(() => {}); }, 4000);
+document.getElementById("chips").addEventListener("click", (ev) => { // um único "ouvinte" para todos os cartões
+  const c = ev.target.closest(".chip");
+  if (c) escolher(c.dataset.b);
+});
+document.addEventListener("temamudou", () => { if (ultimoHistorico) desenharGrafico(ultimoHistorico, true); });
+pausarForaDaTela(document.querySelector(".hero"));
+repetir(atualizar, 5000);

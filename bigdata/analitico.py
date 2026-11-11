@@ -103,6 +103,7 @@ def recomendacao(ranking: list[dict]) -> str:
             f"cadastro de moradores no alerta por SMS e estudo de piscinão/jardim de chuva.")
 
 
+@lru_cache(maxsize=256)  # a camada gold não muda com a API rodando: mesma consulta = mesma resposta
 def painel(bairro: str | None = None, inicio: str | None = None, fim: str | None = None) -> dict:
     diario, relatos = _gold()
     d = filtrar(diario, bairro, inicio, fim)
