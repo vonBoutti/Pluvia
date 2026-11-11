@@ -1,0 +1,17 @@
+GLOBAL SOLUTION 2026/2 - CITIZENTECH
+Engenharia de Software - 4º ano - Turma 4ESOA
+
+Projeto: Alerta Cheia - previsão de alagamentos com IoT + IA e alerta ao cidadão
+
+Nome do grupo: <PREENCHER>
+
+Integrantes (nome - RM):
+1. <NOME COMPLETO> - RM<00000>
+2. <NOME COMPLETO> - RM<00000>
+3. <NOME COMPLETO> - RM<00000>
+4. <NOME COMPLETO> - RM<00000>
+5. <NOME COMPLETO> - RM<00000>
+
+Link do vídeo pitch (público, testado em aba anônima): <COLE AQUI O LINK DO YOUTUBE/DRIVE/VIMEO>
+
+Repositório (opcional): <LINK DO GITHUB>

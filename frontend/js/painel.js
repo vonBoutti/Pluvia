@@ -48,7 +48,9 @@ async function abrir(bairro, rolar = true) {
   const sec = document.getElementById("detalhe");
   sec.classList.remove("oculto");
   document.getElementById("det-titulo").textContent = `${bairro} — últimas ${h.leituras.length} leituras`;
-  const rotulos = h.leituras.map((l) => fmtData(l.ts));
+  // cada leitura = 1 hora consolidada pela estação; eixo em horas relativas ao momento atual
+  const n = h.leituras.length;
+  const rotulos = h.leituras.map((_, i) => (i === n - 1 ? "agora" : `-${n - 1 - i}h`));
   const max = Math.max(...h.leituras.map((l) => l.nivel_cm));
   document.getElementById("det-resumo").textContent =
     `Nível máximo no período: ${num(max)} cm (cota de transbordamento: ${h.cota_cm} cm).`;

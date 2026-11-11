@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="13">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#37474f"/>
+    </marker>
+    <style>
+      .area{fill:#f7faf8;stroke:#9fb3aa;stroke-width:1.5;rx:14}
+      .caixa{fill:#fff;stroke:#0b6e4f;stroke-width:1.5;rx:8}
+      .titulo{font-weight:700;font-size:15px;fill:#0b6e4f}
+      .nome{font-weight:700;fill:#13201b}
+      .det{fill:#55625d;font-size:11.5px}
+      .lin{stroke:#37474f;stroke-width:1.6;fill:none;marker-end:url(#seta)}
+      .rot{font-size:11px;fill:#37474f}
+      .tag{font-size:10.5px;font-weight:700;fill:#fff}
+    </style>
+  </defs>
+  <rect width="1120" height="640" fill="#ffffff"/>
+  <text x="560" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#13201b">Alerta Cheia — arquitetura geral</text>
+
+  <!-- Área 3: IoT -->
+  <rect class="area" x="20" y="55" width="235" height="360"/>
+  <text class="titulo" x="36" y="80">Área 3 · IoT (campo)</text>
+  <rect class="caixa" x="36" y="95" width="203" height="150"/>
+  <text class="nome" x="48" y="117">Estação ESP32 (Wokwi)</text>
+  <text class="det" x="48" y="138">• HC-SR04: nível do córrego</text>
+  <text class="det" x="48" y="156">• Pluviômetro de báscula: chuva</text>
+  <text class="det" x="48" y="174">• DHT22: temperatura</text>
+  <text class="det" x="48" y="192">• LEDs + buzzer: alarme local</text>
+  <text class="det" x="48" y="210">  (funciona sem internet)</text>
+  <text class="det" x="48" y="228">• Buffer de 24 leituras offline</text>
+  <rect class="caixa" x="36" y="262" width="203" height="70"/>
+  <text class="nome" x="48" y="284">Simulador (mock) Python</text>
+  <text class="det" x="48" y="304">6 estações · cenários calmo,</text>
+  <text class="det" x="48" y="321">tempestade e replay histórico</text>
+  <text class="det" x="36" y="360">Envio: JSON a cada hora</text>
+  <text class="det" x="36" y="377">POST /api/leituras + X-API-Key</text>
+
+  <!-- Núcleo: API -->
+  <rect class="area" x="300" y="55" width="400" height="360"/>
+  <text class="titulo" x="316" y="80">API FastAPI · container Docker</text>
+  <rect class="caixa" x="316" y="95" width="368" height="62"/>
+  <text class="nome" x="328" y="117">Segurança</text>
+  <text class="det" x="328" y="136">JWT · chave IoT · validação Pydantic · rate limit</text>
+  <text class="det" x="328" y="151">LGPD (telefone em hash + máscara) · CSP/headers</text>
+
+  <rect class="caixa" x="316" y="170" width="178" height="112" style="stroke:#b34700"/>
+  <rect x="316" y="170" width="178" height="20" rx="8" fill="#b34700"/>
+  <text class="tag" x="326" y="184">ÁREA 1 · IA</text>
+  <text class="nome" x="326" y="208">Modelo de risco</text>
+  <text class="det" x="326" y="226">RandomForest · P(alagar</text>
+  <text class="det" x="326" y="242">em 3 h) por estação</text>
+  <text class="nome" x="326" y="262">Triagem de relatos</text>
+  <text class="det" x="326" y="278">TF-IDF + Reg. Logística</text>
+
+  <rect class="caixa" x="506" y="170" width="178" height="112" style="stroke:#b34700"/>
+  <text class="nome" x="518" y="192">Agente de alerta</text>
+  <text class="det" x="518" y="212">R1 criar · R2 sem spam</text>
+  <text class="det" x="518" y="229">R3 escalar · R4 relatos</text>
+  <text class="det" x="518" y="246">R5 encerrar · R6 SMS 160c</text>
+  <text class="det" x="518" y="268">→ alerta + ação p/ Def. Civil</text>
+
+  <rect class="caixa" x="316" y="296" width="368" height="50"/>
+  <text class="nome" x="328" y="317">SQLite operacional</text>
+  <text class="det" x="328" y="335">leituras · alertas · relatos · inscrições</text>
+  <rect class="caixa" x="316" y="356" width="368" height="44"/>
+  <text class="nome" x="328" y="376">Monitoramento</text>
+  <text class="det" x="440" y="376">/api/health · /api/metricas · /metrics (Prometheus)</text>
+
+  <!-- Área 2: Big data -->
+  <rect class="area" x="300" y="440" width="400" height="180"/>
+  <text class="titulo" x="316" y="465">Área 2 · Big Data (data lake)</text>
+  <rect class="caixa" x="316" y="478" width="110" height="64"/>
+  <text class="nome" x="328" y="500">Bronze</text>
+  <text class="det" x="328" y="518">JSONL IoT, CSV</text>
+  <text class="det" x="328" y="533">bruto, com ruído</text>
+  <rect class="caixa" x="446" y="478" width="110" height="64"/>
+  <text class="nome" x="458" y="500">Silver</text>
+  <text class="det" x="458" y="518">limpo, horário,</text>
+  <text class="det" x="458" y="533">features da IA</text>
+  <rect class="caixa" x="576" y="478" width="108" height="64"/>
+  <text class="nome" x="588" y="500">Gold</text>
+  <text class="det" x="588" y="518">agregados p/</text>
+  <text class="det" x="588" y="533">dashboard</text>
+  <path class="lin" d="M426 510 H444"/>
+  <path class="lin" d="M556 510 H574"/>
+  <text class="det" x="316" y="568">2 anos · 105 mil leituras · relatório de qualidade</text>
+  <text class="det" x="316" y="586">Funções analíticas (Python) ≡ medidas DAX (Power BI)</text>
+  <text class="det" x="316" y="604">Silver treina a IA → modelos .joblib carregados pela API</text>
+
+  <!-- Usuários -->
+  <rect class="area" x="745" y="55" width="355" height="360"/>
+  <text class="titulo" x="761" y="80">Área 3 · Experiência digital</text>
+  <rect class="caixa" x="761" y="95" width="323" height="160"/>
+  <text class="nome" x="773" y="117">Web responsiva (5 telas, acessível)</text>
+  <text class="det" x="773" y="140">1. Painel de risco por bairro (tempo real)</text>
+  <text class="det" x="773" y="159">2. Relatar problema → triagem por IA</text>
+  <text class="det" x="773" y="178">3. Receber alertas por SMS (LGPD)</text>
+  <text class="det" x="773" y="197">4. Dados e indicadores (dashboard, filtros)</text>
+  <text class="det" x="773" y="216">5. Central da Defesa Civil (login JWT)</text>
+  <text class="det" x="773" y="240">A+ e alto contraste · funciona no celular</text>
+  <rect class="caixa" x="761" y="270" width="155" height="76"/>
+  <text class="nome" x="773" y="292">Cidadão</text>
+  <text class="det" x="773" y="311">SMS ≤160 caracteres</text>
+  <text class="det" x="773" y="328">sem precisar de app</text>
+  <rect class="caixa" x="929" y="270" width="155" height="76"/>
+  <text class="nome" x="941" y="292">Defesa Civil</text>
+  <text class="det" x="941" y="311">fila por urgência,</text>
+  <text class="det" x="941" y="328">ação recomendada</text>
+  <text class="det" x="761" y="380">Gestor público: ranking de vulnerabilidade</text>
+  <text class="det" x="761" y="397">e recomendação de investimento</text>
+
+  <!-- Área 4: DevOps -->
+  <rect class="area" x="745" y="440" width="355" height="180"/>
+  <text class="titulo" x="761" y="465">Área 4 · DevOps e qualidade</text>
+  <rect class="caixa" x="761" y="478" width="323" height="128"/>
+  <text class="det" x="773" y="500">git push → GitHub Actions:</text>
+  <text class="det" x="773" y="519">1. ruff (lint + regras de segurança)</text>
+  <text class="det" x="773" y="538">2. pipeline de dados + treino da IA</text>
+  <text class="det" x="773" y="557">3. pytest (14 casos)  4. docker build + smoke test</text>
+  <text class="det" x="773" y="576">5. deploy: push da imagem no GHCR</text>
+  <text class="det" x="773" y="595">docker compose: api + simulador</text>
+
+  <rect class="area" x="20" y="440" width="235" height="180"/>
+  <text class="titulo" x="36" y="465">Integração entre áreas</text>
+  <text class="det" x="36" y="490">• Sensores alimentam o painel e a IA</text>
+  <text class="det" x="36" y="510">• A IA treina com o pipeline (silver)</text>
+  <text class="det" x="36" y="530">• Dashboard lê a camada gold</text>
+  <text class="det" x="36" y="550">• Relatos (texto) + sensores →</text>
+  <text class="det" x="36" y="567">  mesmo agente de alerta</text>
+  <text class="det" x="36" y="587">• Tudo em uma imagem Docker,</text>
+  <text class="det" x="36" y="604">  testada a cada commit</text>
+
+  <!-- setas -->
+  <path class="lin" d="M239 170 H314"/>
+  <text class="rot" x="246" y="162">leituras</text>
+  <path class="lin" d="M239 297 C280 297 290 320 314 320"/>
+  <path class="lin" d="M494 226 H504"/>
+  <path class="lin" d="M684 170 H759"/>
+  <text class="rot" x="692" y="162">REST/JSON</text>
+  <path class="lin" d="M759 200 H700" />
+  <text class="rot" x="704" y="215">relatos</text>
+  <path class="lin" d="M684 226 C720 226 730 300 759 305"/>
+  <text class="rot" x="700" y="270">alertas</text>
+  <path class="lin" d="M500 476 V418"/>
+  <text class="rot" x="506" y="432">modelos + gold</text>
+  <path class="lin" d="M760 540 H704"/>
+</svg>

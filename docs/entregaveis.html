@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Alerta Cheia — Entregáveis Global Solution 2026/2</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  :root { --verde:#0b6e4f; --texto:#13201b; --cinza:#55625d; --linha:#d8dfdc; --fundo:#f3f6f4; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: var(--texto); font-size: 10.5pt; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4px; }
+  h2 { font-size: 15pt; color: var(--verde); border-bottom: 2px solid var(--verde); padding-bottom: 4px; margin: 0 0 10px; }
+  h3 { font-size: 11.5pt; margin: 14px 0 6px; }
+  p { margin: 0 0 8px; }
+  .quebra { break-before: page; }
+  .capa { height: 255mm; display: flex; flex-direction: column; justify-content: space-between; }
+  .capa .faixa { background: var(--verde); color: #fff; padding: 28px; border-radius: 10px; }
+  .capa .faixa h1 { font-size: 34pt; }
+  .eyebrow { letter-spacing: .12em; text-transform: uppercase; font-size: 9pt; font-weight: 700; color: var(--verde); }
+  .capa .faixa .eyebrow { color: #c8f0de; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.5pt; break-inside: avoid; }
+  th, td { border-bottom: 1px solid var(--linha); padding: 5px 6px; text-align: left; vertical-align: top; }
+  th { background: var(--fundo); font-weight: 600; }
+  .bom { color: #1e7a46; font-weight: 700; }
+  .caixa { background: var(--fundo); border-left: 4px solid var(--verde); padding: 8px 12px; border-radius: 6px; margin: 8px 0; break-inside: avoid; }
+  .grade2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  figure { margin: 8px 0 12px; break-inside: avoid; }
+  figure img { width: 100%; border: 1px solid var(--linha); border-radius: 6px; }
+  figcaption { font-size: 8.5pt; color: var(--cinza); margin-top: 3px; }
+  pre, code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 8.3pt; }
+  pre { background: #0f1d18; color: #d9f2e6; padding: 8px 10px; border-radius: 6px; white-space: pre-wrap; word-break: break-word; break-inside: avoid; margin: 6px 0 10px; }
+  .pts { float: right; font-size: 9pt; color: #fff; background: var(--verde); padding: 2px 8px; border-radius: 99px; }
+  ul { margin: 4px 0 8px; padding-left: 18px; }
+  li { margin-bottom: 2px; }
+  .ods { display: inline-block; background: var(--verde); color: #fff; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 4px; }
+  .muted { color: var(--cinza); font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="capa">
+  <div>
+    <div class="faixa">
+      <div class="eyebrow">FIAP · Global Solution 2026/2 · CitizenTech</div>
+      <h1>Alerta Cheia</h1>
+      <p style="font-size:14pt;margin:0">Previsão de alagamentos com sensores IoT e inteligência artificial,<br>com aviso ao cidadão até 2 horas antes.</p>
+    </div>
+    <div style="margin-top:22px">
+      <h3>Engenharia de Software · 4º ano · Turma 4ESOA</h3>
+      <table>
+        <tr><th style="width:35%">Grupo</th><td>&lt;nome do grupo&gt;</td></tr>
+        <tr><th>Integrantes (nome — RM)</th><td>&lt;Nome 1 — RM00000&gt;<br>&lt;Nome 2 — RM00000&gt;<br>&lt;Nome 3 — RM00000&gt;<br>&lt;Nome 4 — RM00000&gt;<br>&lt;Nome 5 — RM00000&gt;</td></tr>
+        <tr><th>Vídeo pitch</th><td>&lt;link público&gt;</td></tr>
+        <tr><th>Repositório</th><td>&lt;link do GitHub&gt;</td></tr>
+      </table>
+    </div>
+  </div>
+  <div>
+    <h3>Sumário</h3>
+    <ol>
+      <li>A proposta: cidadão, problema, solução, ecossistema e impacto</li>
+      <li>Arquitetura geral e integração entre as áreas</li>
+      <li>Área 1: IA e automação</li>
+      <li>Área 2: Big Data e visualização</li>
+      <li>Área 3: MVP, IoT e experiência digital</li>
+      <li>Área 4: DevOps, segurança e qualidade</li>
+      <li>Diferenciais, limitações e como executar</li>
+    </ol>
+    <p class="muted">Todos os dados de sensores, ocorrências e relatos são sintéticos, gerados por <code>bigdata/gerar_dados.py</code> com semente fixa. Os nomes de bairros servem só de cenário.</p>
+  </div>
+</section>
+
+<!-- 1. PROPOSTA -->
+<section class="quebra">
+  <div class="eyebrow">1 · A proposta</div>
+  <h2>Uma CitizenTech para quem mora na beira do córrego</h2>
+  <table>
+    <tr><th style="width:26%">Quem é o cidadão beneficiado</th><td>Moradores de bairros de várzea e periferia (ex.: Jardim Pantanal, Vila Itaim), que sofrem com enchentes todo verão. Muitos são idosos e famílias de baixa renda, nem sempre com smartphone ou internet estável. Também a <strong>Defesa Civil</strong> e o <strong>gestor da subprefeitura</strong>, que precisam decidir rápido e investir certo.</td></tr>
+    <tr><th>Qual problema será resolvido</th><td>Hoje o aviso de alagamento costuma chegar tarde: o alarme manual (régua) só dispara quando o córrego já está perto de transbordar, e os relatos da população chegam soltos por telefone ou redes sociais, sem triagem. Resultado: carros, móveis e documentos perdidos e risco à vida.</td></tr>
+    <tr><th>Como a solução funciona</th><td>Estações IoT baratas medem <strong>chuva</strong>, <strong>nível do córrego</strong> e temperatura a cada hora. Uma <strong>IA</strong> estima a chance de transbordar nas próximas 3 horas. Um <strong>agente de alerta</strong> transforma o risco em ação: SMS ao morador (funciona em qualquer celular) e ação recomendada à Defesa Civil. O cidadão também pode <strong>relatar problemas em texto livre</strong>, que a IA classifica e encaminha em milissegundos. Um <strong>dashboard</strong> mostra ao gestor onde investir em prevenção.</td></tr>
+    <tr><th>Quais tecnologias serão usadas</th><td>Python, FastAPI, SQLite, pandas, scikit-learn (RandomForest, TF-IDF + Regressão Logística), HTML/CSS/JavaScript + Chart.js, ESP32 no Wokwi (HC-SR04, pluviômetro, DHT22), Docker, GitHub Actions, pytest, ruff, JWT. Medidas analíticas também documentadas em DAX para Power BI.</td></tr>
+    <tr><th>Quem participa do ecossistema</th><td>Moradores (recebem alertas e relatam), agentes comunitários, Defesa Civil (fila priorizada e alertas), subprefeituras (bueiros, árvores), operadoras de SMS, escolas e UBS como pontos de apoio, e universidades/ONGs que podem instalar e manter estações.</td></tr>
+    <tr><th>Como o impacto será medido e ampliado</th><td>Métricas embutidas: % de alagamentos avisados com 1 h ou mais de antecedência, antecedência média, falsos alarmes por mês, tempo de triagem, famílias afetadas e índice de vulnerabilidade por bairro. Para ampliar: cada nova estação custa menos de R$ 300 em componentes, a API roda em um único container e o modelo é re-treinado com os dados de cada novo bairro.</td></tr>
+  </table>
+
+  <h3>Conexão com os ODS da ONU</h3>
+  <table>
+    <tr><th style="width:26%">ODS</th><th>Como o Alerta Cheia contribui</th></tr>
+    <tr><td><span class="ods">11</span> Cidades e comunidades sustentáveis</td><td>Meta 11.5: reduzir mortes e perdas por desastres, com foco nos mais vulneráveis. A antecedência do aviso passa de 36 para 75 minutos em média.</td></tr>
+    <tr><td><span class="ods">13</span> Ação contra a mudança do clima</td><td>Meta 13.1: resiliência a riscos climáticos. O sistema de alerta precoce é medida de adaptação a chuvas extremas cada vez mais frequentes.</td></tr>
+    <tr><td><span class="ods">9</span> Indústria, inovação e infraestrutura</td><td>Infraestrutura de baixo custo (IoT + nuvem) e dados abertos que orientam investimento em drenagem.</td></tr>
+    <tr><td><span class="ods">10</span> Redução das desigualdades</td><td>O alerta chega por SMS, sem exigir smartphone, internet ou cadastro com dados pessoais. Interface com fonte ampliada e alto contraste.</td></tr>
+  </table>
+  <div class="caixa"><strong>Princípios do enunciado:</strong> simples (SMS e linguagem clara), segura (JWT, LGPD), inclusiva e acessível (sem app, acessibilidade na web) e útil fora do cenário ideal: a estação mantém <strong>alarme local com LED e buzzer sem internet</strong> e guarda as leituras em buffer até a conexão voltar.</div>
+</section>
+
+<!-- 2. ARQUITETURA -->
+<section class="quebra">
+  <div class="eyebrow">2 · Arquitetura</div>
+  <h2>Arquitetura geral e como as áreas se conectam</h2>
+  <figure><img src="arquitetura.svg" alt="Diagrama de arquitetura"><figcaption>Figura 1: arquitetura do Alerta Cheia (arquivo editável em <code>docs/arquitetura.svg</code>).</figcaption></figure>
+  <h3>Fluxo de ponta a ponta</h3>
+  <ol>
+    <li>A estação (ESP32 ou simulador) envia <code>POST /api/leituras</code> com a chave do dispositivo.</li>
+    <li>A API valida os dados, monta as features com as últimas 24 leituras da estação e chama o modelo de risco.</li>
+    <li>O agente aplica as regras R1–R6 e cria, mantém, escala ou encerra o alerta do bairro.</li>
+    <li>O painel do cidadão é atualizado a cada 4 s; os inscritos recebem SMS (simulado: o número de destinatários é registrado no alerta).</li>
+    <li>Relatos em texto passam pela triagem e também podem acionar o agente (regra R4).</li>
+    <li>O histórico vira data lake (bronze, silver e gold), que treina a IA e alimenta o dashboard.</li>
+  </ol>
+  <p>Organização do código por áreas (pastas): <code>ia/</code>, <code>bigdata/</code>, <code>iot/</code>, <code>app/</code> + <code>frontend/</code>, <code>tests/</code>, <code>.github/workflows/</code>, <code>docs/</code>.</p>
+</section>
+
+<!-- 3. IA -->
+<section class="quebra">
+  <div class="eyebrow">3 · Área 1 de 4</div>
+  <h2>IA e automação <span class="pts">4 pontos</span></h2>
+  <h3>01 · IA aplicada</h3>
+  <table>
+    <tr><th style="width:22%">Componente</th><th>Técnica</th><th>Parte do problema que resolve</th></tr>
+    <tr><td><strong>Modelo de risco</strong> (<code>ia/treinar.py</code>, <code>ia/risco.py</code>)</td><td>RandomForest (300 árvores, prof. 8) sobre 6 features físicas: chuva da hora, chuva 3 h, chuva 24 h, nível, variação do nível em 1 h, % da cota. Alvo: transbordar nas próximas 3 h.</td><td>Antecipa o alagamento enquanto ainda dá tempo de agir. A água da bacia leva de 1 a 3 h para chegar ao córrego (tempo de concentração), e o modelo aprende a ler esse padrão.</td></tr>
+    <tr><td><strong>Triagem de relatos</strong> (<code>ia/triagem.py</code>)</td><td>NLP: TF-IDF (palavras 1-2 + caracteres 3-5, robusto a erro de digitação e falta de acento) + Regressão Logística para <em>categoria</em> e <em>severidade</em>.</td><td>Relatos em linguagem do dia a dia viram categoria, urgência, órgão responsável e prazo, sem fila manual.</td></tr>
+  </table>
+
+  <h3>02 · Agente e regras de automação</h3>
+  <p>O agente (<code>ia/automacao.py</code>) decide a ação a cada nova leitura ou relato grave:</p>
+  <table>
+    <tr><th style="width:8%">Regra</th><th>Condição</th><th>Ação</th></tr>
+    <tr><td>R1</td><td>Risco "alerta" (p ≥ 0,40, limiar escolhido por validação cruzada) ou "emergência" (p ≥ 0,75)</td><td>Cria alerta para o bairro, envia SMS aos inscritos e recomenda ação à Defesa Civil</td></tr>
+    <tr><td>R2</td><td>Já existe alerta ativo de nível igual ou maior</td><td>Mantém, sem reenviar (evita spam e "fadiga de alerta")</td></tr>
+    <tr><td>R3</td><td>Nível de risco sobe</td><td>Novo alerta escalonado (ex.: Alerta → Emergência)</td></tr>
+    <tr><td>R4</td><td>2 ou mais relatos de alagamento com severidade alta no bairro na última hora</td><td>Eleva para pelo menos "alerta" (sinal humano complementa o sensor)</td></tr>
+    <tr><td>R5</td><td>Risco volta a "normal"</td><td>Encerra os alertas ativos do bairro</td></tr>
+    <tr><td>R6</td><td>Toda mensagem</td><td>Linguagem simples, ação concreta, telefone 199, até 160 caracteres (cabe em 1 SMS)</td></tr>
+  </table>
+  <p><strong>Regras de urgência sobre a IA de triagem.</strong> Expressões de risco à vida forçam severidade "alta" mesmo se o modelo errar (segurança primeiro): <code>ilhad, arrastad, correnteza, cintura, peito, invad* casa, desab, rachadura, faísca, fio solto, risco de vida, pessoa presa, água entrando, afogad</code>. Relatos com confiança abaixo de 60% vão para <strong>revisão humana</strong>.</p>
+  <div class="caixa"><strong>Sobre prompts:</strong> a solução não depende de LLM. Isso foi uma escolha consciente: roda offline, custa zero por relato, responde em cerca de 4 ms e é auditável. Os "prompts" do sistema são as mensagens-modelo do agente, que ficam em <code>ia/automacao.py</code>, por exemplo: <em>"ALERTA {bairro}: risco de alagamento nas próximas 3h. Tire carros de áreas baixas e prepare documentos. Defesa Civil 199"</em>.</div>
+</section>
+
+<section class="quebra">
+  <h3>03 · Demonstração: entrada e saída reais</h3>
+  <p><strong>Previsão de risco</strong>: execução do simulador contra a API (<code>docs/evidencias/simulador_tempestade.txt</code>), estação do Jardim Pantanal, cota de 180 cm:</p>
+<pre>hora 3  chuva=  4.0mm nivel=  62.6cm p=0.02 [Normal]      agente=nenhuma
+hora 4  chuva= 12.0mm nivel=  77.4cm p=0.17 [Atenção]     agente=nenhuma
+hora 5  chuva= 18.0mm nivel= 116.1cm p=0.41 [Alerta]      agente=criar   &lt;&lt;&lt; ALERTA (2 h antes)
+hora 6  chuva= 16.0mm nivel= 176.7cm p=0.77 [Emergência]  agente=criar   (R3 escalonamento)
+hora 7  chuva=  8.0mm nivel= 234.9cm p=1.00 [Emergência]  agente=manter  (R2)  ← transbordou
+hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</pre>
+  <p>Na hora 5 o córrego está em <strong>64% da cota</strong>: a régua de 80% ainda não dispararia, mas a IA já emite o alerta. O transbordamento ocorre na hora 7.</p>
+  <p><strong>Resposta da API</strong> a uma leitura (entrada <code>{"estacao":"AC-01","chuva_mm":18,"nivel_cm":116}</code>, rodando no container):</p>
+<pre>{"bairro":"Jardim Pantanal",
+ "features":{"chuva_mm":18.0,"chuva_3h":18.0,"chuva_24h":18.0,"nivel_cm":116.0,"delta_nivel_1h":55.0,"nivel_pct_cota":0.644},
+ "risco":{"probabilidade":0.45,"nivel":"alerta","rotulo":"Alerta"},
+ "agente":{"acao":"criar","nivel":"alerta",
+   "mensagem":"ALERTA Jardim Pantanal: risco de alagamento nas próximas 3h. Tire carros de áreas baixas e prepare documentos. Defesa Civil 199",
+   "acao_defesa_civil":"Deslocar equipe ao bairro; acionar agentes comunitários; bloquear vias baixas.","motivo":"modelo: p=0.45; R1"}}</pre>
+  <p><strong>Triagem de relatos</strong> (frases fora da base de treino):</p>
+  <table>
+    <tr><th>Entrada (texto livre)</th><th>Categoria</th><th>Severidade</th><th>Encaminhamento</th><th>Confiança</th></tr>
+    <tr><td>"Minha mãe idosa ficou ilhada, a água entrou em casa"</td><td>alagamento</td><td>alta</td><td>Defesa Civil · até 30 min</td><td>95%</td></tr>
+    <tr><td>"Bueiro da esquina tampado de garrafa pet"</td><td>bueiro entupido</td><td>baixa</td><td>Subprefeitura, Limpeza · 48 h</td><td>97%</td></tr>
+    <tr><td>"Lâmpada do poste queimada há semanas"</td><td>alagamento ✗</td><td>baixa</td><td><strong>revisão humana</strong></td><td>32%</td></tr>
+  </table>
+  <p class="muted">O terceiro caso mostra a salvaguarda: com confiança baixa, a IA não decide sozinha e manda o relato para revisão.</p>
+  <figure><img src="prints/02_relatar_triagem.png" alt="Tela de relato com triagem"><figcaption>Figura 2: triagem por IA na tela "Relatar problema", em 5,3 ms.</figcaption></figure>
+</section>
+
+<section class="quebra">
+  <h3>04 · Lógica e ganho: antes x depois</h3>
+  <p>Treino com o 1º ano de dados (52.365 horas) e teste no 2º ano (52.426 horas, <strong>32 alagamentos que o modelo nunca viu</strong>). O limiar de alerta (0,40) foi escolhido por validação cruzada <em>dentro do treino</em> (folds por mês, máximo F1), sem olhar o teste. "Antes" é a régua manual usada hoje: alarme quando o córrego atinge 80% da cota.</p>
+  <table>
+    <tr><th>Métrica (período de teste)</th><th>Antes: régua 80%</th><th>Depois: IA</th><th>Ganho</th></tr>
+    <tr><td>Alagamentos avisados com 1 h ou mais de antecedência</td><td>56,2%</td><td class="bom">81,2%</td><td>+25 p.p.</td></tr>
+    <tr><td>Antecedência média do aviso</td><td>35,6 min</td><td class="bom">75,0 min</td><td>2,1× mais tempo</td></tr>
+    <tr><td>Falsos alarmes por mês (6 bairros)</td><td>4,5</td><td class="bom">1,6</td><td>−64%</td></tr>
+    <tr><td>Precisão por hora de alarme</td><td>9,8%</td><td class="bom">65,2%</td><td>6,7×</td></tr>
+    <tr><td>Recall por hora (horas antes do transbordamento)</td><td>19,8%</td><td class="bom">44,8%</td><td>2,3×</td></tr>
+  </table>
+  <p><strong>Importância das features:</strong> chuva acumulada em 3 h (26%), chuva da hora (25%), variação do nível em 1 h (22%), % da cota (13%), chuva 24 h (7%), nível absoluto (7%). Hora do dia e mês foram testados e <strong>descartados</strong>: o modelo "decorava" o horário dos temporais de verão em vez de aprender a física.</p>
+  <table>
+    <tr><th>Triagem de relatos</th><th>Resultado</th></tr>
+    <tr><td>Teste com dados sintéticos (450 relatos)</td><td>100% categoria, 100% severidade (base gerada por modelos de frase, por isso fácil demais)</td></tr>
+    <tr><td><strong>Validação honesta</strong>: 20 frases escritas à mão, fora dos modelos (<code>ia/casos_validacao_manual.csv</code>)</td><td class="bom">95% categoria · 85% severidade</td></tr>
+    <tr><td>Tempo por relato</td><td class="bom">~4 ms (vs. ~2 min de triagem manual por atendente)</td></tr>
+  </table>
+  <figure><img src="prints/04_dashboard.png" style="max-height:120mm;object-fit:cover;object-position:bottom" alt="Tabela antes x depois no dashboard"><figcaption>Figura 3: a comparação antes x depois também aparece no dashboard, lida de <code>/api/ia/metricas</code>.</figcaption></figure>
+</section>
+
+<!-- 4. BIG DATA -->
+<section class="quebra">
+  <div class="eyebrow">4 · Área 2 de 4</div>
+  <h2>Big Data e visualização <span class="pts">4 pontos</span></h2>
+  <h3>01 · Estrutura dos dados: data lake em camadas</h3>
+  <table>
+    <tr><th style="width:12%">Camada</th><th>Arquivos</th><th>Conteúdo</th></tr>
+    <tr><td><strong>Bronze</strong></td><td><code>leituras_iot.jsonl</code> (105.665 linhas), <code>ocorrencias_defesa_civil.csv</code> (88), <code>relatos_cidadaos.csv</code> (1.800)</td><td>Dados brutos como chegam: JSON aninhado do dispositivo, timestamps com atraso, IDs em minúsculas, pacotes perdidos, leituras com defeito (999 cm, −5 mm) e reenvios duplicados.</td></tr>
+    <tr><td><strong>Silver</strong></td><td><code>leituras.csv</code> (105.120), <code>ocorrencias.csv</code>, <code>relatos.csv</code></td><td>Série horária limpa por estação, com flag de imputação e features da IA (chuva 3 h/24 h, Δnível, % da cota, alvo "alaga em 3 h"). Texto dos relatos normalizado.</td></tr>
+    <tr><td><strong>Gold</strong></td><td><code>diario_bairro.csv</code>, <code>mensal_bairro.csv</code>, <code>relatos_categoria.csv</code>, <code>dim_bairro.csv</code>, <code>qualidade.json</code></td><td>Modelo analítico (fatos diário/mensal por bairro + dimensão bairro), pronto para o dashboard ou para o Power BI.</td></tr>
+  </table>
+  <p>Modelo operacional (SQLite da API): <code>leituras</code>(estacao, bairro, ts, chuva_mm, nivel_cm, temp_c, probabilidade, nivel_risco) · <code>alertas</code>(bairro, nivel, mensagem, acao_defesa_civil, motivo, ativo, destinatarios) · <code>relatos</code>(bairro, texto, categoria, severidade, confianca, orgao, prazo, status) · <code>inscricoes</code>(bairro, contato_hash, contato_mascarado).</p>
+
+  <h3>02 · Ingestão e processamento: da coleta ao dado tratado</h3>
+  <ol>
+    <li><strong>Coleta</strong>: estações publicam JSON (<code>bigdata/gerar_dados.py</code> simula 2 anos e 6 estações, com hidrograma realista de 1 a 3 h de atraso).</li>
+    <li><strong>Padronização</strong>: <code>json_normalize</code>, ID da estação em maiúsculas, timestamp arredondado para a hora.</li>
+    <li><strong>Deduplicação</strong> por (estação, hora).</li>
+    <li><strong>Validação de faixa física</strong>: chuva 0–200 mm, nível 0–600 cm, temperatura −10–50 °C. Fora da faixa vira nulo.</li>
+    <li><strong>Reamostragem horária e imputação</strong>: interpolação de até 3 h para nível e temperatura; chuva ausente = 0, com flag <code>imputado</code>.</li>
+    <li><strong>Feature engineering</strong> por estação e <strong>alvo</strong> (transbordar em t+1..t+3).</li>
+    <li><strong>Agregação gold</strong> e junção com ocorrências e relatos.</li>
+  </ol>
+  <p>Relatório de qualidade gerado automaticamente (<code>gold/qualidade.json</code>):</p>
+  <table>
+    <tr><th>Linhas bronze</th><th>Duplicatas removidas</th><th>Nível fora da faixa</th><th>Chuva fora da faixa</th><th>Nulos (nível)</th><th>Horas imputadas</th><th>Linhas silver</th></tr>
+    <tr><td>105.665</td><td>545</td><td>322</td><td>302</td><td>1.372</td><td>3.999</td><td>105.120</td></tr>
+  </table>
+</section>
+
+<section class="quebra">
+  <h3>03 · Dashboard: 8 indicadores com filtros de bairro e período</h3>
+  <figure><img src="prints/05_dashboard_filtro_bairro.png" alt="Dashboard filtrado"><figcaption>Figura 4: dashboard filtrado (Jardim Pantanal, verão 2025/26). KPIs, recomendação ao gestor e gráficos são recalculados pela API.</figcaption></figure>
+  <p><strong>Decisão apoiada:</strong> onde investir primeiro em prevenção. O <em>índice de vulnerabilidade</em> (alagamentos por 100 mm de chuva) separa "choveu muito" de "drena mal". Jardim Pantanal tem índice 1,05 contra 0,03 de Pompeia com a mesma chuva, então é prioridade para limpeza de bueiros, piscinão e cadastro de moradores no SMS.</p>
+</section>
+
+<section class="quebra">
+  <h3>04 · Funções analíticas (Python ≡ DAX)</h3>
+  <p>Implementadas em <code>bigdata/analitico.py</code> e documentadas em DAX em <code>bigdata/medidas_dax.md</code>, para montar o mesmo painel no Power BI a partir dos CSVs gold.</p>
+  <table>
+    <tr><th style="width:24%">Medida</th><th>DAX</th></tr>
+    <tr><td>Chuva acumulada</td><td><code>SUM(diario_bairro[chuva_total_mm])</code></td></tr>
+    <tr><td>Alagamentos</td><td><code>SUM(diario_bairro[alagamentos])</code></td></tr>
+    <tr><td>Horas críticas</td><td><code>SUM(diario_bairro[horas_acima_cota])</code></td></tr>
+    <tr><td>Índice de vulnerabilidade</td><td><code>DIVIDE([Alagamentos], [Chuva Acumulada]) * 100</code></td></tr>
+    <tr><td>Dias com chuva forte</td><td><code>CALCULATE(DISTINCTCOUNT(diario_bairro[data]), diario_bairro[chuva_max_1h_mm] &gt;= 20)</code></td></tr>
+    <tr><td>% relatos graves</td><td><code>DIVIDE(CALCULATE(SUM(relatos_categoria[qtd]), relatos_categoria[severidade]="alta"), SUM(relatos_categoria[qtd]))</code></td></tr>
+    <tr><td>Média móvel 7 dias</td><td><code>AVERAGEX(DATESINPERIOD(Calendario[Date], MAX(Calendario[Date]), -7, DAY), CALCULATE(AVERAGE(diario_bairro[chuva_total_mm])))</code></td></tr>
+    <tr><td>População em bairros afetados</td><td><code>SUMX(FILTER(dim_bairro, CALCULATE([Alagamentos]) &gt; 0), dim_bairro[populacao])</code></td></tr>
+    <tr><td>Ranking de vulnerabilidade</td><td><code>RANKX(ALL(dim_bairro[bairro]), [Indice Vulnerabilidade], , DESC)</code></td></tr>
+    <tr><td>Variação anual</td><td><code>DIVIDE([Alagamentos] - CALCULATE([Alagamentos], SAMEPERIODLASTYEAR(Calendario[Date])), CALCULATE([Alagamentos], SAMEPERIODLASTYEAR(Calendario[Date])))</code></td></tr>
+  </table>
+  <figure><img src="prints/04_dashboard.png" style="max-height:150mm;object-fit:cover;object-position:top" alt="Dashboard geral"><figcaption>Figura 5: visão geral (todos os bairros, 2 anos): 8 KPIs, chuva x alagamentos por mês, vulnerabilidade por bairro, média móvel e relatos por tipo.</figcaption></figure>
+</section>
+
+<!-- 5. MVP / IoT -->
+<section class="quebra">
+  <div class="eyebrow">5 · Área 3 de 4</div>
+  <h2>MVP, IoT e experiência digital <span class="pts">4 pontos</span></h2>
+  <h3>01 · Protótipo: 5 telas funcionais (web responsiva)</h3>
+  <table>
+    <tr><th>Tela</th><th>Para quem</th><th>O que faz</th></tr>
+    <tr><td>Painel de risco (<code>index.html</code>)</td><td>Cidadão</td><td>Risco por bairro em tempo real, % da cota, faixa de alerta, gráfico de 24 h</td></tr>
+    <tr><td>Relatar problema (<code>relatar.html</code>)</td><td>Cidadão</td><td>Relato anônimo em texto livre, com triagem por IA na hora</td></tr>
+    <tr><td>Receber alertas (<code>alertas.html</code>)</td><td>Cidadão</td><td>Cadastro de celular para SMS com consentimento LGPD; histórico de alertas</td></tr>
+    <tr><td>Dados e indicadores (<code>dashboard.html</code>)</td><td>Gestor</td><td>Dashboard com filtros, recomendação e comparação da IA</td></tr>
+    <tr><td>Central da Defesa Civil (<code>admin.html</code>)</td><td>Defesa Civil</td><td>Login JWT, fila de relatos por urgência, status, decisões do agente, saúde do sistema</td></tr>
+  </table>
+  <p>Acessibilidade: botões <strong>A+</strong> (fonte maior) e <strong>alto contraste</strong>, link "pular para o conteúdo", rótulos em todos os campos, <code>aria-live</code> nas atualizações e níveis de risco indicados por <strong>texto + cor</strong> (não só cor). Layout funciona no celular.</p>
+  <figure><img src="prints/01_painel_risco.png" style="max-height:150mm;object-fit:cover;object-position:top" alt="Painel de risco"><figcaption>Figura 6: painel de risco durante a tempestade simulada. O Jardim Pantanal está em emergência e os demais bairros seguem normais.</figcaption></figure>
+</section>
+
+<section class="quebra">
+  <div class="grade2">
+    <figure><img src="prints/03_alertas.png" alt="Receber alertas"><figcaption>Figura 7: cadastro para SMS (telefone mascarado) e alertas emitidos.</figcaption></figure>
+    <figure><img src="prints/07_mobile_painel.png" style="max-height:110mm;width:auto;display:block;margin:auto" alt="Celular"><figcaption>Figura 8: painel no celular (390 px).</figcaption></figure>
+  </div>
+  <figure><img src="prints/06_defesa_civil.png" alt="Defesa Civil"><figcaption>Figura 9: Central da Defesa Civil com fila priorizada pela IA, órgão e prazo, decisões do agente (R1 e R3) e monitoramento.</figcaption></figure>
+</section>
+
+<section class="quebra">
+  <h3>02 · IoT: 3 sensores (Wokwi + simulador)</h3>
+  <table>
+    <tr><th>Sensor / atuador</th><th>Mede / faz</th><th>Implementação</th></tr>
+    <tr><td>HC-SR04 ultrassônico</td><td>Nível do córrego (altura do sensor − distância até a água), mediana de 5 leituras</td><td rowspan="4"><code>iot/estacao_alerta_cheia/</code>: sketch ESP32 + <code>diagram.json</code> do Wokwi; envia JSON por Wi-Fi com <code>X-API-Key</code>. <br><br><code>iot/simulador.py</code>: mock das 6 estações com o mesmo protocolo e cenários calmo, tempestade e replay do maior evento histórico.</td></tr>
+    <tr><td>Pluviômetro de báscula</td><td>Chuva (0,2 mm por báscula, contada por interrupção com debounce)</td></tr>
+    <tr><td>DHT22</td><td>Temperatura e umidade do ar</td></tr>
+    <tr><td>LEDs + buzzer</td><td>Alarme <strong>local</strong> (verde/amarelo/vermelho) que funciona sem internet, mais buffer de 24 leituras offline</td></tr>
+  </table>
+  <p class="muted">Para testar no Wokwi: crie um projeto ESP32 em wokwi.com, cole o <code>.ino</code> e o <code>diagram.json</code>, adicione a biblioteca "DHT sensor library for ESPx", ajuste o slider de distância do HC-SR04 e clique no botão verde para simular chuva. Para o HTTP chegar à API local, use o Wokwi Private Gateway ou exponha a API.</p>
+
+  <h3>03 · Fluxo funcional completo</h3>
+  <ol>
+    <li>A moradora se cadastra em <em>Receber alertas</em> (Jardim Pantanal, com aceite LGPD).</li>
+    <li>Começa um temporal: as estações enviam chuva e nível; o painel muda de Normal para Atenção.</li>
+    <li>Com o córrego em 64% da cota, a IA prevê p = 0,41 e o agente emite <strong>ALERTA</strong> com SMS para os inscritos, 2 h antes do transbordamento.</li>
+    <li>Um vizinho relata "água entrando nas casas, idosa ilhada"; a triagem marca alagamento, severidade alta, Defesa Civil, até 30 min.</li>
+    <li>A Defesa Civil vê o relato no topo da fila, a ação recomendada pelo agente e muda o status para "em atendimento".</li>
+    <li>O nível sobe (p = 0,77): o agente escala para <strong>EMERGÊNCIA</strong> (R3). Depois da chuva, o risco normaliza e o alerta é encerrado (R5).</li>
+    <li>O evento entra no histórico e no dashboard, que recomenda priorizar o bairro.</li>
+  </ol>
+  <p>O mesmo fluxo é verificado automaticamente pelo teste <strong>CT-06</strong> e pode ser reproduzido com <code>python -m iot.simulador --cenario tempestade</code>.</p>
+
+  <h3>04 · Arquitetura</h3>
+  <p>Veja a Figura 1 (seção 2): estações IoT → API FastAPI (segurança, IA, agente, SQLite, monitoramento) → web do cidadão, Defesa Civil e gestor; data lake bronze, silver e gold treinando a IA e alimentando o dashboard; tudo empacotado em Docker e testado no CI.</p>
+</section>
+
+<!-- 6. DEVOPS -->
+<section class="quebra">
+  <div class="eyebrow">6 · Área 4 de 4</div>
+  <h2>DevOps, segurança e qualidade <span class="pts">3 pontos</span></h2>
+  <h3>01 · Organização e versionamento</h3>
+<pre>alerta-cheia/
+├── app/          API FastAPI (main, segurança, schemas, banco)
+├── frontend/     5 telas HTML + CSS + JS
+├── ia/           treino, risco, triagem, agente de automação
+├── bigdata/      gerador, pipeline bronze/silver/gold, funções analíticas, DAX
+├── iot/          sketch ESP32 + diagram.json (Wokwi) e simulador
+├── tests/        14 casos automatizados (pytest)
+├── scripts/      preparar.py (dados + IA), capturar_telas.mjs
+├── docs/         arquitetura, plano de testes, roteiro do pitch, evidências, prints
+├── Dockerfile · docker-compose.yml · .github/workflows/ci.yml · pyproject.toml</pre>
+  <p>Versionado com Git (branch <code>main</code>). Dados e modelos <strong>não</strong> são versionados: são regerados de forma reprodutível (semente fixa) por <code>python -m scripts.preparar</code>.</p>
+
+  <h3>02 · DevOps: Docker, CI/CD e monitoramento</h3>
+  <ul>
+    <li><strong>Dockerfile</strong>: imagem <code>python:3.12-slim</code>, gera dados e treina a IA no build, roda como usuário sem privilégios, com <code>HEALTHCHECK</code>. <strong>docker-compose</strong>: API + simulador (perfil <code>demo</code>) e volume para o banco.</li>
+    <li><strong>GitHub Actions</strong> (<code>.github/workflows/ci.yml</code>): a cada push, roda lint (ruff + regras de segurança), pipeline de dados e treino, 14 testes (relatório JUnit e métricas da IA como artefatos), build da imagem com smoke test (health, leitura IoT e /metrics) e <strong>deploy</strong> com publicação da imagem no GitHub Container Registry na branch main.</li>
+    <li><strong>Monitoramento</strong>: <code>/api/health</code>, <code>/api/metricas</code> (uptime, requisições por rota e status, latência média, alertas ativos) e <code>/metrics</code> no formato Prometheus, pronto para Grafana.</li>
+  </ul>
+  <p>Evidência real (<code>docs/evidencias/docker_run.txt</code>):</p>
+<pre>$ docker ps --filter name=alerta-cheia-evid
+NAMES               IMAGE                 STATUS                   PORTS
+alerta-cheia-evid   alerta-cheia:latest   Up 7 minutes (healthy)   0.0.0.0:8001-&gt;8000/tcp
+$ curl localhost:8001/api/health
+{"status":"ok","versao":"1.0.0","modelos":true}
+$ curl -X POST localhost:8001/api/leituras   (sem chave)
+{"detail":"Chave do dispositivo inválida"}
+$ curl localhost:8001/metrics
+alerta_cheia_requests_total 6
+alerta_cheia_alertas_ativos 1
+alerta_cheia_http_status_total{code="201"} 1
+alerta_cheia_http_status_total{code="401"} 1</pre>
+</section>
+
+<section class="quebra">
+  <h3>03 · Segurança: 7 práticas implementadas</h3>
+  <table>
+    <tr><th style="width:4%">#</th><th style="width:28%">Prática</th><th>Onde / como</th></tr>
+    <tr><td>1</td><td>Autenticação JWT</td><td>Área da Defesa Civil; token HS256 com expiração de 60 min (<code>app/seguranca.py</code>)</td></tr>
+    <tr><td>2</td><td>Senha com hash</td><td>PBKDF2-SHA256 com salt e 200 mil iterações; comparação em tempo constante; senha só por variável de ambiente</td></tr>
+    <tr><td>3</td><td>Autenticação de dispositivos</td><td>Cabeçalho <code>X-API-Key</code> obrigatório em <code>/api/leituras</code></td></tr>
+    <tr><td>4</td><td>Validação de entrada</td><td>Pydantic: faixas físicas dos sensores, estação e bairro cadastrados, tamanho do texto, bloqueio de HTML, formato do telefone</td></tr>
+    <tr><td>5</td><td>Proteção de dados (LGPD)</td><td>Telefone guardado só como HMAC e máscara <code>(11) *****-1234</code>; consentimento explícito; relatos anônimos, sem IP ou nome</td></tr>
+    <tr><td>6</td><td>Rate limit</td><td>Até 5 relatos por minuto por origem (HTTP 429), contra spam e robôs</td></tr>
+    <tr><td>7</td><td>Cabeçalhos HTTP e erros</td><td>CSP, X-Frame-Options DENY, nosniff, no-referrer; erro 500 genérico sem stack trace; SQL sempre parametrizado; XSS evitado com <code>textContent</code></td></tr>
+  </table>
+
+  <h3 class="quebra">04 · Testes: plano com 14 casos e evidência da execução</h3>
+  <table>
+    <tr><th>ID</th><th>Caso</th><th>Esperado</th><th>Resultado</th></tr>
+    <tr><td>CT-01</td><td>Saúde da API</td><td>200, modelos carregados</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-02</td><td>Login com senha errada</td><td>401</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-03</td><td>Rota protegida sem token, com token falso e com token válido</td><td>401 / 401 / 200</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-04</td><td>Leitura IoT sem chave ou com chave errada</td><td>401</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-05</td><td>Leitura com 999 cm, chuva negativa, estação inexistente</td><td>422</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-06</td><td>Tempestade completa: alerta antes do transbordamento</td><td>alerta com nível &lt; 180 cm</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-07</td><td>Triagem de relato grave</td><td>alagamento / alta / Defesa Civil</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-08</td><td>Relato com &lt;script&gt; e bairro inválido</td><td>422</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-09</td><td>6 relatos em 1 minuto</td><td>5×201 + 1×429</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-10</td><td>Telefone não salvo em claro; sem consentimento</td><td>mascarado; ausente no banco; 422</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-11</td><td>Limpeza bronze → silver</td><td>duplicata e defeito tratados</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-12</td><td>Regras R1–R6 do agente</td><td>criar / manter / escalar / encerrar</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-13</td><td>Filtros do dashboard</td><td>KPIs filtrados; 404 para bairro inválido</td><td class="bom">Passou</td></tr>
+    <tr><td>CT-14</td><td>Cabeçalhos de segurança e /metrics</td><td>CSP presente; métricas expostas</td><td class="bom">Passou</td></tr>
+  </table>
+<pre>$ pytest
+tests/test_api.py::test_ct01_health PASSED                                    [  7%]
+tests/test_api.py::test_ct02_login_senha_errada PASSED                        [ 14%]
+...
+tests/test_api.py::test_ct14_cabecalhos_de_seguranca_e_monitoramento PASSED   [100%]
+============================= 14 passed in 5.22s ==============================
+$ ruff check .
+All checks passed!</pre>
+  <p class="muted">Saída completa em <code>docs/evidencias/pytest.txt</code>; plano detalhado em <code>docs/plano_de_testes.md</code>.</p>
+</section>
+
+<!-- 7. FECHAMENTO -->
+<section class="quebra">
+  <div class="eyebrow">7 · Fechamento</div>
+  <h2>Diferenciais, limitações e como executar</h2>
+  <h3>Diferenciais (critério de desempate)</h3>
+  <ul>
+    <li><strong>Áreas integradas</strong>: os sensores alimentam o painel e a IA; a IA é treinada com o pipeline (silver); o dashboard lê a gold; relatos e sensores acionam o mesmo agente.</li>
+    <li><strong>IA medida</strong>: avaliação temporal honesta, com o teste em um ano inteiro nunca visto, comparada com a régua atual e com métricas por evento (antecedência e falsos alarmes), não só acurácia.</li>
+    <li><strong>Pipeline ponta a ponta</strong>: um commit dispara lint, dados, treino, testes, build, smoke test e publicação da imagem, sem passo manual.</li>
+    <li><strong>Validado com gente real</strong>: &lt;preencher com as conversas do grupo com moradores ou agentes da Defesa Civil e o que mudou no projeto&gt;.</li>
+  </ul>
+  <h3>Limitações e próximos passos</h3>
+  <ul>
+    <li>Os dados são sintéticos, com hidrologia simplificada. Em produção, o modelo deve ser re-treinado com séries reais (ex.: CGE-SP, Cemaden) e calibrado por bairro.</li>
+    <li>O envio de SMS é simulado (só a contagem de destinatários). A integração com uma operadora ou gateway de SMS é o próximo passo.</li>
+    <li>Integrar a previsão meteorológica (radar) para ganhar antecedência antes mesmo de a chuva começar.</li>
+  </ul>
+  <h3>Como executar (resumo do README)</h3>
+<pre>pip install -r requirements-dev.txt
+cp .env.example .env
+python -m scripts.preparar                 # dados bronze/silver/gold + treino da IA
+uvicorn app.main:app --env-file .env       # http://localhost:8000  (API em /docs)
+python -m iot.simulador --cenario tempestade
+pytest
+# ou, com Docker:
+docker compose up --build                  # + simulador: docker compose --profile demo up</pre>
+  <h3>Créditos</h3>
+  <p class="muted">Projeto original do grupo. Bibliotecas de código aberto: FastAPI, Uvicorn, Pydantic, pandas, NumPy, scikit-learn, PyJWT, Chart.js, DHTesp (Wokwi). Referências: ONU (ODS 11 e 13), UN-Habitat (cidades inteligentes centradas nas pessoas), PNUD (transformação digital inclusiva).</p>
+</section>
+
+</body>
+</html>

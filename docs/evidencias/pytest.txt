@@ -1,0 +1,25 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\lucyk\AppData\Local\Python\pythoncore-3.14-64\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\lucyk\GS2
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collecting ... collected 14 items
+
+tests/test_api.py::test_ct01_health PASSED                               [  7%]
+tests/test_api.py::test_ct02_login_senha_errada PASSED                   [ 14%]
+tests/test_api.py::test_ct03_rota_protegida_exige_token PASSED           [ 21%]
+tests/test_api.py::test_ct04_leitura_sem_chave_iot_rejeitada PASSED      [ 28%]
+tests/test_api.py::test_ct05_validacao_de_entrada_da_leitura PASSED      [ 35%]
+tests/test_api.py::test_ct06_fluxo_tempestade_alerta_antes_de_transbordar PASSED [ 42%]
+tests/test_api.py::test_ct07_triagem_ia_relato_grave PASSED              [ 50%]
+tests/test_api.py::test_ct08_relato_com_html_rejeitado PASSED            [ 57%]
+tests/test_api.py::test_ct09_rate_limit_relatos PASSED                   [ 64%]
+tests/test_api.py::test_ct10_lgpd_telefone_nao_salvo_em_claro PASSED     [ 71%]
+tests/test_api.py::test_ct11_pipeline_limpa_dados_brutos PASSED          [ 78%]
+tests/test_api.py::test_ct12_regras_do_agente PASSED                     [ 85%]
+tests/test_api.py::test_ct13_dashboard_filtros PASSED                    [ 92%]
+tests/test_api.py::test_ct14_cabecalhos_de_seguranca_e_monitoramento PASSED [100%]
+
+============================= 14 passed in 5.22s ==============================
