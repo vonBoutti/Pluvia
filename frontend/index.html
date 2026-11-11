@@ -3,37 +3,68 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alerta Cheia — Painel de risco</title>
+  <meta name="color-scheme" content="light dark">
+  <title>Alerta Cheia — Risco agora</title>
+  <script src="js/tema.js"></script>
   <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/inicio.css">
 </head>
 <body>
   <header class="topo" id="topo"></header>
-  <main id="conteudo">
-    <h1>Risco de alagamento agora</h1>
-    <p class="sub">Sensores nos córregos medem chuva e nível da água a cada hora. A inteligência artificial estima a chance de transbordar nas <strong>próximas 3 horas</strong>.</p>
+  <main id="conteudo" style="max-width:none;padding:0">
+    <section class="hero" aria-live="polite">
+      <div class="chuva-anim" id="chuva" aria-hidden="true"></div>
 
-    <div id="faixa" class="faixa-alerta" role="alert"></div>
+      <div class="hero-conteudo">
+        <div class="surgir d1">
+          <div class="copo-wrap" role="img" id="copo-desc" aria-label="Nível do córrego">
+            <div class="copo">
+              <div class="agua" id="agua">
+                <svg viewBox="0 0 1200 20" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="onda2" d="M0 10 Q150 0 300 10 T600 10 T900 10 T1200 10 V20 H0 Z"/>
+                  <path class="onda1" d="M0 12 Q150 4 300 12 T600 12 T900 12 T1200 12 V20 H0 Z"/>
+                </svg>
+                <div class="corpo"></div>
+              </div>
+              <div class="limite"><span>transborda aqui</span></div>
+              <div class="copo-texto"><div class="pilula"><strong id="pct">–</strong><span>do limite do córrego</span></div></div>
+            </div>
+          </div>
+        </div>
 
-    <section aria-labelledby="t-bairros">
-      <h2 id="t-bairros" class="oculto">Bairros monitorados</h2>
-      <div id="bairros" class="grade" aria-live="polite"><p>Carregando…</p></div>
+        <div class="estado">
+          <div class="topo-estado surgir d1">
+            <div class="seletor">
+              <span id="ic-local"></span>
+              <label for="meu-bairro">Meu bairro:</label>
+              <select id="meu-bairro"></select>
+            </div>
+            <span id="selo"></span>
+          </div>
+          <h1 class="surgir d2" id="titulo">Carregando…</h1>
+          <p class="frase surgir d3" id="frase"></p>
+          <ul class="fazer surgir d3" id="fazer" aria-label="O que fazer agora"></ul>
+          <div class="ctas surgir d4">
+            <a class="btn-grande cheio" href="alertas.html" id="cta-sms"></a>
+            <a class="btn-grande vazado" href="relatar.html" id="cta-relatar"></a>
+            <a class="btn-grande vazado" href="entenda.html" id="cta-entenda"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="outros surgir d4">
+        <h2>Outros bairros agora</h2>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="rolar-dica"><button type="button" id="ver-historico"></button></div>
     </section>
 
-    <section id="detalhe" class="cartao oculto" style="margin-top:18px" aria-live="polite">
-      <h2 id="det-titulo">Últimas 24 horas</h2>
-      <div class="grafico"><canvas id="grafico-nivel" aria-label="Gráfico do nível do córrego e chuva nas últimas 24 horas" role="img"></canvas></div>
-      <p class="ajuda" id="det-resumo"></p>
-    </section>
-
-    <section class="cartao" style="margin-top:18px">
-      <h2>Como ler o painel</h2>
-      <p>
-        <span class="selo n-normal">Normal</span> sem risco previsto ·
-        <span class="selo n-atencao">Atenção</span> chuva forte, acompanhe ·
-        <span class="selo n-alerta">Alerta</span> risco de alagamento em até 3 h: tire o carro de áreas baixas ·
-        <span class="selo n-emergencia">Emergência</span> vá para local alto
-      </p>
-      <p class="ajuda">A barra mostra quanto o córrego já encheu em relação ao ponto em que transborda (cota). Em emergência ligue <strong>199</strong> (Defesa Civil) ou <strong>193</strong> (Bombeiros).</p>
+    <section id="detalhe" style="max-width:1200px;margin:0 auto;padding:24px 16px 56px">
+      <div class="cartao">
+        <h2 id="det-titulo">Últimas 24 horas</h2>
+        <p class="ajuda" id="det-resumo" style="margin-top:-6px"></p>
+        <div class="grafico"><canvas id="grafico-nivel" aria-label="Gráfico do nível do córrego e chuva nas últimas 24 horas" role="img"></canvas></div>
+      </div>
     </section>
   </main>
   <footer>Alerta Cheia · CitizenTech — Global Solution 2026/2 · dados de demonstração</footer>

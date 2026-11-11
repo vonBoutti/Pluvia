@@ -246,25 +246,37 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
 <section class="quebra">
   <div class="eyebrow">5 · Área 3 de 4</div>
   <h2>MVP, IoT e experiência digital <span class="pts">4 pontos</span></h2>
-  <h3>01 · Protótipo: 5 telas funcionais (web responsiva)</h3>
+  <h3>01 · Protótipo: 6 telas funcionais (web responsiva, tema claro e escuro)</h3>
   <table>
     <tr><th>Tela</th><th>Para quem</th><th>O que faz</th></tr>
-    <tr><td>Painel de risco (<code>index.html</code>)</td><td>Cidadão</td><td>Risco por bairro em tempo real, % da cota, faixa de alerta, gráfico de 24 h</td></tr>
+    <tr><td>Risco agora (<code>index.html</code>)</td><td>Cidadão</td><td>Tela cheia e resumida: o cidadão escolhe o bairro e vê um "copo" animado com o nível do córrego, a mensagem principal (ex.: "Pode alagar em até 3 horas"), 3 ações do que fazer e os outros bairros. A cor de fundo muda com o risco e cai chuva animada quando está chovendo. O gráfico de 24 h fica logo abaixo.</td></tr>
+    <tr><td>Entenda (<code>entenda.html</code>)</td><td>Cidadão</td><td>Explica sem jargão: como funciona (sensor → IA → SMS), o que significa cada cor, glossário de cada número da tela, <b>simulador interativo</b> ("faça chover e veja o córrego encher") e perguntas frequentes sobre confiança e privacidade</td></tr>
     <tr><td>Relatar problema (<code>relatar.html</code>)</td><td>Cidadão</td><td>Relato anônimo em texto livre, com triagem por IA na hora</td></tr>
     <tr><td>Receber alertas (<code>alertas.html</code>)</td><td>Cidadão</td><td>Cadastro de celular para SMS com consentimento LGPD; histórico de alertas</td></tr>
     <tr><td>Dados e indicadores (<code>dashboard.html</code>)</td><td>Gestor</td><td>Dashboard com filtros, recomendação e comparação da IA</td></tr>
     <tr><td>Central da Defesa Civil (<code>admin.html</code>)</td><td>Defesa Civil</td><td>Login JWT, fila de relatos por urgência, status, decisões do agente, saúde do sistema</td></tr>
   </table>
-  <p>Acessibilidade: botões <strong>A+</strong> (fonte maior) e <strong>alto contraste</strong>, link "pular para o conteúdo", rótulos em todos os campos, <code>aria-live</code> nas atualizações e níveis de risco indicados por <strong>texto + cor</strong> (não só cor). Layout funciona no celular.</p>
-  <figure><img src="prints/01_painel_risco.png" style="max-height:150mm;object-fit:cover;object-position:top" alt="Painel de risco"><figcaption>Figura 6: painel de risco durante a tempestade simulada. O Jardim Pantanal está em emergência e os demais bairros seguem normais.</figcaption></figure>
+  <p>Design e acessibilidade: tema <strong>claro e escuro</strong> (segue o celular ou escolha manual), paleta com contraste adequado nos dois modos, botões <strong>A+</strong> (fonte maior) e <strong>alto contraste</strong>, animações que são desligadas para quem prefere menos movimento, rótulos em todos os campos, <code>aria-live</code> nas atualizações e níveis de risco indicados por <strong>texto + cor</strong> (não só cor).</p>
+  <figure><img src="prints/01_painel_risco.png" alt="Risco agora"><figcaption>Figura 6: tela principal durante a tempestade simulada. O cidadão do Jardim Pantanal vê "Pode alagar em até 3 horas", o córrego em 65% do limite e o que fazer.</figcaption></figure>
 </section>
 
 <section class="quebra">
   <div class="grade2">
-    <figure><img src="prints/03_alertas.png" alt="Receber alertas"><figcaption>Figura 7: cadastro para SMS (telefone mascarado) e alertas emitidos.</figcaption></figure>
-    <figure><img src="prints/07_mobile_painel.png" style="max-height:110mm;width:auto;display:block;margin:auto" alt="Celular"><figcaption>Figura 8: painel no celular (390 px).</figcaption></figure>
+    <figure><img src="prints/09_painel_escuro.png" alt="Modo escuro"><figcaption>Figura 7: a mesma tela no modo escuro.</figcaption></figure>
+    <figure><img src="prints/14_entenda_simulador.png" alt="Simulador"><figcaption>Figura 8: página Entenda, com o simulador "faça chover".</figcaption></figure>
   </div>
-  <figure><img src="prints/06_defesa_civil.png" alt="Defesa Civil"><figcaption>Figura 9: Central da Defesa Civil com fila priorizada pela IA, órgão e prazo, decisões do agente (R1 e R3) e monitoramento.</figcaption></figure>
+  <div class="grade2">
+    <figure><img src="prints/03_alertas.png" alt="Receber alertas"><figcaption>Figura 9: cadastro para SMS (telefone mascarado) e alertas emitidos.</figcaption></figure>
+    <figure><img src="prints/07_mobile_painel.png" style="max-height:110mm;width:auto;display:block;margin:auto" alt="Celular"><figcaption>Figura 10: tela principal no celular (390 px).</figcaption></figure>
+  </div>
+</section>
+
+<section class="quebra">
+  <figure><img src="prints/12_entenda.png" style="max-height:245mm;width:auto;display:block;margin:auto" alt="Página Entenda"><figcaption>Figura 11: página Entenda completa: como funciona, as 4 cores, glossário, simulador e perguntas frequentes.</figcaption></figure>
+</section>
+
+<section class="quebra">
+  <figure><img src="prints/06_defesa_civil.png" alt="Defesa Civil"><figcaption>Figura 12: Central da Defesa Civil com fila priorizada pela IA, órgão e prazo, decisões do agente (R1 e R3) e monitoramento.</figcaption></figure>
 </section>
 
 <section class="quebra">
@@ -301,7 +313,7 @@ hora 12 chuva=  0.0mm nivel= 165.3cm p=0.00 [Normal]      agente=encerrar (R5)</
   <h3>01 · Organização e versionamento</h3>
 <pre>alerta-cheia/
 ├── app/          API FastAPI (main, segurança, schemas, banco)
-├── frontend/     5 telas HTML + CSS + JS
+├── frontend/     6 telas HTML + CSS + JS (claro/escuro)
 ├── ia/           treino, risco, triagem, agente de automação
 ├── bigdata/      gerador, pipeline bronze/silver/gold, funções analíticas, DAX
 ├── iot/          sketch ESP32 + diagram.json (Wokwi) e simulador

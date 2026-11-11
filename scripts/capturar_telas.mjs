@@ -41,16 +41,18 @@ ws.addEventListener("message", (ev) => {
 const cdp = (method, params = {}) => new Promise((res) => { const id = ++seq; pendentes.set(id, res); ws.send(JSON.stringify({ id, method, params })); });
 const js = async (expr) => (await cdp("Runtime.evaluate", { expression: expr, awaitPromise: true, returnByValue: true })).result?.result?.value;
 
-async function print(nome, url, { largura = 1280, altura = 900, antes = null, paginaInteira = true, movel = false } = {}) {
+async function print(nome, url, { largura = 1280, altura = 900, antes = null, paginaInteira = true, movel = false, escuro = false } = {}) {
+  await cdp("Emulation.setEmulatedMedia", { features: [{ name: "prefers-color-scheme", value: escuro ? "dark" : "light" }] });
   await cdp("Emulation.setDeviceMetricsOverride", { width: largura, height: altura, deviceScaleFactor: 1, mobile: movel });
   await cdp("Page.navigate", { url: BASE + url });
   await espera(2500);
   if (antes) { await js(antes); await espera(1800); }
   let clip;
   if (paginaInteira) {
-    const h = await js("Math.min(document.documentElement.scrollHeight, 3200)");
-    await cdp("Emulation.setDeviceMetricsOverride", { width: largura, height: h, deviceScaleFactor: 1, mobile: movel });
+    // captura além da janela SEM redimensionar (seções de tela cheia mantêm a altura real)
+    await js("document.querySelectorAll('.revelar').forEach(e => e.classList.add('visivel'))");
     await espera(900);
+    const h = await js("Math.min(document.documentElement.scrollHeight, 6000)");
     clip = { x: 0, y: 0, width: largura, height: h, scale: 1 };
   }
   const r = await cdp("Page.captureScreenshot", { format: "png", ...(clip ? { clip, captureBeyondViewport: true } : {}) });
@@ -60,7 +62,9 @@ async function print(nome, url, { largura = 1280, altura = 900, antes = null, pa
 
 await cdp("Page.enable");
 await cdp("Runtime.enable");
-await print("01_painel_risco", "/index.html", { antes: "document.querySelector('[data-bairro]').click()" });
+await print("01_painel_risco", "/index.html", { paginaInteira: false, antes: "document.getElementById('meu-bairro').value='Jardim Pantanal';document.getElementById('meu-bairro').dispatchEvent(new Event('change'))" });
+await print("01b_painel_completo", "/index.html");
+await print("12_entenda", "/entenda.html");
 await print("02_relatar_triagem", "/relatar.html", {
   paginaInteira: false, altura: 760,
   antes: `document.getElementById('bairro').value='Jardim Pantanal';
@@ -81,7 +85,14 @@ await print("06_defesa_civil", "/admin.html", {
           .then(r=>r.json()).then(d=>{sessionStorage.setItem('token',d.access_token);location.reload();})`,
 });
 await print("07_mobile_painel", "/index.html", { largura: 390, altura: 844, paginaInteira: false, movel: true });
+await print("15_mobile_entenda", "/entenda.html", { largura: 390, altura: 844, paginaInteira: false, movel: true });
 await print("08_swagger_api", "/docs", { paginaInteira: false, altura: 900 });
+await print("09_painel_escuro", "/index.html", { escuro: true, paginaInteira: false });
+await print("13_entenda_escuro", "/entenda.html", { escuro: true });
+await print("14_entenda_simulador", "/entenda.html", { escuro: false, paginaInteira: false, altura: 900,
+  antes: "const r=document.getElementById('sim-mm');r.value=22;r.dispatchEvent(new Event('input'));const h=document.getElementById('sim-h');h.value=3;h.dispatchEvent(new Event('input'));document.querySelectorAll('.revelar').forEach(e=>e.classList.add('visivel'));document.getElementById('sim').scrollIntoView()" });
+await print("10_dashboard_escuro", "/dashboard.html", { escuro: true, paginaInteira: false, altura: 1100 });
+await print("11_relatar_escuro", "/relatar.html", { escuro: true, paginaInteira: false, altura: 760 });
 
 ws.close();
 chrome.kill();

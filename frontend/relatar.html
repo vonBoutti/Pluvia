@@ -3,47 +3,61 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Alerta Cheia — Relatar problema</title>
+  <script src="js/tema.js"></script>
   <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
   <header class="topo" id="topo"></header>
   <main id="conteudo">
-    <h1>Relatar um problema</h1>
-    <p class="sub">Escreva do seu jeito o que está acontecendo. A inteligência artificial entende o relato, classifica a urgência e encaminha para o órgão certo na hora.</p>
+    <div class="cabecalho-pagina">
+      <div class="eyebrow">Anônimo · leva menos de 1 minuto</div>
+      <h1>Viu algum problema? Conte pra gente.</h1>
+      <p class="sub">Escreva do seu jeito. A inteligência artificial entende o relato, avalia a urgência e já encaminha para o órgão certo.</p>
+    </div>
     <div class="duas">
       <form id="form" class="cartao" novalidate>
         <div class="campo">
-          <label for="bairro">Bairro</label>
+          <label for="bairro">Em qual bairro?</label>
           <select id="bairro" name="bairro" required></select>
         </div>
         <div class="campo">
           <label for="texto">O que está acontecendo?</label>
           <textarea id="texto" name="texto" required minlength="10" maxlength="500"
             aria-describedby="ajuda-texto" placeholder="Ex.: a água do córrego está entrando nas casas da rua das Flores"></textarea>
-          <span class="ajuda" id="ajuda-texto">Diga o local e o que você vê. Não precisa se identificar. <span id="contador">0</span>/500</span>
+          <span class="ajuda" id="ajuda-texto">Diga o local e o que você está vendo. <span id="contador">0</span>/500</span>
         </div>
-        <button class="prim" type="submit" id="enviar">Enviar relato</button>
+        <div class="exemplos" aria-label="Exemplos de relato">
+          <button type="button" data-ex="A água do córrego está entrando nas casas e tem um idoso ilhado">Água entrando nas casas</button>
+          <button type="button" data-ex="Bueiro entupido de lixo na esquina, a água não escoa">Bueiro entupido</button>
+          <button type="button" data-ex="Árvore caiu em cima dos fios e está saindo faísca">Árvore nos fios</button>
+        </div>
+        <button class="prim largo" type="submit" id="enviar">Enviar relato</button>
         <p id="erro" class="erro" role="alert"></p>
-        <p class="ajuda">Em perigo imediato ligue <strong>193</strong> (Bombeiros) ou <strong>199</strong> (Defesa Civil).</p>
+        <div class="emergencia-tel"></div>
       </form>
 
       <section class="cartao" aria-live="polite" id="resultado">
-        <h2>Resultado da triagem</h2>
-        <p class="ajuda" id="vazio">Envie um relato para ver como a IA o classifica.</p>
+        <h2>O que acontece com seu relato</h2>
+        <div id="vazio">
+          <ol class="passos">
+            <li><b>Você escreve</b>do seu jeito, sem cadastro</li>
+            <li><b>A IA entende</b>o tipo do problema e a urgência</li>
+            <li><b>Vai pro órgão certo</b>com prazo de atendimento</li>
+          </ol>
+        </div>
         <div id="saida" class="oculto">
-          <p id="protocolo" class="ok"></p>
-          <table>
-            <tbody>
-              <tr><th scope="row">Tipo de problema</th><td id="r-cat"></td></tr>
-              <tr><th scope="row">Urgência</th><td id="r-sev"></td></tr>
-              <tr><th scope="row">Encaminhado para</th><td id="r-orgao"></td></tr>
-              <tr><th scope="row">Prazo de atendimento</th><td id="r-prazo"></td></tr>
-              <tr><th scope="row">Confiança da IA</th><td id="r-conf"></td></tr>
-              <tr><th scope="row">Tempo de triagem</th><td id="r-tempo"></td></tr>
-            </tbody>
-          </table>
-          <p id="r-extra" class="ajuda"></p>
+          <div class="protocolo" id="protocolo"></div>
+          <dl class="lista-dados">
+            <div><dt>Tipo de problema</dt><dd id="r-cat"></dd></div>
+            <div><dt>Urgência</dt><dd id="r-sev"></dd></div>
+            <div><dt>Encaminhado para</dt><dd id="r-orgao"></dd></div>
+            <div><dt>Prazo de atendimento</dt><dd id="r-prazo"></dd></div>
+            <div><dt>Certeza da IA</dt><dd id="r-conf"></dd></div>
+            <div><dt>Tempo de análise</dt><dd id="r-tempo"></dd></div>
+          </dl>
+          <p id="r-extra" class="ajuda" style="margin:12px 0 0"></p>
         </div>
       </section>
     </div>

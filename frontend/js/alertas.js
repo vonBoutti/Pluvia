@@ -15,7 +15,7 @@ document.getElementById("form").addEventListener("submit", async (ev) => {
       }),
     });
     msg.className = "ok";
-    msg.textContent = `${r.mensagem} Número cadastrado: ${r.telefone}.`;
+    msg.textContent = `Pronto! O número ${r.telefone} vai receber os avisos de ${r.bairro}.`;
     ev.target.reset();
   } catch (e) {
     msg.className = "erro";
@@ -29,12 +29,10 @@ async function carregar() {
     const ul = document.getElementById("lista");
     ul.innerHTML = alertas.length ? alertas.map((a) => `
       <li class="${a.ativo ? "ativo" : ""}">
-        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <strong>${esc(a.bairro)}</strong>${selo(a.nivel)}
-        </div>
-        <p style="margin:6px 0">${esc(a.mensagem)}</p>
-        <span class="ajuda">${fmtData(a.criado_em)} · ${a.ativo ? "ATIVO" : "encerrado " + fmtData(a.encerrado_em)} · ${a.destinatarios} SMS enviados</span>
-      </li>`).join("") : "<li>Nenhum alerta emitido. Tudo tranquilo por enquanto.</li>";
+        <div class="linha"><strong>${esc(a.bairro)}</strong>${selo(a.nivel)}</div>
+        <p>${esc(a.mensagem)}</p>
+        <span class="ajuda">${fmtData(a.criado_em)} · ${a.ativo ? "<b>valendo agora</b>" : "encerrado " + fmtData(a.encerrado_em)} · ${a.destinatarios} SMS enviados</span>
+      </li>`).join("") : `<li class="vazio">${icone("ok")}<div>Nenhum aviso por enquanto. Tudo tranquilo!</div></li>`;
   } catch (e) {
     document.getElementById("lista").innerHTML = `<li class="erro">${esc(e.message)}</li>`;
   }

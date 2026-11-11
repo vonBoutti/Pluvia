@@ -22,9 +22,53 @@ em milissegundos. Um dashboard mostra ao gestor onde investir em prevenção.
 |---|---|---|
 | `ia/` | 1 · IA e automação | `treinar.py` (modelos + métricas), `risco.py`, `triagem.py`, `automacao.py` (agente R1–R6) |
 | `bigdata/` | 2 · Big Data | `gerar_dados.py` (bronze), `pipeline.py` (silver/gold), `analitico.py` (medidas), `medidas_dax.md` |
-| `iot/`, `app/`, `frontend/` | 3 · MVP e IoT | sketch ESP32 + `diagram.json` (Wokwi), `simulador.py`, API FastAPI, 5 telas web |
+| `iot/`, `app/`, `frontend/` | 3 · MVP e IoT | sketch ESP32 + `diagram.json` (Wokwi), `simulador.py`, API FastAPI, 6 telas web |
 | `tests/`, `.github/`, `Dockerfile` | 4 · DevOps | 14 testes, CI/CD, Docker, compose |
 | `docs/` | Documentação | PDF, arquitetura, plano de testes, roteiro do pitch, prints e evidências |
+
+## Ferramentas que usamos (e para quê)
+
+Uma explicação sem jargão de cada peça do projeto e do papel dela.
+
+### O "cérebro": linguagem e servidor
+- **Python**: a linguagem em que escrevemos quase tudo, do tratamento dos dados à IA e ao servidor. Escolhemos por ser a mais usada em ciência de dados e por ser fácil de ler.
+- **FastAPI**: monta o "balcão de atendimento" do sistema (a API). É por ele que os sensores entregam as medições e que as telas pedem informações. De quebra, gera sozinho uma página de documentação em `/docs`, onde dá para testar tudo.
+- **Uvicorn**: o programa que mantém a API ligada e respondendo, como um porteiro sempre de plantão.
+- **Pydantic**: confere tudo o que chega antes de aceitar. Se um sensor manda "999 cm" ou alguém tenta enviar um código malicioso no relato, ele barra.
+- **SQLite**: o banco de dados. Guarda leituras, alertas, relatos e inscrições num único arquivo, sem precisar instalar servidor de banco.
+
+### A inteligência: dados e IA
+- **pandas** e **NumPy**: as "planilhas turbinadas" do Python. Usamos para limpar mais de 100 mil leituras (tirar repetidas, corrigir valores impossíveis, preencher buracos) e calcular os indicadores.
+- **scikit-learn**: a biblioteca de IA. Com ela treinamos dois modelos:
+  - um que olha chuva e nível da água e diz **qual a chance de o córrego transbordar nas próximas 3 horas**;
+  - outro que **lê o relato do morador** e entende se é alagamento, bueiro, árvore caída etc., e o quão urgente é.
+- **joblib**: salva os modelos treinados em arquivo, para a API carregá-los sem precisar treinar de novo a cada vez.
+
+### O que a pessoa vê: telas
+- **HTML, CSS e JavaScript**: as seis telas do site. Sem framework pesado, para abrir rápido até em celular simples e internet fraca.
+  - A tela principal ocupa a tela inteira e mostra só o essencial: um "copo" com a água do córrego subindo em tempo real, uma frase grande dizendo o que está acontecendo e três ações do que fazer. A cor de fundo muda conforme o risco, e cai chuva animada quando está chovendo.
+  - A página **Entenda** explica cada número e cada cor sem jargão. Tem um simulador em que a pessoa "faz chover" e vê o córrego encher.
+  - Modo claro e escuro (segue o celular ou o botão ☀/☾), botão para aumentar a fonte, alto contraste e animações que se desligam para quem prefere menos movimento.
+- **Chart.js**: desenha os gráficos (nível do córrego, chuva por mês, ranking de bairros) de forma interativa.
+
+### No campo: sensores
+- **ESP32**: a plaquinha de baixo custo que fica na ponte do córrego e manda os dados pelo Wi-Fi.
+- **Wokwi**: simulador online de eletrônica. Permite montar e testar a estação com os sensores sem comprar nada.
+- **Sensores**: o **ultrassônico HC-SR04** mede a altura da água, o **pluviômetro** conta a chuva e o **DHT22** mede a temperatura. **LEDs e um buzzer** fazem o alarme local, que funciona mesmo se a internet cair.
+- **Simulador em Python** (`iot/simulador.py`): faz o papel das 6 estações para demonstrar o sistema, inclusive com uma tempestade "de mentira".
+
+### Bastidores: qualidade, segurança e entrega
+- **Git**: guarda o histórico de todas as mudanças no código, como um "controle de versões" de um documento.
+- **GitHub Actions**: um robô que, a cada mudança enviada ao GitHub, confere o código, roda os testes, monta o sistema e publica a nova versão, sem ninguém precisar fazer isso à mão.
+- **Docker** e **Docker Compose**: empacotam o sistema inteiro numa "caixa" que roda igual em qualquer computador ou servidor. Um comando e está no ar.
+- **pytest**: roda os 14 testes automáticos que verificam se tudo continua funcionando (login, alertas, IA, proteção de dados...).
+- **Ruff**: um "corretor ortográfico" do código, que também aponta práticas inseguras.
+- **PyJWT**: cria o "crachá digital" (token) que a Defesa Civil recebe ao fazer login e que expira em 1 hora.
+- **Prometheus (formato de métricas)**: o endereço `/metrics` mostra a saúde do sistema (quantas requisições, tempo de resposta, alertas ativos) num formato que ferramentas de monitoramento como o Grafana entendem.
+
+### Para análise extra
+- **Power BI (DAX)**: não é obrigatório para rodar, mas deixamos as fórmulas prontas em `bigdata/medidas_dax.md`, para quem quiser montar o mesmo painel no Power BI.
+- **Google Chrome (modo sem janela)** + **Node.js**: usados só para tirar os prints das telas e gerar o PDF de entrega automaticamente.
 
 ## Como executar
 
@@ -46,7 +90,7 @@ Gera os dados (bronze/silver/gold), treina os dois modelos e grava as métricas 
 ```bash
 uvicorn app.main:app --env-file .env
 ```
-Depois abra http://localhost:8000 (as 5 telas) ou http://localhost:8000/docs (documentação da API).
+Depois abra http://localhost:8000 (as 6 telas: comece pela "Risco agora" e pela "Entenda") ou http://localhost:8000/docs (documentação da API).
 
 Em outro terminal, simule as estações IoT (cada ciclo representa 1 hora):
 

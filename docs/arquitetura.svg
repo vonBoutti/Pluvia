@@ -91,13 +91,13 @@
   <rect class="area" x="745" y="55" width="355" height="360"/>
   <text class="titulo" x="761" y="80">Área 3 · Experiência digital</text>
   <rect class="caixa" x="761" y="95" width="323" height="160"/>
-  <text class="nome" x="773" y="117">Web responsiva (5 telas, acessível)</text>
-  <text class="det" x="773" y="140">1. Painel de risco por bairro (tempo real)</text>
-  <text class="det" x="773" y="159">2. Relatar problema → triagem por IA</text>
-  <text class="det" x="773" y="178">3. Receber alertas por SMS (LGPD)</text>
-  <text class="det" x="773" y="197">4. Dados e indicadores (dashboard, filtros)</text>
-  <text class="det" x="773" y="216">5. Central da Defesa Civil (login JWT)</text>
-  <text class="det" x="773" y="240">A+ e alto contraste · funciona no celular</text>
+  <text class="nome" x="773" y="117">Web responsiva (6 telas, acessível)</text>
+  <text class="det" x="773" y="140">1. Risco agora (tela cheia) · 2. Entenda</text>
+  <text class="det" x="773" y="159">3. Relatar problema → triagem por IA</text>
+  <text class="det" x="773" y="178">4. Receber alertas por SMS (LGPD)</text>
+  <text class="det" x="773" y="197">5. Indicadores (dashboard, filtros)</text>
+  <text class="det" x="773" y="216">6. Central da Defesa Civil (login JWT)</text>
+  <text class="det" x="773" y="240">claro/escuro · A+ · alto contraste · celular</text>
   <rect class="caixa" x="761" y="270" width="155" height="76"/>
   <text class="nome" x="773" y="292">Cidadão</text>
   <text class="det" x="773" y="311">SMS ≤160 caracteres</text>

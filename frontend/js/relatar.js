@@ -7,13 +7,21 @@ const NOMES_SEV = { alta: ["emergencia", "Alta"], media: ["atencao", "Média"], 
 const form = document.getElementById("form");
 const texto = document.getElementById("texto");
 preencherBairros(document.getElementById("bairro"));
-texto.addEventListener("input", () => { document.getElementById("contador").textContent = texto.value.length; });
+document.querySelector(".emergencia-tel").innerHTML =
+  `${icone("telefone")}<span>Em perigo agora? Ligue <b>193</b> (Bombeiros) ou <b>199</b> (Defesa Civil).</span>`;
+document.querySelector(".emergencia-tel svg").style.cssText = "width:20px;height:20px;flex:none";
+
+const contar = () => { document.getElementById("contador").textContent = texto.value.length; };
+texto.addEventListener("input", contar);
+document.querySelectorAll("[data-ex]").forEach((b) => b.addEventListener("click", () => {
+  texto.value = b.dataset.ex; contar(); texto.focus();
+}));
 
 form.addEventListener("submit", async (ev) => {
   ev.preventDefault();
   const erro = document.getElementById("erro");
   erro.textContent = "";
-  if (texto.value.trim().length < 10) { erro.textContent = "Descreva o problema com pelo menos 10 caracteres."; texto.focus(); return; }
+  if (texto.value.trim().length < 10) { erro.textContent = "Conte um pouco mais (pelo menos 10 letras)."; texto.focus(); return; }
   const btn = document.getElementById("enviar");
   btn.disabled = true; btn.textContent = "Analisando…";
   try {
@@ -21,20 +29,20 @@ form.addEventListener("submit", async (ev) => {
     const t = r.triagem;
     document.getElementById("vazio").classList.add("oculto");
     document.getElementById("saida").classList.remove("oculto");
-    document.getElementById("protocolo").textContent = `Relato recebido! Protocolo nº ${r.id}`;
+    document.getElementById("protocolo").innerHTML = `${icone("ok", 'style="width:20px;height:20px"')} Relato recebido! Protocolo nº ${r.id}`;
     document.getElementById("r-cat").textContent = NOMES_CAT[t.categoria];
     const [cls, nome] = NOMES_SEV[t.severidade];
     document.getElementById("r-sev").innerHTML = `<span class="selo n-${cls}">${nome}</span>`;
     document.getElementById("r-orgao").textContent = t.orgao_responsavel;
     document.getElementById("r-prazo").textContent = t.prazo_atendimento;
     document.getElementById("r-conf").textContent = `${Math.round(t.confianca * 100)}%`;
-    document.getElementById("r-tempo").textContent = `${num(r.tempo_triagem_ms, 1)} ms (triagem manual: ~2 min)`;
-    const extras = [];
-    if (t.regra_urgencia_aplicada) extras.push("Palavras de risco à vida detectadas: urgência elevada automaticamente.");
-    if (t.revisao_humana) extras.push("Confiança baixa: um atendente vai revisar a classificação.");
+    document.getElementById("r-tempo").textContent = `${num(r.tempo_triagem_ms, 1)} ms`;
+    const extras = ["Uma pessoa levaria cerca de 2 minutos para fazer essa triagem."];
+    if (t.regra_urgencia_aplicada) extras.push("Detectamos risco à vida: a urgência foi elevada automaticamente.");
+    if (t.revisao_humana) extras.push("A IA ficou em dúvida, então um atendente vai revisar.");
     if (r.agente && r.agente.acao === "criar") extras.push(`Seu relato ajudou a disparar um ALERTA para ${form.bairro.value}.`);
     document.getElementById("r-extra").textContent = extras.join(" ");
-    texto.value = ""; document.getElementById("contador").textContent = "0";
+    texto.value = ""; contar();
   } catch (e) {
     erro.textContent = e.message;
   } finally {
