@@ -6,12 +6,10 @@ Projeto: Pluvia - previsão de alagamentos com IoT + IA e alerta ao cidadão
 Nome do grupo: <PREENCHER>
 
 Integrantes (nome - RM):
-1. <NOME COMPLETO> - RM<00000>
-2. <NOME COMPLETO> - RM<00000>
-3. <NOME COMPLETO> - RM<00000>
-4. <NOME COMPLETO> - RM<00000>
-5. <NOME COMPLETO> - RM<00000>
+1. Lúcia Inês Boutti - RM97911
+2. Thiago Eiji Matumoto - RM97711
+3. Pedro Eugênio Bezerra de Meneses Arruda - RM98227
+4. Matheus Matos Bernardo - RM99340
+5. Murilo Alves Mansano - RM98143
 
-Link do vídeo pitch (público, testado em aba anônima): <COLE AQUI O LINK DO YOUTUBE/DRIVE/VIMEO>
-
-Repositório (opcional): <LINK DO GITHUB>
+Link do vídeo pitch: <COLE AQUI O LINK DO YOUTUBE/DRIVE/VIMEO>

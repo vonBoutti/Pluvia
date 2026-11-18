@@ -30,7 +30,7 @@
   <text class="det" x="48" y="228">• Buffer de 24 leituras offline</text>
   <rect class="caixa" x="36" y="262" width="203" height="70"/>
   <text class="nome" x="48" y="284">Simulador (mock) Python</text>
-  <text class="det" x="48" y="304">6 estações · cenários calmo,</text>
+  <text class="det" x="48" y="304">96 estações · cenários calmo,</text>
   <text class="det" x="48" y="321">tempestade e replay histórico</text>
   <text class="det" x="36" y="360">Envio: JSON a cada hora</text>
   <text class="det" x="36" y="377">POST /api/leituras + X-API-Key</text>
@@ -71,11 +71,11 @@
   <text class="titulo" x="316" y="465">Área 2 · Big Data (data lake)</text>
   <rect class="caixa" x="316" y="478" width="110" height="64"/>
   <text class="nome" x="328" y="500">Bronze</text>
-  <text class="det" x="328" y="518">JSONL IoT, CSV</text>
+  <text class="det" x="328" y="518">JSONL.gz IoT, CSV</text>
   <text class="det" x="328" y="533">bruto, com ruído</text>
   <rect class="caixa" x="446" y="478" width="110" height="64"/>
   <text class="nome" x="458" y="500">Silver</text>
-  <text class="det" x="458" y="518">limpo, horário,</text>
+  <text class="det" x="458" y="518">Parquet, horário,</text>
   <text class="det" x="458" y="533">features da IA</text>
   <rect class="caixa" x="576" y="478" width="108" height="64"/>
   <text class="nome" x="588" y="500">Gold</text>
@@ -83,7 +83,7 @@
   <text class="det" x="588" y="533">dashboard</text>
   <path class="lin" d="M426 510 H444"/>
   <path class="lin" d="M556 510 H574"/>
-  <text class="det" x="316" y="568">2 anos · 105 mil leituras · relatório de qualidade</text>
+  <text class="det" x="316" y="568">2 anos · 96 estações · 1,7 mi leituras · qualidade</text>
   <text class="det" x="316" y="586">Funções analíticas (Python) ≡ medidas DAX (Power BI)</text>
   <text class="det" x="316" y="604">Silver treina a IA → modelos .joblib carregados pela API</text>
 
