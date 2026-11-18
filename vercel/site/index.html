@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Pluvia — Risco agora</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <script src="js/tema.js"></script>
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/inicio.css">
+</head>
+<body>
+  <header class="topo" id="topo"></header>
+  <main id="conteudo" style="max-width:none;padding:0">
+    <section class="hero" aria-live="polite">
+      <div class="chuva-anim" id="chuva" aria-hidden="true"></div>
+
+      <div class="hero-conteudo">
+        <div class="surgir d1">
+          <div class="copo-wrap" role="img" id="copo-desc" aria-label="Nível do córrego">
+            <div class="copo">
+              <div class="agua" id="agua">
+                <svg viewBox="0 0 1200 20" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="onda2" d="M0 10 Q150 0 300 10 T600 10 T900 10 T1200 10 V20 H0 Z"/>
+                  <path class="onda1" d="M0 12 Q150 4 300 12 T600 12 T900 12 T1200 12 V20 H0 Z"/>
+                </svg>
+                <div class="corpo"></div>
+              </div>
+              <div class="limite"><span>transborda aqui</span></div>
+              <div class="copo-texto"><div class="pilula"><strong id="pct">–</strong><span>do limite do córrego</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="estado">
+          <div class="topo-estado surgir d1">
+            <div class="seletor">
+              <span id="ic-local"></span>
+              <label for="meu-bairro">Meu bairro:</label>
+              <select id="meu-bairro"></select>
+            </div>
+            <span id="selo"></span>
+          </div>
+          <h1 class="surgir d2" id="titulo">Carregando…</h1>
+          <p class="frase surgir d3" id="frase"></p>
+          <ul class="fazer surgir d3" id="fazer" aria-label="O que fazer agora"></ul>
+          <div class="ctas surgir d4">
+            <a class="btn-grande cheio" href="alertas.html" id="cta-sms"></a>
+            <a class="btn-grande vazado" href="relatar.html" id="cta-relatar"></a>
+            <a class="btn-grande vazado" href="entenda.html" id="cta-entenda"></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="outros surgir d4">
+        <div class="outros-topo"><h2>Mais críticos agora</h2><button type="button" class="link-btn" id="ver-mapa">Ver os 96 distritos →</button></div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="rolar-dica"><button type="button" id="ver-historico"></button></div>
+    </section>
+
+    <section id="todos" class="todos">
+      <div class="todos-topo">
+        <div>
+          <div class="eyebrow">Mapa de calor</div>
+          <h2 class="titulo-sec" style="margin:0">Toda a cidade agora</h2>
+          <p class="ajuda" id="mapa-total" style="margin:4px 0 0"></p>
+        </div>
+        <label class="busca"><span class="oculto">Buscar distrito</span>
+          <input type="search" id="busca" placeholder="Buscar distrito... ex.: Penha" autocomplete="off">
+        </label>
+      </div>
+      <div class="legenda-mini" aria-hidden="true">
+        <span><i class="l-normal"></i>Normal</span><span><i class="l-atencao"></i>Atenção</span>
+        <span><i class="l-alerta"></i>Alerta</span><span><i class="l-emergencia"></i>Emergência</span>
+        <span class="ajuda">· o número é quanto o córrego já encheu</span>
+      </div>
+      <div id="mapa" class="mapa"></div>
+    </section>
+
+    <section id="detalhe" style="max-width:1200px;margin:0 auto;padding:24px 16px 56px">
+      <div class="cartao">
+        <h2 id="det-titulo">Últimas 24 horas</h2>
+        <p class="ajuda" id="det-resumo" style="margin-top:-6px"></p>
+        <div class="grafico"><canvas id="grafico-nivel" aria-label="Gráfico do nível do córrego e chuva nas últimas 24 horas" role="img"></canvas></div>
+      </div>
+    </section>
+  </main>
+  <footer>Pluvia · CitizenTech — Global Solution 2026/2 · dados de demonstração</footer>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script defer src="js/comum.js"></script>
+  <script defer src="js/demo.js"></script>
+  <script defer src="js/painel.js"></script>
+</body>
+</html>

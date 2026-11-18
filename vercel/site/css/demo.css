@@ -1,0 +1,8 @@
+/* Faixa do modo demonstração (só na versão do Vercel) */
+.faixa-demo { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border-bottom: 1px solid var(--line); font-size: .85rem; color: var(--text); }
+.faixa-demo .dentro { max-width: 1200px; margin: 0 auto; padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.faixa-demo .acoes-demo { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.faixa-demo button { font: inherit; font-weight: 700; border-radius: 8px; padding: 5px 12px; cursor: pointer; border: 1px solid var(--brand); background: var(--brand); color: var(--brand-ink); }
+.faixa-demo button + button { background: transparent; color: var(--brand); }
+.faixa-demo button:disabled { opacity: .6; cursor: wait; }
+#demo-status { color: var(--muted); }

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Pluvia — Entenda</title>
+  <script src="js/tema.js"></script>
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/inicio.css">
+</head>
+<body>
+  <header class="topo" id="topo"></header>
+  <main id="conteudo" style="max-width:none;padding:0">
+
+    <!-- 1. Como funciona -->
+    <section class="faixa-tela hero" style="min-height:calc(100svh - 67px)">
+      <div class="dentro">
+        <div class="eyebrow surgir d1">Entenda em 1 minuto</div>
+        <h1 class="titulo-grande surgir d2">Do <span class="grad">sensor no córrego</span><br>ao aviso no <span class="grad">seu celular</span>.</h1>
+        <p class="lead surgir d3">O Pluvia vigia os córregos dos 96 distritos de São Paulo dia e noite e avisa <b>antes</b> de a água chegar. Assim dá tempo de tirar o carro, guardar documentos e proteger quem você ama.</p>
+        <div class="fluxo surgir d4">
+          <div class="etapa"><div class="bolha" data-ic="sensor"></div><h3>1. O sensor mede</h3><p>Uma caixinha na ponte mede a <b>chuva</b> e a <b>altura da água</b> a cada hora.</p></div>
+          <div class="trilho" aria-hidden="true"><i></i></div>
+          <div class="etapa"><div class="bolha" data-ic="cerebro"></div><h3>2. A IA calcula</h3><p>Um programa treinado com 2 anos de chuvas calcula a <b>chance de transbordar</b> nas próximas 3 horas.</p></div>
+          <div class="trilho" aria-hidden="true"><i></i></div>
+          <div class="etapa"><div class="bolha" data-ic="celular"></div><h3>3. Você é avisado</h3><p>Se houver risco, chega um <b>SMS</b> com o que fazer. Funciona em qualquer celular, sem internet.</p></div>
+        </div>
+        <div class="rolar-dica" style="margin-top:36px"><button type="button" id="ir-cores">O que significam as cores? <span data-ic="seta"></span></button></div>
+      </div>
+    </section>
+
+    <!-- 2. Cores -->
+    <section class="faixa-tela alt curta" id="cores">
+      <div class="dentro">
+        <div class="eyebrow revelar">As 4 cores</div>
+        <h2 class="titulo-sec revelar">Cada cor diz o que você deve fazer</h2>
+        <p class="lead revelar">A cor depende da <b>chance de o córrego transbordar</b> nas próximas 3 horas.</p>
+        <div class="cores">
+          <article class="cor-card c-normal revelar"><span class="selo n-normal">Normal</span><h3>Tudo tranquilo</h3><p>Não há previsão de alagamento.</p><div class="acao" data-ic="ok">Siga sua rotina.</div><div class="faixa-prob">Chance de alagar: menos de 12%</div></article>
+          <article class="cor-card c-atencao revelar"><span class="selo n-atencao">Atenção</span><h3>Chuva forte</h3><p>Está chovendo bastante, mas o córrego ainda tem espaço.</p><div class="acao" data-ic="aviso">Evite ruas que costumam alagar e acompanhe os avisos.</div><div class="faixa-prob">Chance de alagar: de 12% a 34%</div></article>
+          <article class="cor-card c-alerta revelar"><span class="selo n-alerta">Alerta</span><h3>Pode alagar em até 3 h</h3><p>O córrego está subindo rápido. Você recebe SMS.</p><div class="acao" data-ic="aviso">Tire o carro de áreas baixas e guarde documentos no alto.</div><div class="faixa-prob">Chance de alagar: de 35% a 74%</div></article>
+          <article class="cor-card c-emergencia revelar"><span class="selo n-emergencia">Emergência</span><h3>Vai alagar</h3><p>A água está transbordando ou vai transbordar a qualquer momento.</p><div class="acao" data-ic="telefone">Vá para um lugar alto. Não atravesse a água. Ligue 193.</div><div class="faixa-prob">Chance de alagar: 75% ou mais</div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Glossário -->
+    <section class="faixa-tela curta">
+      <div class="dentro">
+        <div class="eyebrow revelar">Os números do painel</div>
+        <h2 class="titulo-sec revelar">O que cada informação quer dizer</h2>
+        <p class="lead revelar">Sem palavras difíceis. Estes são os números que aparecem na tela principal.</p>
+        <div class="glossario">
+          <article class="termo revelar"><div class="rotulo-ex"><b>77%</b><span>de chance de alagar</span></div><h3>Chance de alagar</h3><p>A probabilidade de o córrego transbordar nas <b>próximas 3 horas</b>, calculada pela inteligência artificial.</p><div class="comparar">É como a previsão do tempo: "70% de chance de chuva" não é certeza, mas é motivo para levar o guarda-chuva.</div></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>64%</b><span>do limite do córrego</span></div><h3>Quanto o córrego já encheu</h3><p>É o "copo" da tela principal. Em <b>100%</b> a água chega na borda e começa a ir para a rua.</p><div class="comparar">Imagine um copo d'água: 50% é meio copo; 100% é cheio até a boca.</div></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>116 cm</b><span>altura da água</span></div><h3>Altura da água</h3><p>Quantos centímetros de água há no córrego agora, medidos pelo sensor na ponte.</p><div class="comparar">Em dia seco, fica por volta de 60 cm.</div></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>180 cm</b><span>limite</span></div><h3>Limite (cota de transbordamento)</h3><p>A altura em que o córrego <b>transborda</b> naquele bairro. Cada bairro tem o seu: depende do terreno e do tamanho do canal.</p><div class="comparar">Na tela principal, é a linha tracejada vermelha.</div></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>18 mm/h</b><span>chuva</span></div><h3>Chuva (mm por hora)</h3><p>Quanta chuva caiu na última hora. 1 mm significa 1 litro de água em cada metro quadrado.</p><div class="comparar">Até 5 mm/h: chuva fraca · 5 a 20: moderada · <b>acima de 20: forte</b>, a rua enche em minutos.</div></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>AC-01</b><span>sensor</span></div><h3>Sensor (estação)</h3><p>A caixinha instalada no córrego. Mede, envia os dados e tem <b>luz e sirene próprias</b> que tocam mesmo se a internet cair.</p></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>SMS</b><span>aviso</span></div><h3>Aviso por SMS</h3><p>Mensagem curta no celular com o bairro, o risco e o que fazer. Você só recebe se cadastrar o número, e pode sair quando quiser.</p></article>
+          <article class="termo revelar"><div class="rotulo-ex"><b>Relato</b><span>você conta</span></div><h3>Relato de morador</h3><p>Quando você conta o que está vendo (rua alagada, bueiro entupido, árvore caída), a IA entende o problema e manda para o órgão certo na hora.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Simulador -->
+    <section class="faixa-tela alt" id="sim">
+      <div class="chuva-anim" id="sim-chuva" aria-hidden="true"></div>
+      <div class="dentro">
+        <div class="eyebrow revelar">Experimente</div>
+        <h2 class="titulo-sec revelar">Faça chover e veja o córrego encher</h2>
+        <p class="lead revelar">Mexa nos controles para entender como chuva forte e chuva demorada enchem o córrego. A IA de verdade faz uma conta parecida, só que com mais informações.</p>
+        <div class="simulador revelar">
+          <div class="copo-wrap" role="img" id="sim-desc" aria-label="Simulação do nível do córrego">
+            <div class="copo">
+              <div class="agua" id="sim-agua">
+                <svg viewBox="0 0 1200 20" preserveAspectRatio="none" aria-hidden="true">
+                  <path class="onda2" d="M0 10 Q150 0 300 10 T600 10 T900 10 T1200 10 V20 H0 Z"/>
+                  <path class="onda1" d="M0 12 Q150 4 300 12 T600 12 T900 12 T1200 12 V20 H0 Z"/>
+                </svg>
+                <div class="corpo"></div>
+              </div>
+              <div class="limite"><span>transborda aqui</span></div>
+              <div class="copo-texto"><div class="pilula"><strong id="sim-pct">33%</strong><span>do limite do córrego</span></div></div>
+            </div>
+          </div>
+          <div class="controle">
+            <label for="sim-mm">Chuva por hora <b id="sim-mm-v">0 mm</b></label>
+            <input type="range" id="sim-mm" min="0" max="40" step="1" value="0">
+            <div class="escala"><span>sem chuva</span><span>fraca</span><span>moderada</span><span>forte</span><span>temporal</span></div>
+            <label for="sim-h" style="margin-top:22px">Há quanto tempo chove <b id="sim-h-v">1 h</b></label>
+            <input type="range" id="sim-h" min="1" max="4" step="1" value="1">
+            <div class="escala"><span>1 h</span><span>2 h</span><span>3 h</span><span>4 h</span></div>
+            <div class="sim-resultado" id="sim-res" aria-live="polite"></div>
+            <p class="ajuda" style="margin:10px 0 0">Simulação ilustrativa, para aprender. Os números reais do seu bairro estão na página "Risco agora".</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Confiança e privacidade -->
+    <section class="faixa-tela curta">
+      <div class="dentro">
+        <div class="eyebrow revelar">Dá para confiar?</div>
+        <h2 class="titulo-sec revelar">Perguntas que todo mundo faz</h2>
+        <div class="faq">
+          <details class="revelar"><summary>O aviso sempre acerta?</summary><p>Não existe previsão perfeita. Em testes com um ano inteiro de chuvas, o sistema avisou <b>mais de 9 de cada 10 alagamentos com pelo menos 1 hora de antecedência</b> nos 96 distritos, enquanto o método usado hoje avisava 6 de cada 10. Por isso também usamos os relatos dos moradores, e a Defesa Civil acompanha tudo.</p></details>
+          <details class="revelar"><summary>Preciso de internet ou de aplicativo?</summary><p>Não. O aviso chega por SMS, que funciona em qualquer celular. O site é só para quem quiser acompanhar de perto.</p></details>
+          <details class="revelar"><summary>O que vocês fazem com meu telefone?</summary><p>Usamos só para mandar avisos de enchente. Ele fica guardado de forma protegida (nem a equipe consegue ver o número completo) e você pode pedir para apagar quando quiser, como manda a LGPD.</p></details>
+          <details class="revelar"><summary>Meu relato é anônimo?</summary><p>Sim. Não pedimos nome e não guardamos o endereço de internet de quem envia.</p></details>
+          <details class="revelar"><summary>E se faltar luz ou internet no sensor?</summary><p>O sensor tem luz e sirene próprias que tocam sozinhas quando o córrego enche. As medições ficam guardadas e são enviadas quando a conexão voltar.</p></details>
+          <details class="revelar"><summary>Vi a água subindo e não recebi aviso. E agora?</summary><p>Confie no que você está vendo: vá para um lugar alto e ligue <b>193</b> (Bombeiros) ou <b>199</b> (Defesa Civil). Depois, conte para a gente em "Relatar". Isso ajuda o sistema a avisar seus vizinhos.</p></details>
+        </div>
+        <div class="ctas revelar" style="margin-top:32px">
+          <a class="btn-grande cheio" href="alertas.html" data-ic="sino">Quero receber avisos</a>
+          <a class="btn-grande vazado" href="index.html" data-ic="mapa">Ver o risco agora</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>Pluvia · Defesa Civil 199 · Bombeiros 193</footer>
+  <script defer src="js/comum.js"></script>
+  <script defer src="js/demo.js"></script>
+  <script defer src="js/entenda.js"></script>
+</body>
+</html>

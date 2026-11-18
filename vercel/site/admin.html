@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Pluvia — Defesa Civil</title>
+  <script src="js/tema.js"></script>
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+  <header class="topo" id="topo"></header>
+  <main id="conteudo">
+    <div class="cabecalho-pagina"><div class="eyebrow">Área restrita</div><h1>Central da Defesa Civil</h1>
+    <p class="sub">Fila de relatos triados pela IA, alertas emitidos pelo agente e saúde do sistema.</p></div>
+
+    <form id="login" class="cartao" style="max-width:420px" novalidate>
+      <h2>Entrar</h2>
+      <div class="campo"><label for="usuario">Usuário</label><input id="usuario" autocomplete="username" required></div>
+      <div class="campo"><label for="senha">Senha</label><input id="senha" type="password" autocomplete="current-password" required></div>
+      <button class="prim largo" type="submit">Entrar</button>
+      <p id="erro-login" class="erro" role="alert"></p>
+    </form>
+
+    <div id="painel" class="oculto">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <button class="sec" id="sair" type="button">Sair</button>
+        <button class="sec" id="reset" type="button">Reiniciar cenário de demonstração</button>
+      </div>
+      <section class="kpis" id="monitor" aria-label="Monitoramento do sistema"></section>
+      <section class="cartao">
+        <h2>Fila de relatos (ordenada por urgência)</h2>
+        <div class="tabela-rolagem"><table id="t-relatos"></table></div>
+      </section>
+      <section class="cartao" style="margin-top:16px">
+        <h2>Decisões do agente de alerta</h2>
+        <div class="tabela-rolagem"><table id="t-alertas"></table></div>
+      </section>
+    </div>
+  </main>
+  <footer>Pluvia · acesso autenticado com token JWT (expira em 60 min)</footer>
+  <script defer src="js/comum.js"></script>
+  <script defer src="js/demo.js"></script>
+  <script defer src="js/admin.js"></script>
+</body>
+</html>
