@@ -3,7 +3,7 @@ Engenharia de Software - 4º ano - Turma 4ESOA
 
 Projeto: Pluvia - previsão de alagamentos com IoT + IA e alerta ao cidadão
 
-Nome do grupo: <PREENCHER>
+Nome do grupo: Pluvia
 
 Integrantes (nome - RM):
 1. Lúcia Inês Boutti - RM97911
