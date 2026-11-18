@@ -15,6 +15,7 @@ público onde investir em prevenção.
 
 | | |
 |---|---|
+| **Demo online** | **https://pluvia-vercel.vercel.app/**: as 6 telas funcionando sem instalar nada. Roda no navegador com os mesmos modelos de IA do projeto. Na tela "Risco agora", use o botão **"Simular temporal"** (detalhes em [`vercel/README.md`](vercel/README.md)) |
 | **Documento de entregáveis** | [`docs/Pluvia_Entregaveis.pdf`](docs/Pluvia_Entregaveis.pdf) (também em `.docx`) |
 | **Vídeo pitch** | `<link do vídeo>` (também em `integrantes.txt`) |
 | **Integrantes** | Lúcia Inês Boutti (RM97911) · Thiago Eiji Matumoto (RM97711) · Pedro Eugênio Bezerra de Meneses Arruda (RM98227) · Matheus Matos Bernardo (RM99340) · Murilo Alves Mansano (RM98143) |
@@ -46,6 +47,10 @@ público onde investir em prevenção.
 ---
 
 ## 2. Como rodar (cerca de 5 minutos)
+
+> **Só quer ver funcionando?** Abra a demo online em **https://pluvia-vercel.vercel.app/**, sem instalar nada.
+> Ela roda no navegador com os mesmos modelos de IA. Para avaliar o sistema completo (API, banco, segurança,
+> testes e Docker), siga os passos abaixo.
 
 **Pré-requisito:** Python 3.11 ou superior (testado em 3.12 e 3.14). Todos os comandos são executados na raiz do projeto.
 
